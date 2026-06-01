@@ -5,7 +5,7 @@
     "background": "cream",
     "headerStyle": "split",
     "footerStyle": "corporate",
-    "footerText": "Markus Waldheim — Senior IT-Consultant & DevSecOps Experte",
+    "footerText": "Alexander Neumann — Senior IT-Consultant & DevSecOps Experte",
     "previewMode": "a4",
     "visibleSections": {
       "profile": true,
@@ -22,14 +22,14 @@
     }
   },
   "personal": {
-    "name": "Markus Waldheim",
+    "name": "Alexander Neumann",
     "role": "Senior IT-Consultant & DevSecOps Experte",
-    "email": "kontakt@waldheim.dev",
-    "phone": "+49 821 1234567",
-    "location": "Augsburg, Deutschland",
-    "website": "waldheim.dev",
-    "github": "github.com/Waldheim-dev",
-    "linkedin": "linkedin.com/in/markus-waldheim-03827a312",
+    "email": "alexander.neumann@example.com",
+    "phone": "+49 89 12345678",
+    "location": "München, Deutschland",
+    "website": "alexander-neumann.dev",
+    "github": "github.com/alexander-neumann",
+    "linkedin": "linkedin.com/in/alexander-neumann",
     "profileText": "Zertifizierter Scrum Master (PSM II) und Ausbilder (IHK) mit über 10 Jahren IT-Praxiserfahrung an der Schnittstelle zwischen Softwarearchitektur, robuster System-Infrastruktur und agiler Transformation. Meine Mission ist das Schließen der Lücke zwischen Geschäfts-Visionen und technischer Exzellenz sowie das Eliminieren von Ineffizienzen in Softwareprojekten."
   },
   "competencies": [
@@ -76,37 +76,37 @@
     },
     {
       "title": "Zertifizierter Ausbilder (AdA)",
-      "authority": "IHK Schwaben (Augsburg)",
+      "authority": "IHK München",
       "date": "2021"
     }
   ],
   "workExperience": [
     {
       "role": "Inhaber & IT-Berater",
-      "company": "Waldheim.dev, Augsburg/München",
+      "company": "Neumann Consulting & Tech, München",
       "date": "Seit Feb 2022",
       "details": [
         "IT-Dienstleistungen und strategische Beratung für KMU, Startups und Vereine in Südbayern.",
         "Fokus auf DevSecOps, moderne Webarchitektur (Frontend & Backend), UI/UX-Design und Cloud-Infrastruktur.",
-        "Entwicklung und Instandhaltung eigener SaaS-Branchenlösungen: Silvacore (WEG- & Mietverwaltung), Ecodrive (Fahrzeugkosten-Optimierung) und Socialverse (KI-basiertes Social Media Management)."
+        "Entwicklung und Instandhaltung eigener SaaS-Branchenlösungen zur Prozessautomatisierung und Fuhrparkkosten-Optimierung."
       ]
     },
     {
       "role": "Senior IT-Consultant",
-      "company": "InterFace AG, München",
+      "company": "Global Technology Solutions AG, München",
       "date": "Seit Jul 2022",
       "details": [
         "Strategische Entwicklung von Geschäftsprozess-Anwendungen in den Bereichen Staatswesen, Medizin und Automobilindustrie.",
         "Kernmitglied des hausinternen DevSecOps-Expertenteams sowie des UI/UX-Zirkels.",
-        "Projekte: DevSecOps-Automatisierung für kommunale Software (München), inhouse DevService-Teamunterstützung, behördlicher Freigabeprozess (Nürnberg) und Diabetesstudien-Verwaltung (München)."
+        "Projekte: DevSecOps-Automatisierung für kommunale Software (München), inhouse DevService-Teamunterstützung und Diabetesstudien-Verwaltung."
       ]
     },
     {
       "role": "Fullstack-Entwickler & Teamleiter / Ausbilder",
-      "company": "SEWOBE AG, Augsburg",
+      "company": "Enterprise Software AG, Augsburg",
       "date": "Feb 2015 — Jul 2022",
       "details": [
-        "Entwicklung und Modularisierung eines PHP-basierten ERP/CRM-Systems für Verbände und Parteien.",
+        "Entwicklung und Modularisierung eines PHP-basierten ERP/CRM-Systems für Verbände und Organisationen.",
         "Als Teamleiter (seit 2020) verantwortlich für die agile Neuentwicklung des CRM-Kerns auf Angular-Basis.",
         "Verantwortlicher IHK-Ausbilder der Fachinformatiker für Anwendungsentwicklung sowie Administrator der lokalen Netzwerke und CI/CD-Systeme."
       ]
@@ -115,7 +115,7 @@
   "education": [
     {
       "degree": "Ausbildung zum Fachinformatiker für Anwendungsentwicklung",
-      "institution": "SEWOBE AG, Augsburg (Abschluss vor der IHK Augsburg)",
+      "institution": "Enterprise Software AG, Augsburg (Abschluss vor der IHK)",
       "date": "2015 — 2018"
     }
   ],
@@ -130,30 +130,30 @@
     "IHK-Ausbildung & Coaching"
   ],
   "hobbies": [
-    "🛠️ Open-Source-Entwicklung (z. B. WetterApp, Amigo Framework, Netbox-Plugins)",
+    "🛠️ Open-Source-Entwicklung (z. B. WetterApp, Custom Framework, Netbox-Plugins)",
     "🎓 Wissensvermittlung und Mentoring",
     "⚡ Cloud Architecture & Tech-Experimente"
   ],
   "projects": [
     {
-      "title": "K8s Chaos Battleship (Cloudland 2026)",
+      "title": "K8s Chaos Battleship (Cloud-Konferenz)",
       "duration": "2026",
       "role": "Rolle: Core Developer & Architect",
-      "description": "Konzeption eines interaktiven Chaos Engineering Experiments für die Tech-Konferenz Cloudland, aufgebaut mit Go, Kubernetes und FluxCD zur anschaulichen Demonstration resilienter Infrastrukturen.",
+      "description": "Konzeption eines interaktiven Chaos Engineering Experiments für eine Tech-Konferenz, aufgebaut mit Go, Kubernetes und FluxCD zur anschaulichen Demonstration resilienter Infrastrukturen.",
       "technologies": ["Go", "Kubernetes", "FluxCD", "Docker", "DevSecOps"]
     },
     {
-      "title": "Silvacore SaaS Plattform",
+      "title": "B2B SaaS Plattform",
       "duration": "2024 — 2025",
       "role": "Rolle: Product Owner & Lead Developer",
       "description": "Entwicklung einer mandantenfähigen B2B-Plattform zur Abrechnung und Verwaltung von Miet- und WEG-Nebenkosten für kleinere Immobilienverwaltungen.",
       "technologies": ["Angular", "Node.js", "PostgreSQL", "Tailwind CSS", "Docker"]
     },
     {
-      "title": "Musikverein Obermeitingen e.V. Webportal",
+      "title": "Webportal Musikverein",
       "duration": "2023 — 2024",
       "role": "Rolle: Web-Designer & Core Committer",
-      "description": "Modernisierung des gesamten Vereinsauftritts mit Astro.js und Tailwind CSS zur Erreichung optimaler Ladezeiten (Lighthouse-Score 100/100) und moderner UI.",
+      "description": "Modernisierung eines gesamten Vereinsauftritts mit Astro.js und Tailwind CSS zur Erreichung optimaler Ladezeiten (Lighthouse-Score 100/100) und moderner UI.",
       "technologies": ["Astro.js", "Tailwind CSS", "Vite", "SEO Optimierung"]
     }
   ],
@@ -201,13 +201,13 @@
   },
   "openSource": [
     {
-      "title": "Amigo: Autonomes Multi-Agenten-Framework (Go)",
+      "title": "Custom Go Agent Framework",
       "role": "Creator & Lead Architect",
       "description": "Ein autonomes, hoch-performantes Multi-Agenten-Framework in Go zur Erstellung, Koordination und Ausführung kollaborativer KI-Agenten-Systeme (LLM-integriert).",
       "technologies": ["Go (Golang)", "Anthropic API", "Gemini API", "Docker", "CLI"]
     },
     {
-      "title": "Netbox Ausgabeschein-Generator",
+      "title": "Netbox Document Generator",
       "role": "Creator & Maintainer",
       "description": "Ein nützliches Automatisierungs-Tool für Vereine zur schnellen, fehlerfreien Generierung von Hardware-Ausgabescheinen und Übergabebelegen direkt aus Netbox-Datenbanken.",
       "technologies": ["Python", "Netbox API", "HTML / CSS", "PDF-Generation"]
