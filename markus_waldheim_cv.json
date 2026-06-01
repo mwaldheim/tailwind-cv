@@ -1,0 +1,234 @@
+{
+  "layout": {
+    "theme": "teal",
+    "style": "modernist",
+    "background": "cream",
+    "headerStyle": "split",
+    "footerStyle": "corporate",
+    "footerText": "Markus Waldheim — Senior IT-Consultant & DevSecOps Experte",
+    "previewMode": "a4",
+    "visibleSections": {
+      "profile": true,
+      "workExperience": true,
+      "projects": true,
+      "openSource": true,
+      "skills": true,
+      "competencies": true,
+      "education": true,
+      "certifications": true,
+      "methodsAndTools": true,
+      "languages": true,
+      "hobbies": true
+    }
+  },
+  "personal": {
+    "name": "Markus Waldheim",
+    "role": "Senior IT-Consultant & DevSecOps Experte",
+    "email": "kontakt@waldheim.dev",
+    "phone": "+49 821 1234567",
+    "location": "Augsburg, Deutschland",
+    "website": "waldheim.dev",
+    "github": "github.com/Waldheim-dev",
+    "linkedin": "linkedin.com/in/markus-waldheim-03827a312",
+    "profileText": "Zertifizierter Scrum Master (PSM II) und Ausbilder (IHK) mit über 10 Jahren IT-Praxiserfahrung an der Schnittstelle zwischen Softwarearchitektur, robuster System-Infrastruktur und agiler Transformation. Meine Mission ist das Schließen der Lücke zwischen Geschäfts-Visionen und technischer Exzellenz sowie das Eliminieren von Ineffizienzen in Softwareprojekten."
+  },
+  "competencies": [
+    {
+      "title": "DevSecOps & Automation",
+      "description": "Integration von automatisierten Sicherheitsprüfungen und stabilen CI/CD-Pipelines in Agile Workflows."
+    },
+    {
+      "title": "Software-Architektur",
+      "description": "Konzeption und Modularisierung skalierbarer Cloud-Native- und Kubernetes-Anwendungen."
+    },
+    {
+      "title": "Agiles Coaching & Leadership",
+      "description": "Befähigung von cross-funktionalen Teams durch agile Methoden nach Scrum (PSM II) und IHK-Richtlinien."
+    }
+  ],
+  "languages": [
+    {
+      "name": "Deutsch",
+      "level": "Muttersprache",
+      "percentage": 100
+    },
+    {
+      "name": "Englisch",
+      "level": "Verhandlungssicher",
+      "percentage": 90
+    }
+  ],
+  "certifications": [
+    {
+      "title": "Professional Scrum Master II (PSM II)",
+      "authority": "Scrum.org",
+      "date": "2024"
+    },
+    {
+      "title": "Professional Scrum Master I (PSM I)",
+      "authority": "Scrum.org",
+      "date": "2023"
+    },
+    {
+      "title": "Professional Scrum Product Owner I (PSPO I)",
+      "authority": "Scrum.org",
+      "date": "2023"
+    },
+    {
+      "title": "Zertifizierter Ausbilder (AdA)",
+      "authority": "IHK Schwaben (Augsburg)",
+      "date": "2021"
+    }
+  ],
+  "workExperience": [
+    {
+      "role": "Inhaber & IT-Berater",
+      "company": "Waldheim.dev, Augsburg/München",
+      "date": "Seit Feb 2022",
+      "details": [
+        "IT-Dienstleistungen und strategische Beratung für KMU, Startups und Vereine in Südbayern.",
+        "Fokus auf DevSecOps, moderne Webarchitektur (Frontend & Backend), UI/UX-Design und Cloud-Infrastruktur.",
+        "Entwicklung und Instandhaltung eigener SaaS-Branchenlösungen: Silvacore (WEG- & Mietverwaltung), Ecodrive (Fahrzeugkosten-Optimierung) und Socialverse (KI-basiertes Social Media Management)."
+      ]
+    },
+    {
+      "role": "Senior IT-Consultant",
+      "company": "InterFace AG, München",
+      "date": "Seit Jul 2022",
+      "details": [
+        "Strategische Entwicklung von Geschäftsprozess-Anwendungen in den Bereichen Staatswesen, Medizin und Automobilindustrie.",
+        "Kernmitglied des hausinternen DevSecOps-Expertenteams sowie des UI/UX-Zirkels.",
+        "Projekte: DevSecOps-Automatisierung für kommunale Software (München), inhouse DevService-Teamunterstützung, behördlicher Freigabeprozess (Nürnberg) und Diabetesstudien-Verwaltung (München)."
+      ]
+    },
+    {
+      "role": "Fullstack-Entwickler & Teamleiter / Ausbilder",
+      "company": "SEWOBE AG, Augsburg",
+      "date": "Feb 2015 — Jul 2022",
+      "details": [
+        "Entwicklung und Modularisierung eines PHP-basierten ERP/CRM-Systems für Verbände und Parteien.",
+        "Als Teamleiter (seit 2020) verantwortlich für die agile Neuentwicklung des CRM-Kerns auf Angular-Basis.",
+        "Verantwortlicher IHK-Ausbilder der Fachinformatiker für Anwendungsentwicklung sowie Administrator der lokalen Netzwerke und CI/CD-Systeme."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Ausbildung zum Fachinformatiker für Anwendungsentwicklung",
+      "institution": "SEWOBE AG, Augsburg (Abschluss vor der IHK Augsburg)",
+      "date": "2015 — 2018"
+    }
+  ],
+  "methodsAndTools": [
+    "Scrum / Agile",
+    "DevSecOps / CI-CD",
+    "Chaos Engineering",
+    "Git / GitHub Flow",
+    "Docker / Podman",
+    "UI-UX / Wireframing",
+    "KI-gestützte Entwicklung",
+    "IHK-Ausbildung & Coaching"
+  ],
+  "hobbies": [
+    "🛠️ Open-Source-Entwicklung (z. B. WetterApp, Amigo Framework, Netbox-Plugins)",
+    "🎓 Wissensvermittlung und Mentoring",
+    "⚡ Cloud Architecture & Tech-Experimente"
+  ],
+  "projects": [
+    {
+      "title": "K8s Chaos Battleship (Cloudland 2026)",
+      "duration": "2026",
+      "role": "Rolle: Core Developer & Architect",
+      "description": "Konzeption eines interaktiven Chaos Engineering Experiments für die Tech-Konferenz Cloudland, aufgebaut mit Go, Kubernetes und FluxCD zur anschaulichen Demonstration resilienter Infrastrukturen.",
+      "technologies": ["Go", "Kubernetes", "FluxCD", "Docker", "DevSecOps"]
+    },
+    {
+      "title": "Silvacore SaaS Plattform",
+      "duration": "2024 — 2025",
+      "role": "Rolle: Product Owner & Lead Developer",
+      "description": "Entwicklung einer mandantenfähigen B2B-Plattform zur Abrechnung und Verwaltung von Miet- und WEG-Nebenkosten für kleinere Immobilienverwaltungen.",
+      "technologies": ["Angular", "Node.js", "PostgreSQL", "Tailwind CSS", "Docker"]
+    },
+    {
+      "title": "Musikverein Obermeitingen e.V. Webportal",
+      "duration": "2023 — 2024",
+      "role": "Rolle: Web-Designer & Core Committer",
+      "description": "Modernisierung des gesamten Vereinsauftritts mit Astro.js und Tailwind CSS zur Erreichung optimaler Ladezeiten (Lighthouse-Score 100/100) und moderner UI.",
+      "technologies": ["Astro.js", "Tailwind CSS", "Vite", "SEO Optimierung"]
+    }
+  ],
+  "skills": {
+    "frontend": [
+      {
+        "name": "Angular / TypeScript / RxJS",
+        "level": "Experte",
+        "years": "10 Jahre",
+        "percentage": 98
+      },
+      {
+        "name": "Astro.js / Tailwind CSS / Vite",
+        "level": "Experte",
+        "years": "3.5 Jahre",
+        "percentage": 95
+      },
+      {
+        "name": "React / Figma / UI-UX Design",
+        "level": "Sehr gut",
+        "years": "5 Jahre",
+        "percentage": 88
+      }
+    ],
+    "backend": [
+      {
+        "name": "Node.js / Express / NestJS",
+        "level": "Experte",
+        "years": "10 Jahre",
+        "percentage": 92
+      },
+      {
+        "name": "PHP / Java / Spring / Quarkus",
+        "level": "Sehr gut",
+        "years": "12 Jahre",
+        "percentage": 85
+      },
+      {
+        "name": "Go (Golang)",
+        "level": "Gut",
+        "years": "1 Jahr",
+        "percentage": 70
+      }
+    ]
+  },
+  "openSource": [
+    {
+      "title": "Amigo: Autonomes Multi-Agenten-Framework (Go)",
+      "role": "Creator & Lead Architect",
+      "description": "Ein autonomes, hoch-performantes Multi-Agenten-Framework in Go zur Erstellung, Koordination und Ausführung kollaborativer KI-Agenten-Systeme (LLM-integriert).",
+      "technologies": ["Go (Golang)", "Anthropic API", "Gemini API", "Docker", "CLI"]
+    },
+    {
+      "title": "Netbox Ausgabeschein-Generator",
+      "role": "Creator & Maintainer",
+      "description": "Ein nützliches Automatisierungs-Tool für Vereine zur schnellen, fehlerfreien Generierung von Hardware-Ausgabescheinen und Übergabebelegen direkt aus Netbox-Datenbanken.",
+      "technologies": ["Python", "Netbox API", "HTML / CSS", "PDF-Generation"]
+    },
+    {
+      "title": "WetterApp",
+      "role": "Creator",
+      "description": "Eine hoch-performante, quelloffene Wetter-App mit Multi-Provider-Unterstützung (wie DWD und OpenWeather) zur Live-Aggregation meteorologischer Messdaten.",
+      "technologies": ["Astro.js", "Tailwind CSS", "TypeScript", "REST APIs"]
+    },
+    {
+      "title": "Obsidian Gemini Agent",
+      "role": "Creator",
+      "description": "Ein AI Knowledge-Management Agent als Obsidian-Plugin zur automatischen Verlinkung, semantischen Strukturierung und Analyse persönlicher Notizen.",
+      "technologies": ["TypeScript", "Gemini API", "Vector Embeddings", "Obsidian API"]
+    },
+    {
+      "title": "llms.txt Astro Plugin",
+      "role": "Creator",
+      "description": "Ein Open-Source Astro.js Plugin zur automatisierten Erstellung und Aktualisierung standardisierter llms.txt-Dateien zur optimalen AI-Lesbarkeit von Websites.",
+      "technologies": ["Astro.js", "TypeScript", "Node.js", "Markdown-Parser"]
+    }
+  ]
+}

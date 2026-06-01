@@ -1,0 +1,815 @@
+@import "tailwindcss";
+
+:root {
+  --cv-margin-x: 20mm;
+  --cv-margin-y: 20mm;
+}
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  
+  --color-cv-primary: #1e293b;
+  --color-cv-secondary: #475569;
+  --color-cv-accent: #2563eb;
+  --color-cv-accent-light: #dbeafe;
+  --color-cv-bg: #ffffff;
+  --color-cv-line: #e2e8f0;
+}
+
+/* Custom styles for A4 flowing layout and print optimization */
+@layer base {
+  body {
+    @apply bg-slate-900 text-slate-100 min-h-screen antialiased overflow-hidden print:overflow-visible;
+  }
+}
+
+/* Flowing Page Container (grows on screen, paginates on print) */
+.page-preview {
+  width: 210mm;
+  min-height: 297mm;
+  height: auto;
+  background-color: white;
+  color: #0f172a;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 8px 16px -6px rgba(0, 0, 0, 0.5);
+  position: relative;
+  transition: transform 0.3s ease, font-family 0.2s ease, background-color 0.2s ease;
+  padding: 0 !important; /* Zero padding to allow full-bleed banners! */
+}
+
+/* ========================================================
+   SCREEN PREVIEW MODES (A4 vs Continuous)
+   ======================================================== */
+.page-preview-continuous {
+  width: 100% !important;
+  max-width: 850px !important;
+  min-height: auto !important;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4) !important;
+  border-radius: 16px !important;
+  margin-bottom: 2rem !important;
+  padding: 3rem !important; /* Elegant comfortable web padding */
+  transition: all 0.3s ease;
+}
+
+@media print {
+  /* Continuous mode is ALWAYS overridden on print to ensure standard DINA4! */
+  .page-preview-continuous {
+    width: 210mm !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* Print Overrides */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .page-preview {
+    width: 210mm !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background-color: white !important;
+    color: #0f172a !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: A4;
+  }
+}
+
+/* Standard Section Paddings (replaces page-preview padding) */
+#cv-page > section {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+#cv-footer {
+  margin-left: var(--cv-margin-x) !important;
+  margin-right: var(--cv-margin-x) !important;
+  padding-bottom: 3rem;
+}
+
+@media print {
+  #cv-page {
+    gap: 4.5mm !important;
+  }
+  #cv-page > section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 1mm !important;
+    padding-bottom: 1mm !important;
+  }
+  #cv-footer {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-top: 1mm !important;
+    padding-bottom: 0 !important;
+    margin-top: 2mm !important;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+  li {
+    break-inside: avoid !important;
+  }
+  /* Clean horizontal flow for contact info on print */
+  .contact-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    gap: 2mm 5mm !important;
+    margin-top: 3mm !important;
+    padding-top: 2.5mm !important;
+    border-top: 1px solid var(--color-cv-line) !important;
+  }
+  .header-layout-executive .contact-grid,
+  .header-layout-double-border .contact-grid {
+    justify-content: center !important;
+  }
+  .header-layout-split .contact-grid {
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    justify-content: flex-end !important;
+    gap: 1.2mm !important;
+    border-top: none !important;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+}
+
+/* Page Break Protection */
+.print-block-avoid {
+  break-inside: avoid !important;
+  -webkit-column-break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+/* ========================================================
+   PAPER BACKGROUNDS (layout.background)
+   ======================================================== */
+.paper-bg-white {
+  background-color: #ffffff !important;
+}
+
+.paper-bg-cream {
+  background-color: #faf6f0 !important; /* Warm ivory cream style */
+}
+
+.paper-bg-grid {
+  background-color: #ffffff !important;
+  background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px) !important;
+  background-size: 16px 16px !important;
+}
+
+.paper-bg-border {
+  background-color: #ffffff !important;
+  border: 12px solid var(--color-cv-primary) !important;
+}
+
+/* ========================================================
+   DYNAMIC HEADER VARIANT STYLES
+   ======================================================== */
+
+/* Minimalist Left-Aligned Header */
+.header-layout-minimal {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--color-cv-line);
+  margin-bottom: 1rem;
+}
+
+/* Symmetrical Centered Header */
+.header-layout-executive {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: 3rem;
+  padding-bottom: 1.5rem;
+  text-align: center !important;
+  margin-bottom: 1rem;
+}
+.header-layout-executive h2 {
+  text-align: center !important;
+}
+.header-layout-executive h3 {
+  text-align: center !important;
+}
+.header-layout-executive .contact-grid {
+  justify-content: center !important;
+  text-align: center !important;
+  border-top: 1px solid var(--color-cv-primary) !important;
+  border-bottom: 1px solid var(--color-cv-primary) !important;
+  padding: 8px 0 !important;
+  margin-top: 16px !important;
+}
+
+/* Corporate Banner (Full-Bleed Header spanning 100% of paper edges) */
+.header-layout-corporate {
+  background-color: var(--color-cv-primary);
+  color: white !important;
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: 3rem;
+  padding-bottom: 2.5rem;
+  margin-bottom: 2rem;
+}
+.header-layout-corporate h2 {
+  color: white !important;
+  -webkit-text-fill-color: white !important; /* Override modernist gradients */
+}
+.header-layout-corporate h3 {
+  color: var(--color-cv-accent-light) !important;
+}
+.header-layout-corporate .contact-grid {
+  color: rgba(255, 255, 255, 0.8) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+.header-layout-corporate svg {
+  color: var(--color-cv-accent-light) !important;
+  fill: var(--color-cv-accent-light) !important;
+}
+
+/* Split Asymmetrical Header (Left Name, Right Contact Info Stack) */
+.header-layout-split {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 3px solid var(--color-cv-primary);
+  margin-bottom: 1.5rem;
+}
+.header-layout-split .contact-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+  margin-top: 0 !important;
+  border: none !important;
+  padding: 0 !important;
+  text-align: right !important;
+}
+.header-layout-split .contact-grid > div {
+  justify-content: flex-end !important;
+}
+
+/* Accent Block Badge Header (Left-aligned with background card badge) */
+.header-layout-badge {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  margin-bottom: 1.5rem;
+}
+.header-layout-badge > div {
+  background-color: var(--color-cv-accent-light);
+  border-left: 6px solid var(--color-cv-accent);
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: inline-block;
+  max-width: 100%;
+}
+.header-layout-badge .contact-grid {
+  margin-top: 1rem !important;
+  border-top: 1px solid var(--color-cv-line) !important;
+  padding-top: 8px !important;
+}
+
+/* Elegant Double Border Header */
+.header-layout-double-border {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: 3.5rem;
+  padding-bottom: 2rem;
+  margin-bottom: 1.5rem;
+}
+.header-layout-double-border h2 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  font-size: 2.75rem !important;
+  text-align: center !important;
+}
+.header-layout-double-border h3 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  font-size: 0.95rem !important;
+  text-align: center !important;
+  margin-top: 4px;
+}
+.header-layout-double-border .contact-grid {
+  justify-content: center !important;
+  border-top: 3px double var(--color-cv-primary) !important;
+  border-bottom: 3px double var(--color-cv-primary) !important;
+  padding: 10px 0 !important;
+  margin-top: 1.25rem !important;
+}
+
+/* Printing Header Adjustments */
+@media print {
+  .header-layout-minimal,
+  .header-layout-executive,
+  .header-layout-split,
+  .header-layout-badge,
+  .header-layout-double-border {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 6mm !important;
+  }
+  .header-layout-corporate {
+    margin-top: -20mm !important;
+    margin-left: -20mm !important;
+    margin-right: -20mm !important;
+    padding-top: 20mm !important;
+    padding-left: 20mm !important;
+    padding-right: 20mm !important;
+    padding-bottom: 10mm !important;
+  }
+}
+
+/* ========================================================
+   DESIGN LAYOUT STYLES (layout.style) - 6 options
+   ======================================================== */
+
+/* --- 1. MINIMAL (Default Minimalist Classic) --- */
+.style-minimal {
+  font-family: "Inter", sans-serif;
+}
+.style-minimal h2 {
+  font-family: "Outfit", sans-serif;
+}
+.style-minimal h4 {
+  border-bottom: 2px solid var(--color-cv-accent);
+  padding-bottom: 4px;
+}
+.style-minimal .timeline-dot {
+  background-color: white;
+  border: 2px solid var(--color-cv-accent);
+}
+
+/* --- 2. EXECUTIVE (Formal Elegant Serif) --- */
+.style-executive {
+  font-family: "Playfair Display", Georgia, serif;
+}
+.style-executive h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  text-align: center;
+  font-weight: 700;
+}
+.style-executive h3 {
+  text-align: center;
+  font-style: italic;
+  color: var(--color-cv-secondary);
+}
+.style-executive h4 {
+  text-align: center;
+  border-top: 1px solid var(--color-cv-primary);
+  border-bottom: 1px solid var(--color-cv-primary);
+  padding: 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+}
+.style-executive .timeline-dot {
+  display: none;
+}
+.style-executive #work-experience-container > div,
+.style-executive .timeline-border-clear {
+  border-left: none !important;
+  padding-left: 0 !important;
+}
+
+/* --- 3. MODERNIST (Tech & Bold Modern) --- */
+.style-modernist {
+  font-family: "Inter", sans-serif;
+}
+.style-modernist h2 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--color-cv-primary), var(--color-cv-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+.style-modernist h3 {
+  color: var(--color-cv-accent);
+}
+.style-modernist h4 {
+  background-color: var(--color-cv-accent-light);
+  color: var(--color-cv-accent);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: "Outfit", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.style-modernist .timeline-dot {
+  background-color: var(--color-cv-accent);
+  border: none;
+  border-radius: 4px; /* Square dots */
+}
+.style-modernist #methods-tools-container span {
+  font-family: monospace;
+  border-radius: 4px;
+}
+
+/* --- 4. VINTAGE-EDITORIAL (Editorial Literary Magazine) --- */
+.style-vintage-editorial {
+  font-family: "Playfair Display", Georgia, serif;
+}
+.style-vintage-editorial h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+.style-vintage-editorial h3 {
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+}
+.style-vintage-editorial h4 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.1rem;
+  border-bottom: 3px double var(--color-cv-primary);
+  padding-bottom: 5px;
+  margin-bottom: 0.75rem;
+}
+.style-vintage-editorial .timeline-dot {
+  background-color: var(--color-cv-primary);
+  border: none;
+  width: 10px;
+  height: 10px;
+  left: -6px;
+}
+.style-vintage-editorial #work-experience-container > div {
+  border-left-width: 1px;
+  border-left-color: var(--color-cv-primary);
+}
+
+/* --- 5. AVANT-GARDE (Bauhaus Structural Bold) --- */
+.style-avant-garde {
+  font-family: "Outfit", sans-serif;
+}
+.style-avant-garde h2 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  border-left: 8px solid var(--color-cv-primary);
+  padding-left: 12px;
+}
+.style-avant-garde h4 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-left: 5px solid var(--color-cv-accent);
+  padding-left: 10px;
+  border-bottom: 1px solid var(--color-cv-line);
+  padding-bottom: 4px;
+}
+.style-avant-garde .timeline-dot {
+  background-color: var(--color-cv-primary);
+  border: none;
+  width: 12px;
+  height: 12px;
+  left: -7px;
+  border-radius: 0px; /* Monolithic square */
+}
+.style-avant-garde #work-experience-container > div {
+  border-left-width: 3px;
+  border-left-color: var(--color-cv-primary);
+}
+
+/* --- 6. CYBERPUNK (Neo-Noir Monospace Tech) --- */
+.style-cyberpunk {
+  font-family: "Courier New", Monaco, monospace;
+}
+.style-cyberpunk h2 {
+  font-family: "Courier New", Monaco, monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid var(--color-cv-primary);
+  padding: 6px 12px;
+}
+.style-cyberpunk h3 {
+  font-family: "Courier New", Monaco, monospace;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.style-cyberpunk h4 {
+  font-family: "Courier New", Monaco, monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-color: var(--color-cv-primary);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 0px;
+}
+.style-cyberpunk .timeline-dot {
+  background-color: white;
+  border: 2px solid var(--color-cv-primary);
+  border-radius: 0;
+}
+.style-cyberpunk #work-experience-container > div {
+  border-left: 2px dashed var(--color-cv-primary);
+}
+.style-cyberpunk #work-experience-container > div,
+.style-cyberpunk #projects-container > div,
+.style-cyberpunk #skills-frontend-container > div,
+.style-cyberpunk #skills-backend-container > div,
+.style-cyberpunk #education-container > div,
+.style-cyberpunk #competencies-container > div {
+  border: 1px solid var(--color-cv-line);
+  padding: 12px !important;
+  background-color: rgba(248, 250, 252, 0.4);
+  margin-bottom: 8px;
+  break-inside: avoid;
+}
+
+/* --- 7. SWISS INTERNATIONAL (Typographic Modernism) --- */
+.style-swiss {
+  font-family: "Outfit", "Inter", sans-serif;
+}
+.style-swiss h2 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 2.5rem;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  border-bottom: 6px solid var(--color-cv-primary);
+  padding-bottom: 8px;
+}
+.style-swiss h3 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-cv-accent);
+}
+.style-swiss h4 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  border-top: 3px solid var(--color-cv-primary);
+  padding-top: 6px;
+  margin-top: 1rem;
+}
+.style-swiss .timeline-dot {
+  background-color: var(--color-cv-primary);
+  border: none;
+  width: 10px;
+  height: 10px;
+  left: -6px;
+}
+.style-swiss #work-experience-container > div {
+  border-left-width: 2px;
+  border-left-color: var(--color-cv-primary);
+}
+
+/* --- 8. WARM EDITORIAL (Cozy Elegant Serif) --- */
+.style-warm-editorial {
+  font-family: "Playfair Display", Georgia, serif;
+}
+.style-warm-editorial h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  color: var(--color-cv-primary);
+}
+.style-warm-editorial h3 {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+  color: var(--color-cv-secondary);
+}
+.style-warm-editorial h4 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--color-cv-primary);
+  border-bottom: 1px solid var(--color-cv-accent);
+  padding-bottom: 6px;
+  border-radius: 0px;
+}
+.style-warm-editorial .timeline-dot {
+  background-color: var(--color-cv-accent-light);
+  border: 2px solid var(--color-cv-accent);
+  width: 12px;
+  height: 12px;
+  left: -7px;
+}
+.style-warm-editorial #work-experience-container > div {
+  border-left: 1.5px solid var(--color-cv-accent-light);
+}
+.style-warm-editorial span, 
+.style-warm-editorial p, 
+.style-warm-editorial li {
+  font-family: "Inter", sans-serif;
+}
+
+/* --- 9. TECH TERMINAL (Console Command Line) --- */
+.style-terminal {
+  font-family: "Courier New", Monaco, monospace;
+}
+.style-terminal h2 {
+  font-family: "Courier New", Monaco, monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.style-terminal h2::before {
+  content: "> ";
+  color: var(--color-cv-accent);
+}
+.style-terminal h3 {
+  font-family: "Courier New", Monaco, monospace;
+  font-weight: 700;
+}
+.style-terminal h3::before {
+  content: "$ role --set ";
+  color: var(--color-cv-secondary);
+}
+.style-terminal h4 {
+  font-family: "Courier New", Monaco, monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1px solid var(--color-cv-line);
+  background-color: var(--color-cv-accent-light);
+  color: var(--color-cv-primary);
+  padding: 4px 8px;
+  display: inline-block;
+  border-radius: 4px;
+}
+.style-terminal .timeline-dot {
+  background-color: var(--color-cv-accent);
+  border: none;
+  width: 8px;
+  height: 8px;
+  left: -5px;
+  border-radius: 0px;
+}
+.style-terminal #work-experience-container > div {
+  border-left: 2px dashed var(--color-cv-line);
+}
+
+/* --- 10. NEUMORPHIC SOFT UI (Tactile Soft Shadow) --- */
+.style-neumorphic {
+  font-family: "Outfit", sans-serif;
+}
+.style-neumorphic h2 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+  color: var(--color-cv-primary);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+.style-neumorphic h3 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  color: var(--color-cv-accent);
+}
+.style-neumorphic h4 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #f1f5f9, #ffffff);
+  box-shadow: 3px 3px 6px #cbd5e1, -3px -3px 6px #ffffff;
+  color: var(--color-cv-primary);
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.style-neumorphic .timeline-dot {
+  background-color: white;
+  border: 3px solid var(--color-cv-accent);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  width: 14px;
+  height: 14px;
+  left: -8px;
+}
+.style-neumorphic #work-experience-container > div {
+  border-left: 2px solid var(--color-cv-accent-light);
+}
+.style-neumorphic #work-experience-container > div,
+.style-neumorphic #projects-container > div {
+  background: linear-gradient(135deg, #f8fafc, #ffffff);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.03), -4px -4px 10px rgba(255, 255, 255, 0.9);
+  padding: 16px !important;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(241, 245, 249, 0.8);
+}
+
+/* Corporate Minimal Footer */
+.footer-layout-corporate {
+  border-top: 2px solid var(--color-cv-primary) !important;
+  padding-top: 8px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+/* Initials Badge Footer */
+.footer-layout-initials {
+  border-top: 1px dashed var(--color-cv-line) !important;
+  padding-top: 10px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+.footer-layout-initials-badge {
+  background-color: var(--color-cv-accent);
+  color: white !important;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 9px;
+}
+
+/* Signature Line Footer */
+.footer-layout-signature {
+  border-top: 1px solid var(--color-cv-line) !important;
+  padding-top: 12px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-end !important;
+}
+.footer-signature-line {
+  border-top: 1px solid var(--color-cv-secondary);
+  width: 120px;
+  text-align: center;
+  padding-top: 4px;
+  font-style: italic;
+  font-size: 8px;
+}
+
+/* Web App Tab System Styling */
+.tab-btn-active {
+  @apply bg-slate-700 text-white border-b-2 border-blue-500 font-bold;
+}
+.tab-btn-inactive {
+  @apply text-slate-400 hover:text-slate-200 hover:bg-slate-700;
+}
+
+/* Elegant custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.3);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}

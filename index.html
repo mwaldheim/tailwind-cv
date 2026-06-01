@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interaktiver Premium Lebenslauf / CV Builder</title>
+  <meta name="description" content="Professioneller, interaktiver CV-Builder mit Tailwind CSS v4. Erstelle, bearbeite und exportiere deinen Lebenslauf direkt als A4-PDF.">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans flex flex-col xl:flex-row overflow-hidden print:overflow-visible">
+
+  <!-- Hidden file selector for JSON Import -->
+  <input type="file" id="import-file" class="hidden" accept=".json">
+
+  <!-- ========================================================
+       LEFT PANEL: modular dashboard builder panel (no-print)
+       ======================================================== -->
+  <aside class="no-print w-full xl:w-[480px] xl:shrink-0 bg-slate-800 border-r border-slate-700/80 p-5 flex flex-col gap-4 h-screen overflow-y-auto">
+    
+    <!-- App Brand & General Actions -->
+    <div class="flex items-center justify-between pb-3 border-b border-slate-700/50">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></span>
+        <h1 class="text-base font-extrabold font-display tracking-tight text-white">CV Baustein-System</h1>
+      </div>
+      <div class="flex gap-1.5">
+        <button id="export-json-btn" class="p-1.5 rounded-lg bg-slate-700 hover:bg-slate-650 text-slate-300 transition-colors cursor-pointer" title="Als JSON-Datei sichern">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        </button>
+        <button id="import-json-btn" class="p-1.5 rounded-lg bg-slate-700 hover:bg-slate-650 text-slate-300 transition-colors cursor-pointer" title="JSON-Sicherung einspielen">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+        </button>
+        <button id="reset-btn" class="p-1.5 rounded-lg bg-red-950/40 hover:bg-red-900/40 text-red-400 transition-colors cursor-pointer" title="Auf Blanco zurücksetzen">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+        </button>
+        <button id="print-btn" class="px-3.5 py-1.5 text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all shadow-md flex items-center gap-1.5 cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+          PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- Tab Selection Buttons -->
+    <div class="grid grid-cols-4 bg-slate-900/50 p-1 rounded-xl border border-slate-700/40">
+      <button id="tab-btn-design" class="tab-btn-active py-2 text-[11px] font-bold rounded-lg cursor-pointer transition-all">🎨 Design</button>
+      <button id="tab-btn-personal" class="tab-btn-inactive py-2 text-[11px] font-semibold rounded-lg cursor-pointer transition-all">👤 Daten</button>
+      <button id="tab-btn-blocks" class="tab-btn-inactive py-2 text-[11px] font-semibold rounded-lg cursor-pointer transition-all">🧱 Blöcke</button>
+      <button id="tab-btn-json" class="tab-btn-inactive py-2 text-[11px] font-semibold rounded-lg cursor-pointer transition-all">💻 JSON</button>
+    </div>
+
+    <!-- ================= TAB CONTENT 1: DESIGN ================= -->
+    <div id="tab-content-design" class="tab-pane flex flex-col gap-4">
+      
+      <!-- Screen Preview Mode Selector -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Bildschirm-Ansicht</label>
+        <select id="select-preview-mode" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-blue-500">
+          <option value="a4">Kompaktes DINA4-Druckblatt</option>
+          <option value="continuous">Endloses Web-Portfolio (Scrollend)</option>
+        </select>
+      </div>
+
+      <!-- Layout Style Selector -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Layout-Stil &amp; Schrift</label>
+        <select id="select-layout-style" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-500">
+          <option value="minimal">Minimalist (Standard Sans-Serif)</option>
+          <option value="executive">Executive (Elegant Serif / Times)</option>
+          <option value="modernist">Modern Tech (Bold Gradient &amp; Pills)</option>
+          <option value="vintage-editorial">Vintage Editorial (Elegant Literary Serif)</option>
+          <option value="avant-garde">Avant-Garde (Bauhaus Bold Geometrics)</option>
+          <option value="cyberpunk">Cyberpunk (Neo-Noir Tech Monospace)</option>
+          <option value="swiss">Swiss International (Typographic Modernism)</option>
+          <option value="warm-editorial">Warm Editorial (Cozy Elegant Serif)</option>
+          <option value="terminal">Tech Terminal (Console Command Line)</option>
+          <option value="neumorphic">Neumorphic Soft UI (Tactile Soft Shadow)</option>
+        </select>
+      </div>
+
+      <!-- Color Themes -->
+      <div class="flex flex-col gap-2">
+        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Farbschema</label>
+        <div id="theme-selector-container" class="flex flex-wrap gap-2 bg-slate-900/40 p-2 rounded-lg border border-slate-700/50">
+          <!-- Dynamically rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Paper Background Style -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Papier-Hintergrund &amp; Rahmen</label>
+        <select id="select-paper-bg" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-500">
+          <option value="white">Reines Weiß (Solid White)</option>
+          <option value="cream">Creme-Ton (Premium Ivory)</option>
+          <option value="grid">Konstruktions-Gitter (Faint Blueprint Grid)</option>
+          <option value="border">Primärfarb-Rahmen (Primary Border)</option>
+        </select>
+      </div>
+
+      <!-- Header Variant Style -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Header-Variante</label>
+        <select id="select-header-style" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-500">
+          <option value="minimal">Standard (Minimalistisch linksbündig)</option>
+          <option value="executive">Symmetrisch (Zentriert)</option>
+          <option value="corporate">Corporate Banner (Vollfarb-Band)</option>
+          <option value="split">Asymmetrischer Split (Zweispaltig)</option>
+          <option value="badge">Akzentuierter Badge-Block</option>
+          <option value="double-border">Klassischer Editorial-Doppelrahmen</option>
+        </select>
+      </div>
+
+      <!-- Footer Style Options -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Footer-Variante</label>
+        <select id="select-footer-style" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-500">
+          <option value="none">Kein Footer (Clean Slate)</option>
+          <option value="simple">Benutzerdefinierter Text (Standard)</option>
+          <option value="confidential">Streng Vertraulich-Vermerk</option>
+          <option value="corporate">Minimal Corporate (Logo &amp; Text)</option>
+          <option value="initials">Namens-Initialen-Badge</option>
+          <option value="signature">Unterschriften-Platzhalter</option>
+        </select>
+      </div>
+
+      <!-- Footer Custom Text Input -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Footer-Text</label>
+        <input type="text" id="input-footer-text" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="z.B. Lebenslauf — Dein Name">
+      </div>
+
+      <!-- Visibilities Section Checklist (Building Block Toggle) -->
+      <div class="flex flex-col gap-2 border-t border-slate-700/50 pt-3">
+        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Lebenslauf-Bausteine einblenden</label>
+        <div class="grid grid-cols-2 gap-2 bg-slate-900/40 p-3 rounded-lg border border-slate-700/50 text-xs">
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-profile" checked class="rounded accent-blue-500"> Kurzprofil</label>
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-work" checked class="rounded accent-blue-500"> Berufserfahrung</label>
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-projects" checked class="rounded accent-blue-500"> Projekte</label>
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-opensource" checked class="rounded accent-blue-500"> Open Source</label>
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-skills" checked class="rounded accent-blue-500"> Skills</label>
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-competencies" checked class="rounded accent-blue-500"> Kompetenzen</label>
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-education" checked class="rounded accent-blue-500"> Ausbildung</label>
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-certs" checked class="rounded accent-blue-500"> Zertifikate</label>
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-tools" checked class="rounded accent-blue-500"> Tools</label>
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-languages" checked class="rounded accent-blue-500"> Sprachen</label>
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white"><input type="checkbox" id="check-visible-hobbies" checked class="rounded accent-blue-500"> Hobbies</label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= TAB CONTENT 2: PERSONAL DATA ================= -->
+    <div id="tab-content-personal" class="tab-pane hidden flex flex-col gap-3">
+      <div class="flex flex-col gap-1">
+        <label class="text-[10px] font-bold text-slate-400 uppercase">Vor- und Nachname</label>
+        <input type="text" id="meta-name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:ring-1 focus:ring-blue-500 focus:outline-none">
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[10px] font-bold text-slate-400 uppercase">Berufsbezeichnung / Rolle</label>
+        <input type="text" id="meta-role" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:ring-1 focus:ring-blue-500 focus:outline-none">
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-slate-400 uppercase">E-Mail</label>
+          <input type="email" id="meta-email" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:ring-1 focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-slate-400 uppercase">Telefonnummer</label>
+          <input type="text" id="meta-phone" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:ring-1 focus:ring-blue-500 focus:outline-none">
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-slate-400 uppercase">Standort</label>
+          <input type="text" id="meta-location" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:ring-1 focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-slate-400 uppercase">Webseite</label>
+          <input type="text" id="meta-website" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:ring-1 focus:ring-blue-500 focus:outline-none">
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-slate-400 uppercase">GitHub</label>
+          <input type="text" id="meta-github" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:ring-1 focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-slate-400 uppercase">LinkedIn</label>
+          <input type="text" id="meta-linkedin" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:ring-1 focus:ring-blue-500 focus:outline-none">
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[10px] font-bold text-slate-400 uppercase">Kurzprofil / Bio</label>
+        <textarea id="meta-profile-text" rows="5" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:ring-1 focus:ring-blue-500 focus:outline-none leading-relaxed"></textarea>
+      </div>
+    </div>
+
+    <!-- ================= TAB CONTENT 3: MODULAR BUILDING BLOCKS ================= -->
+    <div id="tab-content-blocks" class="tab-pane hidden flex flex-col gap-4">
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Auswahl des Daten-Bausteins</label>
+        <select id="select-active-block" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-blue-500">
+          <option value="workExperience">💼 Berufserfahrung</option>
+          <option value="projects">🚀 Projekterfahrungen</option>
+          <option value="openSource">🔓 Open-Source-Projekte</option>
+          <option value="skills">📊 Skills &amp; Technologien</option>
+          <option value="competencies">💡 Kernkompetenzen</option>
+          <option value="education">🎓 Ausbildung</option>
+          <option value="certifications">🏆 Zertifizierungen</option>
+          <option value="methodsAndTools">🛠️ Methoden &amp; Tools</option>
+          <option value="hobbies">🚴‍♂️ Hobbies &amp; Interessen</option>
+        </select>
+      </div>
+
+      <!-- List editor container rendered dynamically by JS -->
+      <div id="block-list-editor" class="flex flex-col gap-4 border-t border-slate-700/50 pt-3">
+        <!-- Dynamically rendered input cards go here -->
+      </div>
+    </div>
+
+    <!-- ================= TAB CONTENT 4: RAW JSON CODE ================= -->
+    <div id="tab-content-json" class="tab-pane hidden flex flex-col gap-2 h-full">
+      <label class="text-[10px] font-bold text-slate-400 uppercase">Rohdaten-JSON (Echtzeit-Editor)</label>
+      <p class="text-[10px] text-slate-400 leading-normal mb-1">Du kannst diesen JSON-Baustein direkt bearbeiten oder kopieren. Änderungen aktualisieren die Vorschau und das Formular sofort.</p>
+      <textarea id="json-editor" class="w-full flex-1 bg-slate-900 border border-slate-700 rounded-lg p-3 text-[10px] font-mono text-emerald-400 focus:outline-none focus:ring-1 focus:ring-blue-500 leading-normal resize-none" style="min-height: calc(100vh - 250px)"></textarea>
+    </div>
+
+  </aside>
+
+  <!-- ========================================================
+   RIGHT PANEL: Dynamic Live A4 Preview Canvas
+   ======================================================== -->
+  <main class="flex-1 bg-slate-900/60 p-6 overflow-y-auto flex justify-center items-start h-screen print:h-auto print:p-0 print:overflow-visible">
+    
+    <article id="cv-page" class="page-preview flex flex-col gap-7 style-minimal paper-bg-white">
+
+      
+      <!-- Dynamic Render Target: Page Header Banner -->
+      <header id="cv-header" class="w-full pb-5 relative transition-all duration-300">
+        <div class="flex flex-col gap-2">
+          <h2 id="cv-name" class="text-4xl font-extrabold font-display tracking-tight leading-none text-[var(--color-cv-primary)]"></h2>
+          <h3 id="cv-role" class="text-lg text-[var(--color-cv-accent)] font-semibold font-display tracking-wide"></h3>
+        </div>
+
+        <!-- 3-Column Contact Grid -->
+        <div class="contact-grid grid grid-cols-1 md:grid-cols-3 gap-y-2 gap-x-4 mt-5 pt-3 border-t border-slate-100 text-xs text-[var(--color-cv-secondary)]">
+          <div class="flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <span id="cv-contact-email" class="break-all font-medium"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+            <span id="cv-contact-phone" class="font-medium"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span id="cv-contact-location" class="font-medium"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+            <span id="cv-contact-website" class="font-medium"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 fill-slate-400 shrink-0" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+            <span id="cv-contact-github" class="font-medium"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 fill-slate-400 shrink-0" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+            <span id="cv-contact-linkedin" class="font-medium"></span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Render Target: Kurzprofil -->
+      <section id="cv-sec-profile" class="flex flex-col gap-2 transition-all duration-300">
+        <h4 class="text-sm font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2">
+          <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+          Kurzprofil
+        </h4>
+        <p id="cv-profile-text" class="text-xs text-[var(--color-cv-secondary)] leading-relaxed text-justify"></p>
+      </section>
+
+      <!-- Dynamic Render Target: Berufserfahrung -->
+      <section id="cv-sec-work" class="flex flex-col gap-4 transition-all duration-300">
+        <h4 class="text-sm font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2">
+          <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          Berufserfahrung
+        </h4>
+        <div id="work-experience-container" class="flex flex-col gap-6">
+          <!-- Dynamically rendered -->
+        </div>
+      </section>
+
+      <!-- Dynamic Render Target: Projekterfahrungen -->
+      <section id="cv-sec-projects" class="flex flex-col gap-4 transition-all duration-300">
+        <h4 class="text-sm font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2">
+          <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+          Projekterfahrungen (B2B)
+        </h4>
+        <div id="projects-container" class="flex flex-col gap-5">
+          <!-- Dynamically rendered -->
+        </div>
+      </section>
+
+      <!-- Dynamic Render Target: Open Source Projekte & Tools -->
+      <section id="cv-sec-opensource" class="flex flex-col gap-4 transition-all duration-300">
+        <h4 class="text-sm font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2">
+          <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h.01M16 20h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Open-Source-Projekte &amp; Tools
+        </h4>
+        <div id="opensource-container" class="flex flex-col gap-4">
+          <!-- Dynamically rendered -->
+        </div>
+      </section>
+
+      <!-- Dynamic Render Target: Skill-Erfahrungen & Tech Stack -->
+      <section id="cv-sec-skills" class="print-block-avoid flex flex-col gap-4 transition-all duration-300">
+        <h4 class="text-sm font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2">
+          <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          Technologie-Stack &amp; Skills
+        </h4>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+          <div class="flex flex-col gap-2">
+            <h5 class="text-xs font-bold text-[var(--color-cv-primary)] border-b border-[var(--color-cv-line)] pb-0.5">Frontend &amp; UI</h5>
+            <div id="skills-frontend-container" class="flex flex-col gap-3 text-xs text-[var(--color-cv-secondary)]"></div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <h5 class="text-xs font-bold text-[var(--color-cv-primary)] border-b border-[var(--color-cv-line)] pb-0.5">Backend &amp; API</h5>
+            <div id="skills-backend-container" class="flex flex-col gap-3 text-xs text-[var(--color-cv-secondary)]"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dynamic Render Target: Symmetrical Side-by-Side Lower Grid -->
+      <section class="print-block-avoid grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-slate-100">
+        
+        <!-- Left Sub-column -->
+        <div class="flex flex-col gap-6 timeline-border-clear">
+          <!-- Competencies -->
+          <div id="cv-sec-competencies" class="flex flex-col gap-3 transition-all duration-300">
+            <h4 class="text-xs font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2 border-b border-slate-100 pb-1">
+              <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+              Kernkompetenzen
+            </h4>
+            <div id="competencies-container" class="flex flex-col gap-3 text-xs text-[var(--color-cv-secondary)]"></div>
+          </div>
+
+          <!-- Education -->
+          <div id="cv-sec-education" class="flex flex-col gap-3 transition-all duration-300">
+            <h4 class="text-xs font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2 border-b border-slate-100 pb-1">
+              <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+              Ausbildung
+            </h4>
+            <div id="education-container" class="flex flex-col gap-4 text-xs text-[var(--color-cv-secondary)]"></div>
+          </div>
+
+          <!-- Certifications -->
+          <div id="cv-sec-certifications" class="flex flex-col gap-3 transition-all duration-300">
+            <h4 class="text-xs font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2 border-b border-slate-100 pb-1">
+              <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+              Zertifizierungen
+            </h4>
+            <ul id="certifications-container" class="flex flex-col gap-3 text-xs text-[var(--color-cv-secondary)] list-none pl-0"></ul>
+          </div>
+        </div>
+
+        <!-- Right Sub-column -->
+        <div class="flex flex-col gap-6 timeline-border-clear">
+          <!-- Methods & Tools -->
+          <div id="cv-sec-methodsAndTools" class="flex flex-col gap-3 transition-all duration-300">
+            <h4 class="text-xs font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2 border-b border-slate-100 pb-1">
+              <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+              Methoden &amp; Tools
+            </h4>
+            <div id="methods-tools-container" class="flex flex-wrap gap-1.5 text-[10px]"></div>
+          </div>
+
+          <!-- Languages -->
+          <div id="cv-sec-languages" class="flex flex-col gap-3 transition-all duration-300">
+            <h4 class="text-xs font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2 border-b border-slate-100 pb-1">
+              <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 7.31 16.5 3 19"></path></svg>
+              Sprachen
+            </h4>
+            <div id="languages-container" class="flex flex-col gap-3 text-xs text-[var(--color-cv-secondary)]"></div>
+          </div>
+
+          <!-- Hobbies -->
+          <div id="cv-sec-hobbies" class="flex flex-col gap-3 transition-all duration-300">
+            <h4 class="text-xs font-extrabold tracking-wider text-[var(--color-cv-primary)] uppercase flex items-center gap-2 border-b border-slate-100 pb-1">
+              <svg class="w-4 h-4 text-[var(--color-cv-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Hobbys &amp; Interessen
+            </h4>
+            <div id="hobbies-container" class="flex flex-col gap-1.5 text-xs text-[var(--color-cv-secondary)]"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Dynamic Footer Block -->
+      <footer id="cv-footer" class="mt-auto border-t border-slate-100 pt-3 text-[10px] text-slate-400 flex justify-between print-block-avoid">
+        <span id="cv-footer-left"></span>
+        <span id="cv-footer-right" class="no-print">A4-Lebenslauf Vorschau</span>
+      </footer>
+
+    </article>
+
+  </main>
+  
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
