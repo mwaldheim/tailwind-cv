@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --cv-margin-x: 20mm;
-  --cv-margin-y: 20mm;
+  --cv-margin-x: 76px;
+  --cv-margin-y: 76px;
 }
 
 @theme {
@@ -796,6 +796,182 @@
 }
 .tab-btn-inactive {
   @apply text-slate-400 hover:text-slate-200 hover:bg-slate-700;
+}
+
+/* ========================================================
+   EXTRA DESIGN STYLES (11–13)
+   ======================================================== */
+
+/* --- 11. SCANDINAVIAN (Nordic Minimalism) --- */
+.style-scandinavian {
+  font-family: "Inter", sans-serif;
+  letter-spacing: 0.01em;
+}
+.style-scandinavian h2 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 300;
+  font-size: 2.8rem;
+  letter-spacing: -0.04em;
+  color: var(--color-cv-primary);
+  text-transform: none;
+}
+.style-scandinavian h3 {
+  font-weight: 400;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-cv-secondary);
+}
+.style-scandinavian h4 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  color: var(--color-cv-secondary);
+  border-bottom: 1px solid var(--color-cv-line);
+  padding-bottom: 6px;
+  margin-bottom: 0.75rem;
+}
+.style-scandinavian .timeline-dot {
+  background-color: var(--color-cv-secondary);
+  border: none;
+  width: 6px;
+  height: 6px;
+  left: -4px;
+  border-radius: 50%;
+}
+.style-scandinavian #work-experience-container > div {
+  border-left: 1px solid var(--color-cv-line);
+}
+.style-scandinavian span[data-path],
+.style-scandinavian p {
+  color: var(--color-cv-secondary);
+}
+.style-scandinavian h5[data-path] {
+  color: var(--color-cv-primary);
+  font-weight: 600;
+}
+
+/* --- 12. ART DECO (Geometric Ornamental) --- */
+.style-art-deco {
+  font-family: "Playfair Display", Georgia, serif;
+}
+.style-art-deco h2 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 2rem;
+  text-align: center;
+  border-top: 3px solid var(--color-cv-primary);
+  border-bottom: 3px solid var(--color-cv-primary);
+  padding: 8px 0;
+  position: relative;
+}
+.style-art-deco h2::before,
+.style-art-deco h2::after {
+  content: "◆";
+  color: var(--color-cv-accent);
+  font-size: 0.6em;
+  margin: 0 0.5em;
+  vertical-align: middle;
+}
+.style-art-deco h3 {
+  font-family: "Outfit", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--color-cv-accent);
+  margin-top: 4px;
+}
+.style-art-deco h4 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  border-top: 1px solid var(--color-cv-primary);
+  border-bottom: 1px solid var(--color-cv-primary);
+  padding: 5px 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.style-art-deco h4::before {
+  content: "▸";
+  color: var(--color-cv-accent);
+  font-size: 0.9em;
+}
+.style-art-deco .timeline-dot {
+  background-color: var(--color-cv-accent);
+  border: none;
+  width: 10px;
+  height: 10px;
+  left: -6px;
+  border-radius: 0;
+  transform: rotate(45deg);
+}
+.style-art-deco #work-experience-container > div {
+  border-left: 2px solid var(--color-cv-primary);
+}
+.style-art-deco .contact-grid {
+  border-top: 1px solid var(--color-cv-primary);
+  border-bottom: 1px solid var(--color-cv-primary);
+  padding: 8px 0;
+  justify-content: center;
+  text-align: center;
+}
+
+/* --- 13. ACADEMIC (Formal Scholarly Layout) --- */
+.style-academic {
+  font-family: "Playfair Display", Georgia, serif;
+}
+.style-academic h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 0;
+  color: var(--color-cv-primary);
+}
+.style-academic h3 {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--color-cv-secondary);
+  margin-top: 2px;
+}
+.style-academic h4 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: none;
+  letter-spacing: 0;
+  border-bottom: 2px solid var(--color-cv-primary);
+  padding-bottom: 4px;
+  color: var(--color-cv-primary);
+}
+.style-academic .timeline-dot {
+  background-color: white;
+  border: 2px solid var(--color-cv-primary);
+  width: 10px;
+  height: 10px;
+  left: -6px;
+}
+.style-academic #work-experience-container > div {
+  border-left: 2px solid var(--color-cv-line);
+}
+.style-academic li {
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+.style-academic span, .style-academic p {
+  font-family: "Inter", sans-serif;
 }
 
 /* Elegant custom scrollbar */

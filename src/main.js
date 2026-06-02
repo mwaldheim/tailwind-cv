@@ -27,6 +27,7 @@ const defaultCVData = {
     "role": "Senior IT-Consultant & DevSecOps Experte",
     "email": "alexander.neumann@example.com",
     "phone": "+49 89 12345678",
+    "address": "",
     "location": "München, Deutschland",
     "website": "alexander-neumann.dev",
     "github": "github.com/alexander-neumann",
@@ -185,44 +186,37 @@ const defaultCVData = {
     }
   ],
   "skills": {
-    "frontend": [
+    "groups": [
       {
-        "name": "Angular / TypeScript / RxJS",
-        "level": "Experte",
-        "years": "10 Jahre",
-        "percentage": 98
+        "label": "Frontend & UI",
+        "items": [
+          { "name": "Angular / TypeScript / RxJS", "level": "Experte", "years": "10 Jahre", "percentage": 98 },
+          { "name": "Astro.js / Tailwind CSS / Vite", "level": "Experte", "years": "3.5 Jahre", "percentage": 95 },
+          { "name": "React / Figma / UI-UX Design", "level": "Sehr gut", "years": "5 Jahre", "percentage": 88 }
+        ]
       },
       {
-        "name": "Astro.js / Tailwind CSS / Vite",
-        "level": "Experte",
-        "years": "3.5 Jahre",
-        "percentage": 95
+        "label": "Backend & API",
+        "items": [
+          { "name": "Node.js / Express / NestJS", "level": "Experte", "years": "10 Jahre", "percentage": 92 },
+          { "name": "PHP / Java / Spring / Quarkus", "level": "Sehr gut", "years": "12 Jahre", "percentage": 85 },
+          { "name": "Go (Golang)", "level": "Gut", "years": "1 Jahr", "percentage": 70 }
+        ]
       },
       {
-        "name": "React / Figma / UI-UX Design",
-        "level": "Sehr gut",
-        "years": "5 Jahre",
-        "percentage": 88
-      }
-    ],
-    "backend": [
-      {
-        "name": "Node.js / Express / NestJS",
-        "level": "Experte",
-        "years": "10 Jahre",
-        "percentage": 92
+        "label": "DevSecOps & Cloud",
+        "items": [
+          { "name": "Kubernetes / Docker / Helm", "level": "Experte", "years": "7 Jahre", "percentage": 94 },
+          { "name": "GitLab CI/CD / GitHub Actions", "level": "Experte", "years": "6 Jahre", "percentage": 92 },
+          { "name": "AWS / Azure / Terraform", "level": "Sehr gut", "years": "5 Jahre", "percentage": 85 }
+        ]
       },
       {
-        "name": "PHP / Java / Spring / Quarkus",
-        "level": "Sehr gut",
-        "years": "12 Jahre",
-        "percentage": 85
-      },
-      {
-        "name": "Go (Golang)",
-        "level": "Gut",
-        "years": "1 Jahr",
-        "percentage": 70
+        "label": "Datenbanken & Tools",
+        "items": [
+          { "name": "PostgreSQL / MongoDB / Redis", "level": "Sehr gut", "years": "8 Jahre", "percentage": 87 },
+          { "name": "IntelliJ / VS Code / Figma", "level": "Experte", "years": "10 Jahre", "percentage": 95 }
+        ]
       }
     ]
   }
@@ -292,8 +286,21 @@ function loadData() {
   if (cached) {
     try {
       cvData = JSON.parse(cached);
-      // Ensure layout exists
+      // Ensure layout exists (schema migration)
       if (!cvData.layout) cvData.layout = JSON.parse(JSON.stringify(defaultCVData.layout));
+      // Ensure personal.address exists (schema migration)
+      if (cvData.personal && cvData.personal.address === undefined) cvData.personal.address = '';
+      // Migrate old skills format {frontend:[...], backend:[...]} to new {groups:[...]}
+      if (cvData.skills && !cvData.skills.groups) {
+        const oldGroups = [];
+        for (const [key, items] of Object.entries(cvData.skills)) {
+          if (Array.isArray(items)) {
+            const label = key.charAt(0).toUpperCase() + key.slice(1);
+            oldGroups.push({ label, items });
+          }
+        }
+        cvData.skills = { groups: oldGroups };
+      }
     } catch (e) {
       console.error("Failed to parse cached CV data", e);
       cvData = JSON.parse(JSON.stringify(defaultCVData));
@@ -301,6 +308,8 @@ function loadData() {
   } else {
     cvData = JSON.parse(JSON.stringify(defaultCVData));
   }
+  // Always persist to keep localStorage in sync with the current schema
+  localStorage.setItem('cv_json_data', JSON.stringify(cvData));
 }
 
 // Render dynamic sections from JSON model
@@ -319,7 +328,10 @@ function renderCV(preventSidebarRebuild = false) {
     'style-swiss',
     'style-warm-editorial',
     'style-terminal',
-    'style-neumorphic'
+    'style-neumorphic',
+    'style-scandinavian',
+    'style-art-deco',
+    'style-academic'
   );
   root.classList.add(`style-${cvData.layout.style}`);
   applyStyleSpecificPrintMargins(cvData.layout.style);
@@ -425,6 +437,7 @@ function renderCV(preventSidebarRebuild = false) {
     { id: 'cv-profile-text', path: 'personal.profileText' },
     { id: 'cv-contact-email', path: 'personal.email' },
     { id: 'cv-contact-phone', path: 'personal.phone' },
+    { id: 'cv-contact-address', path: 'personal.address' },
     { id: 'cv-contact-location', path: 'personal.location' },
     { id: 'cv-contact-website', path: 'personal.website' },
     { id: 'cv-contact-github', path: 'personal.github' },
@@ -796,60 +809,43 @@ function renderOpenSource() {
 
 
 function renderSkills() {
-  // Render Frontend Skills
-  const feContainer = document.getElementById('skills-frontend-container');
-  feContainer.innerHTML = '';
-  
-  cvData.skills.frontend.forEach((skill, index) => {
-    const div = document.createElement('div');
-    div.className = 'group relative flex flex-col gap-1 pr-6';
-    div.innerHTML = `
-      <div class="flex justify-between items-baseline text-xs">
-        <span class="font-semibold text-slate-800" data-path="skills.frontend.${index}.name">${skill.name}</span>
-        <span class="text-slate-500 text-[10px] shrink-0 font-medium">
-          <span class="font-bold text-[var(--color-cv-accent)] uppercase" data-path="skills.frontend.${index}.level">${skill.level}</span> • 
-          <span data-path="skills.frontend.${index}.years">${skill.years}</span>
-        </span>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="w-full bg-slate-200 h-1 rounded-full overflow-hidden">
-          <div class="bg-[var(--color-cv-accent)] h-full transition-all duration-300" style="width: ${skill.percentage}%"></div>
-        </div>
-        <span class="text-[9px] text-slate-400 no-print font-bold w-6 text-right" data-path="skills.frontend.${index}.percentage" data-type="number">${skill.percentage}%</span>
-      </div>
-      <button class="no-print absolute top-0.5 right-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-0.5" onclick="removeSkillItem('frontend', ${index})" title="Skill entfernen">
-        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-      </button>
-    `;
-    feContainer.appendChild(div);
-  });
+  const container = document.getElementById('skills-groups-container');
+  if (!container) return;
+  container.innerHTML = '';
 
-  // Render Backend Skills
-  const beContainer = document.getElementById('skills-backend-container');
-  beContainer.innerHTML = '';
-  
-  cvData.skills.backend.forEach((skill, index) => {
-    const div = document.createElement('div');
-    div.className = 'group relative flex flex-col gap-1 pr-6';
-    div.innerHTML = `
-      <div class="flex justify-between items-baseline text-xs">
-        <span class="font-semibold text-slate-800" data-path="skills.backend.${index}.name">${skill.name}</span>
-        <span class="text-slate-500 text-[10px] shrink-0 font-medium">
-          <span class="font-bold text-[var(--color-cv-accent)] uppercase" data-path="skills.backend.${index}.level">${skill.level}</span> • 
-          <span data-path="skills.backend.${index}.years">${skill.years}</span>
-        </span>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="w-full bg-slate-200 h-1 rounded-full overflow-hidden">
-          <div class="bg-[var(--color-cv-accent)] h-full transition-all duration-300" style="width: ${skill.percentage}%"></div>
+  const groups = cvData.skills?.groups || [];
+  groups.forEach((group, gi) => {
+    const col = document.createElement('div');
+    col.className = 'flex flex-col gap-2';
+    col.innerHTML = `<h5 class="text-xs font-bold text-[var(--color-cv-primary)] border-b border-[var(--color-cv-line)] pb-0.5">${group.label}</h5>`;
+    const list = document.createElement('div');
+    list.className = 'flex flex-col gap-3 text-xs text-[var(--color-cv-secondary)]';
+
+    (group.items || []).forEach((skill, index) => {
+      const div = document.createElement('div');
+      div.className = 'group relative flex flex-col gap-1 pr-6';
+      div.innerHTML = `
+        <div class="flex justify-between items-baseline text-xs">
+          <span class="font-semibold text-slate-800" data-path="skills.groups.${gi}.items.${index}.name">${skill.name}</span>
+          <span class="text-slate-500 text-[10px] shrink-0 font-medium">
+            <span class="font-bold text-[var(--color-cv-accent)] uppercase" data-path="skills.groups.${gi}.items.${index}.level">${skill.level}</span> • 
+            <span data-path="skills.groups.${gi}.items.${index}.years">${skill.years}</span>
+          </span>
         </div>
-        <span class="text-[9px] text-slate-400 no-print font-bold w-6 text-right" data-path="skills.backend.${index}.percentage" data-type="number">${skill.percentage}%</span>
-      </div>
-      <button class="no-print absolute top-0.5 right-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-0.5" onclick="removeSkillItem('backend', ${index})" title="Skill entfernen">
-        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-      </button>
-    `;
-    beContainer.appendChild(div);
+        <div class="flex items-center gap-2">
+          <div class="w-full bg-slate-200 h-1 rounded-full overflow-hidden">
+            <div class="bg-[var(--color-cv-accent)] h-full transition-all duration-300" style="width: ${skill.percentage}%"></div>
+          </div>
+          <span class="text-[9px] text-slate-400 no-print font-bold w-6 text-right" data-path="skills.groups.${gi}.items.${index}.percentage" data-type="number">${skill.percentage}%</span>
+        </div>
+        <button class="no-print absolute top-0.5 right-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-0.5" onclick="removeSkillItem(${gi}, ${index})" title="Skill entfernen">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+        </button>
+      `;
+      list.appendChild(div);
+    });
+    col.appendChild(list);
+    container.appendChild(col);
   });
 }
 
@@ -907,67 +903,67 @@ function renderBlockEditor() {
     container.appendChild(addBtn);
 
   } else if (activeBlock === 'skills') {
-    // Skills nested lists (frontend and backend)
-    container.innerHTML = `
-      <div class="flex flex-col gap-4">
-        <!-- Frontend Skills Form list -->
-        <div class="flex flex-col gap-2">
-          <h6 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Frontend Skills</h6>
-          <div id="skills-fe-editor" class="flex flex-col gap-2"></div>
-          <button class="w-full py-1.5 bg-slate-700 hover:bg-slate-650 text-slate-200 rounded-lg text-xs font-semibold cursor-pointer transition-colors" onclick="addSkillItem('frontend')">+ Frontend Skill</button>
-        </div>
-        <!-- Backend Skills Form list -->
-        <div class="flex flex-col gap-2 border-t border-slate-700/50 pt-3">
-          <h6 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Backend Skills</h6>
-          <div id="skills-be-editor" class="flex flex-col gap-2"></div>
-          <button class="w-full py-1.5 bg-slate-700 hover:bg-slate-650 text-slate-200 rounded-lg text-xs font-semibold cursor-pointer transition-colors" onclick="addSkillItem('backend')">+ Backend Skill</button>
-        </div>
-      </div>
-    `;
+    // Dynamic skill groups editor
+    const groups = cvData.skills?.groups || [];
+    const wrapper = document.createElement('div');
+    wrapper.className = 'flex flex-col gap-5';
 
-    // Render frontend skill cards
-    const feEd = document.getElementById('skills-fe-editor');
-    cvData.skills.frontend.forEach((skill, index) => {
-      const card = document.createElement('div');
-      card.className = 'bg-slate-900 border border-slate-700 p-2.5 rounded-lg flex flex-col gap-2 relative';
-      card.innerHTML = `
-        <div class="flex justify-between items-center">
-          <span class="text-[9px] font-bold text-blue-400">#${index + 1} Frontend</span>
-          <button class="text-red-400 hover:text-red-500 cursor-pointer" onclick="removeSkillItem('frontend', ${index})">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-          </button>
-        </div>
-        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${skill.name}" oninput="updateSkillField('frontend', ${index}, 'name', this.value)" placeholder="Technologie-Name">
-        <div class="grid grid-cols-3 gap-1">
-          <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.level}" oninput="updateSkillField('frontend', ${index}, 'level', this.value)" placeholder="z.B. Experte">
-          <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.years}" oninput="updateSkillField('frontend', ${index}, 'years', this.value)" placeholder="z.B. 6 Jahre">
-          <input type="number" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.percentage}" oninput="updateSkillField('frontend', ${index}, 'percentage', parseInt(this.value))" placeholder="95" min="0" max="100">
-        </div>
-      `;
-      feEd.appendChild(card);
-    });
+    groups.forEach((group, gi) => {
+      const section = document.createElement('div');
+      section.className = 'flex flex-col gap-2 border border-slate-700 rounded-xl p-3';
 
-    // Render backend skill cards
-    const beEd = document.getElementById('skills-be-editor');
-    cvData.skills.backend.forEach((skill, index) => {
-      const card = document.createElement('div');
-      card.className = 'bg-slate-900 border border-slate-700 p-2.5 rounded-lg flex flex-col gap-2 relative';
-      card.innerHTML = `
-        <div class="flex justify-between items-center">
-          <span class="text-[9px] font-bold text-blue-400">#${index + 1} Backend</span>
-          <button class="text-red-400 hover:text-red-500 cursor-pointer" onclick="removeSkillItem('backend', ${index})">
+      // Group header: rename input + delete group button
+      section.innerHTML = `
+        <div class="flex items-center gap-2 pb-2 border-b border-slate-700">
+          <input type="text" class="flex-1 bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs text-white font-bold" value="${group.label}" oninput="renameSkillGroup(${gi}, this.value)" placeholder="Gruppen-Name">
+          <button class="text-red-400 hover:text-red-500 cursor-pointer p-1" onclick="removeSkillGroup(${gi})" title="Gruppe entfernen">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
           </button>
         </div>
-        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${skill.name}" oninput="updateSkillField('backend', ${index}, 'name', this.value)" placeholder="Technologie-Name">
-        <div class="grid grid-cols-3 gap-1">
-          <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.level}" oninput="updateSkillField('backend', ${index}, 'level', this.value)" placeholder="z.B. Experte">
-          <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.years}" oninput="updateSkillField('backend', ${index}, 'years', this.value)" placeholder="z.B. 6 Jahre">
-          <input type="number" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.percentage}" oninput="updateSkillField('backend', ${index}, 'percentage', parseInt(this.value))" placeholder="90" min="0" max="100">
-        </div>
       `;
-      beEd.appendChild(card);
+
+      // Skill cards inside the group
+      const cardList = document.createElement('div');
+      cardList.className = 'flex flex-col gap-2';
+      (group.items || []).forEach((skill, index) => {
+        const card = document.createElement('div');
+        card.className = 'bg-slate-900 border border-slate-800 p-2.5 rounded-lg flex flex-col gap-2';
+        card.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="text-[9px] font-bold text-blue-400">#${index + 1}</span>
+            <button class="text-red-400 hover:text-red-500 cursor-pointer" onclick="removeSkillItem(${gi}, ${index})">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            </button>
+          </div>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${skill.name}" oninput="updateSkillField(${gi}, ${index}, 'name', this.value)" placeholder="Technologie-Name">
+          <div class="grid grid-cols-3 gap-1">
+            <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.level}" oninput="updateSkillField(${gi}, ${index}, 'level', this.value)" placeholder="z.B. Experte">
+            <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.years}" oninput="updateSkillField(${gi}, ${index}, 'years', this.value)" placeholder="z.B. 6 Jahre">
+            <input type="number" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.percentage}" oninput="updateSkillField(${gi}, ${index}, 'percentage', parseInt(this.value) || 0)" placeholder="95" min="0" max="100">
+          </div>
+        `;
+        cardList.appendChild(card);
+      });
+      section.appendChild(cardList);
+
+      // Add skill button
+      const addSkillBtn = document.createElement('button');
+      addSkillBtn.className = 'w-full py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs font-semibold cursor-pointer transition-colors';
+      addSkillBtn.textContent = '+ Skill hinzufügen';
+      addSkillBtn.onclick = () => addSkillItem(gi);
+      section.appendChild(addSkillBtn);
+
+      wrapper.appendChild(section);
     });
+
+    // Add new group button
+    const addGroupBtn = document.createElement('button');
+    addGroupBtn.className = 'w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold cursor-pointer transition-colors flex items-center justify-center gap-1.5';
+    addGroupBtn.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg> Neue Gruppe hinzufügen';
+    addGroupBtn.onclick = () => addSkillGroup();
+    wrapper.appendChild(addGroupBtn);
+
+    container.appendChild(wrapper);
   }
 }
 
@@ -1149,10 +1145,12 @@ window.updateSubBlockList = function(index, field, subIndex, value) {
   renderCV(true);
 };
 
-window.updateSkillField = function(category, index, field, value) {
-  cvData.skills[category][index][field] = value;
-  saveData();
-  renderCV(true);
+window.updateSkillField = function(groupIndex, index, field, value) {
+  if (cvData.skills?.groups?.[groupIndex]?.items?.[index] !== undefined) {
+    cvData.skills.groups[groupIndex].items[index][field] = value;
+    saveData();
+    renderCV(true);
+  }
 };
 
 // ---------------- STRUCTURAL CHANGE ACTIONS (ADD & REMOVE) ----------------
@@ -1204,22 +1202,51 @@ window.removeArrayItem = function(section, index) {
   }
 };
 
-window.addSkillItem = function(category) {
+window.addSkillItem = function(groupIndex) {
   const defaultSkill = { name: "Neue Technologie / Skill", level: "Tiefe Kenntnisse", years: "3 Jahre", percentage: 75 };
-  if (cvData.skills && cvData.skills[category]) {
-    cvData.skills[category].push(defaultSkill);
+  if (cvData.skills?.groups?.[groupIndex]) {
+    cvData.skills.groups[groupIndex].items.push(defaultSkill);
     saveData();
     renderCV();
-    showNotification(`Skill in ${category} hinzugefügt.`);
+    showNotification("Skill hinzugefügt.");
   }
 };
 
-window.removeSkillItem = function(category, index) {
-  if (cvData.skills && cvData.skills[category] && cvData.skills[category].length > index) {
-    cvData.skills[category].splice(index, 1);
+window.removeSkillItem = function(groupIndex, index) {
+  const items = cvData.skills?.groups?.[groupIndex]?.items;
+  if (items && items.length > index) {
+    items.splice(index, 1);
     saveData();
     renderCV();
     showNotification("Skill entfernt.");
+  }
+};
+
+window.addSkillGroup = function() {
+  if (!cvData.skills) cvData.skills = { groups: [] };
+  if (!cvData.skills.groups) cvData.skills.groups = [];
+  cvData.skills.groups.push({ label: "Neue Gruppe", items: [] });
+  saveData();
+  renderCV();
+  renderBlockEditor();
+  showNotification("Neue Skill-Gruppe hinzugefügt.");
+};
+
+window.renameSkillGroup = function(groupIndex, newLabel) {
+  if (cvData.skills?.groups?.[groupIndex]) {
+    cvData.skills.groups[groupIndex].label = newLabel;
+    saveData();
+    renderCV(true);
+  }
+};
+
+window.removeSkillGroup = function(groupIndex) {
+  if (cvData.skills?.groups && cvData.skills.groups.length > groupIndex) {
+    cvData.skills.groups.splice(groupIndex, 1);
+    saveData();
+    renderCV();
+    renderBlockEditor();
+    showNotification("Skill-Gruppe entfernt.");
   }
 };
 
@@ -1318,17 +1345,18 @@ function setupTabController() {
 // ---------------- DYNAMIC FORMS VALUE SYNCHRONIZER ----------------
 
 function setupInputListeners() {
-  // Personal detail fields listeners
+  // Personal detail fields listeners – previewId maps sidebar input to CV preview element
   const fields = [
-    { id: 'meta-name', path: 'personal.name' },
-    { id: 'meta-role', path: 'personal.role' },
-    { id: 'meta-email', path: 'personal.email' },
-    { id: 'meta-phone', path: 'personal.phone' },
-    { id: 'meta-location', path: 'personal.location' },
-    { id: 'meta-website', path: 'personal.website' },
-    { id: 'meta-github', path: 'personal.github' },
-    { id: 'meta-linkedin', path: 'personal.linkedin' },
-    { id: 'meta-profile-text', path: 'personal.profileText' }
+    { id: 'meta-name', path: 'personal.name', previewId: 'cv-name' },
+    { id: 'meta-role', path: 'personal.role', previewId: 'cv-role' },
+    { id: 'meta-email', path: 'personal.email', previewId: 'cv-contact-email' },
+    { id: 'meta-phone', path: 'personal.phone', previewId: 'cv-contact-phone' },
+    { id: 'meta-address', path: 'personal.address', previewId: 'cv-contact-address' },
+    { id: 'meta-location', path: 'personal.location', previewId: 'cv-contact-location' },
+    { id: 'meta-website', path: 'personal.website', previewId: 'cv-contact-website' },
+    { id: 'meta-github', path: 'personal.github', previewId: 'cv-contact-github' },
+    { id: 'meta-linkedin', path: 'personal.linkedin', previewId: 'cv-contact-linkedin' },
+    { id: 'meta-profile-text', path: 'personal.profileText', previewId: 'cv-profile-text' }
   ];
 
   fields.forEach(f => {
@@ -1337,20 +1365,10 @@ function setupInputListeners() {
       el.addEventListener('input', (e) => {
         setValueByPath(cvData, f.path, e.target.value);
         saveData();
-        
-        // Sync preview directly
-        const previewEl = document.getElementById(f.id.replace('meta-', 'cv-'));
+        // Sync preview element directly for instant feedback
+        const previewEl = document.getElementById(f.previewId);
         if (previewEl) {
           previewEl.innerHTML = e.target.value;
-        }
-        // Special mapping for page 2 header sync
-        if (f.id === 'meta-name') {
-          const p2Name = document.getElementById('cv-p2-name');
-          if (p2Name) p2Name.innerHTML = e.target.value;
-        }
-        if (f.id === 'meta-role') {
-          const p2Role = document.getElementById('cv-p2-role');
-          if (p2Role) p2Role.innerHTML = e.target.value;
         }
       });
     }
@@ -1470,6 +1488,7 @@ function syncFormsFromData() {
     { id: 'meta-role', path: 'personal.role' },
     { id: 'meta-email', path: 'personal.email' },
     { id: 'meta-phone', path: 'personal.phone' },
+    { id: 'meta-address', path: 'personal.address' },
     { id: 'meta-location', path: 'personal.location' },
     { id: 'meta-website', path: 'personal.website' },
     { id: 'meta-github', path: 'personal.github' },
@@ -1764,43 +1783,54 @@ function applyStyleSpecificPrintMargins(styleName) {
     document.head.appendChild(styleEl);
   }
 
-  // Margin configurations for each style matching the design aesthetics
+  // Margin configs in mm (numbers). mm is only used in @media print CSS.
+  // Screen CSS variables are converted to px (1mm = 96/25.4 px).
   const marginConfigs = {
-    'minimal': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
-    'executive': { top: '22mm', bottom: '22mm', left: '22mm', right: '22mm' },
-    'modernist': { top: '18mm', bottom: '18mm', left: '18mm', right: '18mm' },
-    'vintage-editorial': { top: '22mm', bottom: '22mm', left: '25mm', right: '25mm' },
-    'avant-garde': { top: '15mm', bottom: '15mm', left: '15mm', right: '15mm' },
-    'cyberpunk': { top: '15mm', bottom: '15mm', left: '12mm', right: '12mm' },
-    'swiss': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
-    'warm-editorial': { top: '22mm', bottom: '22mm', left: '22mm', right: '22mm' },
-    'terminal': { top: '15mm', bottom: '15mm', left: '15mm', right: '15mm' },
-    'neumorphic': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' }
+    'minimal':          { top: 20, bottom: 20, left: 20, right: 20 },
+    'executive':        { top: 22, bottom: 22, left: 22, right: 22 },
+    'modernist':        { top: 18, bottom: 18, left: 18, right: 18 },
+    'vintage-editorial':{ top: 22, bottom: 22, left: 25, right: 25 },
+    'avant-garde':      { top: 15, bottom: 15, left: 15, right: 15 },
+    'cyberpunk':        { top: 15, bottom: 15, left: 12, right: 12 },
+    'swiss':            { top: 20, bottom: 20, left: 20, right: 20 },
+    'warm-editorial':   { top: 22, bottom: 22, left: 22, right: 22 },
+    'terminal':         { top: 15, bottom: 15, left: 15, right: 15 },
+    'neumorphic':       { top: 20, bottom: 20, left: 20, right: 20 },
+    'scandinavian':     { top: 24, bottom: 24, left: 22, right: 22 },
+    'art-deco':         { top: 20, bottom: 20, left: 20, right: 20 },
+    'academic':         { top: 25, bottom: 25, left: 25, right: 25 }
   };
 
-  const config = marginConfigs[styleName] || marginConfigs['minimal'];
+  const cfg = marginConfigs[styleName] || marginConfigs['minimal'];
 
-  // Sync screen preview margins to exactly match print margins!
+  // Convert mm → px for screen CSS variables (1mm = 96/25.4 ≈ 3.7795 px)
+  const mmToPx = (mm) => `${Math.round(mm * 96 / 25.4)}px`;
+
   const rootElement = document.documentElement;
-  rootElement.style.setProperty('--cv-margin-x', config.left);
-  rootElement.style.setProperty('--cv-margin-y', config.top);
+  rootElement.style.setProperty('--cv-margin-x', mmToPx(cfg.left));
+  rootElement.style.setProperty('--cv-margin-y', mmToPx(cfg.top));
 
+  // @page margin:0 → layout is ALWAYS independent of browser print dialog margin settings.
+  // Physical mm units are valid and correct exclusively inside @media print.
   styleEl.innerHTML = `
     @media print {
       @page {
         size: A4;
-        margin-top: ${config.top} !important;
-        margin-bottom: ${config.bottom} !important;
-        margin-left: ${config.left} !important;
-        margin-right: ${config.right} !important;
+        margin: 0;
+      }
+      #cv-page {
+        padding-top: ${cfg.top}mm !important;
+        padding-bottom: ${cfg.bottom}mm !important;
+        padding-left: ${cfg.left}mm !important;
+        padding-right: ${cfg.right}mm !important;
       }
       .header-layout-corporate {
-        margin-top: -${config.top} !important;
-        margin-left: -${config.left} !important;
-        margin-right: -${config.right} !important;
-        padding-top: ${config.top} !important;
-        padding-left: ${config.left} !important;
-        padding-right: ${config.right} !important;
+        margin-top: -${cfg.top}mm !important;
+        margin-left: -${cfg.left}mm !important;
+        margin-right: -${cfg.right}mm !important;
+        padding-top: ${cfg.top}mm !important;
+        padding-left: ${cfg.left}mm !important;
+        padding-right: ${cfg.right}mm !important;
         padding-bottom: 10mm !important;
       }
     }
@@ -1860,14 +1890,14 @@ function showPrintGuideModal() {
             </div>
           </div>
 
-          <!-- Step 3: Margins to Default -->
+          <!-- Step 3: Margins are irrelevant -->
           <div class="flex gap-3 bg-slate-950/40 p-3 border border-slate-800/60 rounded-xl">
-            <div class="text-amber-500 shrink-0 mt-0.5">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg>
+            <div class="text-emerald-500 shrink-0 mt-0.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <div>
-              <h4 class="font-bold text-white text-xs mb-0.5">3. Ränder auf "Standard" belassen</h4>
-              <p class="text-[11px] text-slate-400 leading-normal">Setze die Ränder auf <strong>"Standard"</strong>. Die passenden Seitenränder des Stils werden durch unser System automatisch gesteuert.</p>
+              <h4 class="font-bold text-white text-xs mb-0.5">3. Ränder – egal! (automatisch gesteuert)</h4>
+              <p class="text-[11px] text-slate-400 leading-normal">Die Seitenränder werden <strong>vollautomatisch durch das CV-System gesteuert</strong> – egal ob du im Dialog "Standard", "Keine" oder einen anderen Wert wählst. Das Ergebnis ist immer korrekt.</p>
             </div>
           </div>
 
