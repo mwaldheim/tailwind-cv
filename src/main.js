@@ -331,6 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupTabController();
   setupInputListeners();
   setupDesignListeners();
+  setupMobileToggle();
   
   renderCV();
 });
@@ -2489,4 +2490,31 @@ function showPrintGuideModal() {
       window.print();
     }, 100);
   };
+}
+
+// ----------------  MOBILE PANEL TOGGLE ----------------
+
+function setupMobileToggle() {
+  const tabEditor = document.getElementById('mobile-tab-editor');
+  const tabPreview = document.getElementById('mobile-tab-preview');
+  if (!tabEditor || !tabPreview) return;
+
+  function setMobileTab(showPreview) {
+    document.body.classList.toggle('mobile-preview-active', showPreview);
+
+    tabEditor.classList.toggle('bg-slate-700', !showPreview);
+    tabEditor.classList.toggle('text-white', !showPreview);
+    tabEditor.classList.toggle('font-bold', !showPreview);
+    tabEditor.classList.toggle('text-slate-400', showPreview);
+    tabEditor.classList.toggle('font-semibold', showPreview);
+
+    tabPreview.classList.toggle('bg-slate-700', showPreview);
+    tabPreview.classList.toggle('text-white', showPreview);
+    tabPreview.classList.toggle('font-bold', showPreview);
+    tabPreview.classList.toggle('text-slate-400', !showPreview);
+    tabPreview.classList.toggle('font-semibold', !showPreview);
+  }
+
+  tabEditor.addEventListener('click', () => setMobileTab(false));
+  tabPreview.addEventListener('click', () => setMobileTab(true));
 }
