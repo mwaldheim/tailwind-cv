@@ -1043,9 +1043,19 @@
    taps "Vorschau".
    ======================================================== */
 @media (max-width: 1279px) {
+  /* Give the body an exact height so flex children know their bounds */
+  body {
+    height: 100vh !important;
+  }
+
+  /* min-height: 0 is critical: it overrides the flex default of min-height: auto,
+     which would otherwise let the child grow past its container and prevent scrolling */
   #editor-panel,
   #preview-panel {
-    height: calc(100vh - 3rem) !important; /* subtract toggle bar height */
+    flex: 1 1 0% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    overflow-y: auto;
   }
 
   #preview-panel {
@@ -1060,6 +1070,7 @@
   body.mobile-preview-active #preview-panel {
     display: flex !important;
     overflow-x: auto;
+    overflow-y: auto;
   }
 }
 
