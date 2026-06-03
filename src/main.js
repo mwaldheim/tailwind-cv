@@ -19,7 +19,13 @@ const defaultCVData = {
       "certifications": true,
       "methodsAndTools": true,
       "languages": true,
-      "hobbies": true
+      "hobbies": true,
+      "volunteer": false,
+      "awards": false,
+      "drivingLicense": false,
+      "talks": false,
+      "publications": false,
+      "references": false
     }
   },
   "personal": {
@@ -32,6 +38,10 @@ const defaultCVData = {
     "website": "alexander-neumann.dev",
     "github": "github.com/alexander-neumann",
     "linkedin": "linkedin.com/in/alexander-neumann",
+    "photo": "",
+    "birthDate": "",
+    "birthPlace": "",
+    "nationality": "",
     "profileText": "Zertifizierter Scrum Master (PSM II) und Ausbilder (IHK) mit über 10 Jahren IT-Praxiserfahrung an der Schnittstelle zwischen Softwarearchitektur, robuster System-Infrastruktur und agiler Transformation. Meine Mission ist das Schließen der Lücke zwischen Geschäfts-Visionen und technischer Exzellenz sowie das Eliminieren von Ineffizienzen in Softwareprojekten."
   },
   "competencies": [
@@ -185,6 +195,43 @@ const defaultCVData = {
       "technologies": ["Astro.js", "TypeScript", "Node.js", "Markdown-Parser"]
     }
   ],
+  "talks": [
+    {
+      "title": "DevSecOps in der Praxis – von 0 auf Pipeline in 60 Minuten",
+      "event": "DevConf Munich 2025",
+      "date": "2025",
+      "url": ""
+    }
+  ],
+  "publications": [
+    {
+      "title": "Clean Architecture im agilen Umfeld",
+      "publisher": "IT-Spektrum Blog",
+      "date": "2024",
+      "url": ""
+    }
+  ],
+  "referencesNote": "Referenzen aus früheren Positionen sind auf Anfrage erhältlich.",
+  "volunteer": [
+    {
+      "role": "Mentor für Nachwuchs-Entwickler",
+      "organization": "Tech Mentoring Initiative München",
+      "date": "2021 – heute",
+      "description": "Begleitung und Förderung von Junior-Entwicklern in den Bereichen Clean Code, agile Methoden und DevSecOps-Praktiken."
+    }
+  ],
+  "awards": [
+    {
+      "title": "Outstanding Developer Award",
+      "issuer": "TechConf Munich",
+      "date": "2023",
+      "description": "Auszeichnung für herausragende Beiträge zur Open-Source-Community im DevSecOps-Umfeld."
+    }
+  ],
+  "drivingLicense": {
+    "classes": "B, BE",
+    "ownVehicle": true
+  },
   "skills": {
     "groups": [
       {
@@ -231,16 +278,48 @@ let editMode = true; // Always true for interactive builder
 
 // Theme definitions
 const themes = {
-  navy: { primary: '#1e293b', secondary: '#475569', accent: '#2563eb', accentLight: '#dbeafe', bg: '#f8fafc', line: '#e2e8f0' },
-  emerald: { primary: '#064e3b', secondary: '#0f766e', accent: '#0d9488', accentLight: '#ccfbf1', bg: '#f0fdfa', line: '#e2e8f0' },
-  purple: { primary: '#3b0764', secondary: '#581c87', accent: '#7c3aed', accentLight: '#f3e8ff', bg: '#faf5ff', line: '#f3e8ff' },
-  charcoal: { primary: '#18181b', secondary: '#3f3f46', accent: '#4f46e5', accentLight: '#e0e7ff', bg: '#fafafa', line: '#e4e4e7' },
+  // ── Modern / Trendig ──────────────────────────────────────────────────────
+  petrol:     { primary: '#0c4a5a', secondary: '#1a6e86', accent: '#0891b2', accentLight: '#e0f2fe', bg: '#f5fbfd', line: '#bae6fd' },
+  midnight:   { primary: '#111827', secondary: '#374151', accent: '#6366f1', accentLight: '#eef2ff', bg: '#f9fafb', line: '#e0e7ff' },
+  cobalt:     { primary: '#1e3a5f', secondary: '#2a5298', accent: '#3b82f6', accentLight: '#dbeafe', bg: '#f8faff', line: '#bfdbfe' },
+  copper:     { primary: '#3d2b1f', secondary: '#7a4d2e', accent: '#b87333', accentLight: '#fdf0e0', bg: '#fffcf8', line: '#f5deb3' },
+  olive:      { primary: '#2d3a1e', secondary: '#4a5e2e', accent: '#6b7e3a', accentLight: '#f0f4e0', bg: '#fafcf7', line: '#d4e0b0' },
+  // ── Klassisch / Zeitlos ───────────────────────────────────────────────────
+  navy:       { primary: '#1e293b', secondary: '#475569', accent: '#2563eb', accentLight: '#dbeafe', bg: '#f8fafc', line: '#e2e8f0' },
+  charcoal:   { primary: '#18181b', secondary: '#3f3f46', accent: '#4f46e5', accentLight: '#e0e7ff', bg: '#fafafa', line: '#e4e4e7' },
+  royal:      { primary: '#1e3a8a', secondary: '#1e40af', accent: '#2563eb', accentLight: '#eff6ff', bg: '#f8fafc', line: '#dbeafe' },
+  oxford:     { primary: '#002147', secondary: '#003e87', accent: '#0064c8', accentLight: '#e6eeff', bg: '#f8faff', line: '#c0d8f8' },
+  // ── Natur / Organisch ─────────────────────────────────────────────────────
+  teal:       { primary: '#115e59', secondary: '#0f766e', accent: '#0d9488', accentLight: '#ccfbf1', bg: '#f0fdfa', line: '#99f6e4' },
+  emerald:    { primary: '#064e3b', secondary: '#0f766e', accent: '#0d9488', accentLight: '#ccfbf1', bg: '#f0fdfa', line: '#e2e8f0' },
+  sage:       { primary: '#14532d', secondary: '#3f6212', accent: '#15803d', accentLight: '#dcfce7', bg: '#fcfdfb', line: '#bbf7d0' },
+  amber:      { primary: '#78350f', secondary: '#92400e', accent: '#b45309', accentLight: '#fef3c7', bg: '#fffdfa', line: '#fde68a' },
+  // ── Warm / Leidenschaftlich ───────────────────────────────────────────────
+  wine:       { primary: '#4a0e2c', secondary: '#6b1e42', accent: '#9b1851', accentLight: '#fce4ec', bg: '#fffbfc', line: '#f9a8c9' },
   terracotta: { primary: '#7c2d12', secondary: '#9a3412', accent: '#c2410c', accentLight: '#ffedd5', bg: '#fffbeb', line: '#fed7aa' },
-  sage: { primary: '#14532d', secondary: '#3f6212', accent: '#15803d', accentLight: '#dcfce7', bg: '#fcfdfb', line: '#bbf7d0' },
-  royal: { primary: '#1e3a8a', secondary: '#1e40af', accent: '#2563eb', accentLight: '#eff6ff', bg: '#f8fafc', line: '#dbeafe' },
-  dustyrose: { primary: '#4c0519', secondary: '#881337', accent: '#be123c', accentLight: '#ffe4e6', bg: '#fffafb', line: '#fecdd3' },
-  teal: { primary: '#115e59', secondary: '#0f766e', accent: '#0d9488', accentLight: '#ccfbf1', bg: '#f0fdfa', line: '#99f6e4' },
-  amber: { primary: '#78350f', secondary: '#92400e', accent: '#b45309', accentLight: '#fef3c7', bg: '#fffdfa', line: '#fde68a' }
+  dustyrose:  { primary: '#4c0519', secondary: '#881337', accent: '#be123c', accentLight: '#ffe4e6', bg: '#fffafb', line: '#fecdd3' },
+  // ── Elegant / Akademisch ─────────────────────────────────────────────────
+  purple:     { primary: '#3b0764', secondary: '#581c87', accent: '#7c3aed', accentLight: '#f3e8ff', bg: '#faf5ff', line: '#f3e8ff' },
+};
+
+const themeLabels = {
+  petrol:     'Petrol — modernes Blaugrün',
+  midnight:   'Midnight — ultra-modern Dunkel',
+  cobalt:     'Kobalt — kräftiges Blau',
+  copper:     'Kupfer — warmes Bronze',
+  olive:      'Olive — erdiges Grün',
+  navy:       'Navy — klassisches Dunkelblau',
+  charcoal:   'Charcoal — elegantes Anthrazit',
+  royal:      'Royal — tiefes Königsblau',
+  oxford:     'Oxford — traditionelles Dunkelblau',
+  teal:       'Teal — frisches Blaugrün',
+  emerald:    'Emerald — sattes Grün',
+  sage:       'Sage — gedämpftes Waldgrün',
+  amber:      'Amber — warmes Honiggelb',
+  wine:       'Weinrot — elegantes Bordeaux',
+  terracotta: 'Terracotta — warmes Erdrot',
+  dustyrose:  'Dusty Rose — zartes Altrosa',
+  purple:     'Amethyst — elegantes Violett',
 };
 
 // Initialize Application
@@ -290,6 +369,23 @@ function loadData() {
       if (!cvData.layout) cvData.layout = JSON.parse(JSON.stringify(defaultCVData.layout));
       // Ensure personal.address exists (schema migration)
       if (cvData.personal && cvData.personal.address === undefined) cvData.personal.address = '';
+      // Migrate new sections if missing
+      if (cvData.personal.photo === undefined) cvData.personal.photo = '';
+      if (cvData.personal.birthDate === undefined) cvData.personal.birthDate = '';
+      if (cvData.personal.birthPlace === undefined) cvData.personal.birthPlace = '';
+      if (cvData.personal.nationality === undefined) cvData.personal.nationality = '';
+      if (!cvData.talks) cvData.talks = [];
+      if (!cvData.publications) cvData.publications = [];
+      if (cvData.referencesNote === undefined) cvData.referencesNote = '';
+      if (!cvData.volunteer) cvData.volunteer = [];
+      if (!cvData.awards) cvData.awards = [];
+      if (!cvData.drivingLicense) cvData.drivingLicense = { classes: '', ownVehicle: false };
+      if (cvData.layout?.visibleSections?.volunteer === undefined) cvData.layout.visibleSections.volunteer = false;
+      if (cvData.layout?.visibleSections?.awards === undefined) cvData.layout.visibleSections.awards = false;
+      if (cvData.layout?.visibleSections?.drivingLicense === undefined) cvData.layout.visibleSections.drivingLicense = false;
+      if (cvData.layout?.visibleSections?.talks === undefined) cvData.layout.visibleSections.talks = false;
+      if (cvData.layout?.visibleSections?.publications === undefined) cvData.layout.visibleSections.publications = false;
+      if (cvData.layout?.visibleSections?.references === undefined) cvData.layout.visibleSections.references = false;
       // Migrate old skills format {frontend:[...], backend:[...]} to new {groups:[...]}
       if (cvData.skills && !cvData.skills.groups) {
         const oldGroups = [];
@@ -372,6 +468,12 @@ function renderCV(preventSidebarRebuild = false) {
   toggleSectionVisibility('cv-sec-methodsAndTools', visible.methodsAndTools);
   toggleSectionVisibility('cv-sec-languages', visible.languages);
   toggleSectionVisibility('cv-sec-hobbies', visible.hobbies);
+  toggleSectionVisibility('cv-sec-volunteer', visible.volunteer);
+  toggleSectionVisibility('cv-sec-awards', visible.awards);
+  toggleSectionVisibility('cv-sec-drivingLicense', visible.drivingLicense);
+  toggleSectionVisibility('cv-sec-talks', visible.talks);
+  toggleSectionVisibility('cv-sec-publications', visible.publications);
+  toggleSectionVisibility('cv-sec-references', visible.references);
 
   // 6. Apply Dynamic Footer Block
   const cvFooter = document.getElementById('cv-footer');
@@ -451,6 +553,45 @@ function renderCV(preventSidebarRebuild = false) {
     }
   });
 
+  // 7b. Render Profile Photo
+  const photoWrapper = document.getElementById('cv-photo-wrapper');
+  const photoImg = document.getElementById('cv-photo');
+  const photoSrc = cvData.personal?.photo || '';
+  if (photoWrapper && photoImg) {
+    if (photoSrc) {
+      photoImg.src = photoSrc;
+      photoWrapper.classList.remove('hidden');
+    } else {
+      photoWrapper.classList.add('hidden');
+    }
+  }
+
+  // 7c. Render Personal Details (birthDate, birthPlace, nationality)
+  const pdWrapper = document.getElementById('cv-personal-details');
+  const bdEl = document.getElementById('cv-personal-birthdate');
+  const bpEl = document.getElementById('cv-personal-birthplace');
+  const natEl = document.getElementById('cv-personal-nationality');
+  const birthDate = cvData.personal?.birthDate || '';
+  const birthPlace = cvData.personal?.birthPlace || '';
+  const nationality = cvData.personal?.nationality || '';
+  if (bdEl) {
+    if (birthDate) { bdEl.textContent = `Geb. ${birthDate}`; bdEl.classList.remove('hidden'); }
+    else { bdEl.classList.add('hidden'); }
+  }
+  if (bpEl) {
+    if (birthPlace) { bpEl.textContent = `Geburtsort: ${birthPlace}`; bpEl.classList.remove('hidden'); }
+    else { bpEl.classList.add('hidden'); }
+  }
+  if (natEl) {
+    if (nationality) { natEl.textContent = `Nationalität: ${nationality}`; natEl.classList.remove('hidden'); }
+    else { natEl.classList.add('hidden'); }
+  }
+  if (pdWrapper) {
+    const anyPersonalDetails = birthDate || birthPlace || nationality;
+    if (anyPersonalDetails) pdWrapper.classList.remove('hidden');
+    else pdWrapper.classList.add('hidden');
+  }
+
   // 8. Render Dynamic Content Blocks
   renderCompetencies();
   renderLanguages();
@@ -462,9 +603,18 @@ function renderCV(preventSidebarRebuild = false) {
   renderProjects();
   renderOpenSource();
   renderSkills();
+  renderVolunteer();
+  renderAwards();
+  renderDrivingLicense();
+  renderTalks();
+  renderPublications();
+  renderReferences();
+  // Update page-break indicators after DOM settles
+  requestAnimationFrame(() => renderPageBreaks());
 
   // 9. Sync Left Form Inputs
   syncFormsFromData();
+  syncPhotoPreview();
 
   // 10. Attach on-screen listeners
   syncEditabilityAndListeners();
@@ -849,6 +999,201 @@ function renderSkills() {
   });
 }
 
+function renderVolunteer() {
+  const container = document.getElementById('volunteer-container');
+  if (!container) return;
+  container.innerHTML = '';
+  (cvData.volunteer || []).forEach((item, index) => {
+    const div = document.createElement('div');
+    div.className = 'group relative flex flex-col gap-0.5 pr-6';
+    div.innerHTML = `
+      <div class="flex justify-between items-baseline flex-wrap gap-x-2">
+        <span class="font-bold text-[var(--color-cv-primary)]" data-path="volunteer.${index}.role">${item.role}</span>
+        <span class="text-[10px] text-slate-400 shrink-0" data-path="volunteer.${index}.date">${item.date}</span>
+      </div>
+      <span class="font-semibold text-[var(--color-cv-accent)] text-[11px]" data-path="volunteer.${index}.organization">${item.organization}</span>
+      <span class="leading-relaxed" data-path="volunteer.${index}.description">${item.description}</span>
+      <button class="no-print absolute top-0.5 right-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-0.5" onclick="removeArrayItem('volunteer', ${index})" title="Entfernen">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+      </button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function renderAwards() {
+  const container = document.getElementById('awards-container');
+  if (!container) return;
+  container.innerHTML = '';
+  (cvData.awards || []).forEach((item, index) => {
+    const div = document.createElement('div');
+    div.className = 'group relative flex flex-col gap-0.5 pr-6';
+    div.innerHTML = `
+      <div class="flex justify-between items-baseline flex-wrap gap-x-2">
+        <span class="font-bold text-[var(--color-cv-primary)]" data-path="awards.${index}.title">${item.title}</span>
+        <span class="text-[10px] text-slate-400 shrink-0" data-path="awards.${index}.date">${item.date}</span>
+      </div>
+      <span class="font-semibold text-[var(--color-cv-accent)] text-[11px]" data-path="awards.${index}.issuer">${item.issuer}</span>
+      ${item.description ? `<span class="leading-relaxed" data-path="awards.${index}.description">${item.description}</span>` : ''}
+      <button class="no-print absolute top-0.5 right-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-0.5" onclick="removeArrayItem('awards', ${index})" title="Entfernen">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+      </button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function renderDrivingLicense() {
+  const container = document.getElementById('driving-license-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const dl = cvData.drivingLicense;
+  if (!dl || (!dl.classes && !dl.ownVehicle)) return;
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'flex flex-wrap items-center gap-2';
+
+  if (dl.classes) {
+    dl.classes.split(',').map(c => c.trim()).filter(Boolean).forEach(cls => {
+      const badge = document.createElement('span');
+      badge.className = 'px-2.5 py-0.5 bg-[var(--color-cv-accent-light)] text-[var(--color-cv-accent)] text-[10px] font-bold rounded-full';
+      badge.textContent = `Klasse ${cls}`;
+      wrapper.appendChild(badge);
+    });
+  }
+
+  if (dl.ownVehicle) {
+    const badge = document.createElement('span');
+    badge.className = 'flex items-center gap-1 text-[10px] text-slate-500';
+    badge.innerHTML = '<svg class="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg> Eigenes Fahrzeug vorhanden';
+    wrapper.appendChild(badge);
+  }
+  container.appendChild(wrapper);
+}
+
+function renderTalks() {
+  const container = document.getElementById('talks-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const talks = cvData.talks || [];
+  if (!talks.length) return;
+
+  talks.forEach(talk => {
+    const div = document.createElement('div');
+    div.className = 'flex flex-col gap-0.5';
+
+    const title = document.createElement('div');
+    title.className = 'font-semibold text-[var(--color-cv-primary)] leading-tight';
+    title.textContent = talk.title || '';
+
+    const meta = document.createElement('div');
+    meta.className = 'flex items-center gap-2 text-[var(--color-cv-secondary)]';
+    const parts = [talk.event, talk.date].filter(Boolean);
+    meta.textContent = parts.join(' · ');
+
+    div.appendChild(title);
+    div.appendChild(meta);
+
+    if (talk.url) {
+      const link = document.createElement('a');
+      link.href = talk.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'text-[var(--color-cv-accent)] hover:underline truncate';
+      link.textContent = talk.url;
+      div.appendChild(link);
+    }
+
+    container.appendChild(div);
+  });
+}
+
+function renderPublications() {
+  const container = document.getElementById('publications-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const pubs = cvData.publications || [];
+  if (!pubs.length) return;
+
+  pubs.forEach(pub => {
+    const div = document.createElement('div');
+    div.className = 'flex flex-col gap-0.5';
+
+    const title = document.createElement('div');
+    title.className = 'font-semibold text-[var(--color-cv-primary)] leading-tight';
+    title.textContent = pub.title || '';
+
+    const meta = document.createElement('div');
+    meta.className = 'flex items-center gap-2 text-[var(--color-cv-secondary)]';
+    const parts = [pub.publisher, pub.date].filter(Boolean);
+    meta.textContent = parts.join(' · ');
+
+    div.appendChild(title);
+    div.appendChild(meta);
+
+    if (pub.url) {
+      const link = document.createElement('a');
+      link.href = pub.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'text-[var(--color-cv-accent)] hover:underline truncate';
+      link.textContent = pub.url;
+      div.appendChild(link);
+    }
+
+    container.appendChild(div);
+  });
+}
+
+function renderReferences() {
+  const container = document.getElementById('references-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const note = cvData.referencesNote || '';
+  if (!note) return;
+  container.textContent = note;
+}
+
+function syncPhotoPreview() {
+  const preview = document.getElementById('photo-preview');
+  const removeBtn = document.getElementById('photo-remove');
+  const photo = cvData.personal?.photo || '';
+  if (!preview) return;
+  if (photo) {
+    preview.innerHTML = `<img src="${photo}" alt="Profilfoto" class="w-full h-full object-cover">`;
+    if (removeBtn) removeBtn.classList.remove('hidden');
+  } else {
+    preview.innerHTML = '<svg class="w-7 h-7 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>';
+    if (removeBtn) removeBtn.classList.add('hidden');
+  }
+}
+
+function renderPageBreaks() {
+  // Remove existing break indicators
+  document.querySelectorAll('#cv-page .page-break-indicator').forEach(el => el.remove());
+
+  const cvPage = document.getElementById('cv-page');
+  if (!cvPage || (cvData.layout?.previewMode === 'continuous')) return;
+
+  // A4 at 96dpi: 297mm × (96px / 25.4mm) ≈ 1122.52px
+  const A4_PX = Math.round(297 * 96 / 25.4);
+  const totalHeight = cvPage.scrollHeight;
+
+  for (let page = 1; page * A4_PX < totalHeight; page++) {
+    const indicator = document.createElement('div');
+    indicator.className = 'page-break-indicator no-print';
+    indicator.setAttribute('aria-hidden', 'true');
+    indicator.style.top = `${page * A4_PX}px`;
+    indicator.innerHTML = `
+      <div class="page-break-indicator__line">
+        <span class="page-break-indicator__label">Seite ${page} → ${page + 1}</span>
+      </div>
+    `;
+    cvPage.appendChild(indicator);
+  }
+}
+
+
 // ---------------- DYNAMIC SIDEBAR BLOCK EDITOR RENDERER ----------------
 
 function renderBlockEditor() {
@@ -964,8 +1309,48 @@ function renderBlockEditor() {
     wrapper.appendChild(addGroupBtn);
 
     container.appendChild(wrapper);
+
+  } else if (activeBlock === 'drivingLicense') {
+    // Special object editor for Führerschein
+    const dl = cvData.drivingLicense || {};
+    container.innerHTML = `
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Führerschein-Klassen</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${dl.classes || ''}" oninput="window.updateDrivingLicense('classes', this.value)" placeholder="z.B. B, BE, C1">
+          <span class="text-[9px] text-slate-600">Mehrere Klassen mit Komma trennen (z.B. B, BE)</span>
+        </div>
+        <label class="flex items-center gap-2 cursor-pointer text-sm text-slate-300">
+          <input type="checkbox" class="rounded accent-blue-500" ${dl.ownVehicle ? 'checked' : ''} onchange="window.updateDrivingLicense('ownVehicle', this.checked)">
+          Eigenes Fahrzeug vorhanden
+        </label>
+      </div>
+    `;
+  } else if (activeBlock === 'references') {
+    // Special free-text editor for Referenzen
+    const note = cvData.referencesNote || '';
+    container.innerHTML = `
+      <div class="flex flex-col gap-2">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Referenz-Hinweis</label>
+        <textarea rows="3" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white leading-normal" oninput="window.updateReferencesNote(this.value)" placeholder="z.B. Referenzen auf Anfrage erhältlich.">${note}</textarea>
+        <span class="text-[9px] text-slate-600">Erscheint kursiv am Ende des Lebenslaufs.</span>
+      </div>
+    `;
   }
 }
+
+window.updateReferencesNote = function(value) {
+  cvData.referencesNote = value;
+  saveData();
+  renderCV(true);
+};
+
+window.updateDrivingLicense = function(field, value) {
+  if (!cvData.drivingLicense) cvData.drivingLicense = { classes: '', ownVehicle: false };
+  cvData.drivingLicense[field] = value;
+  saveData();
+  renderCV(true);
+};
 
 // Generate the specific input forms inside dynamic cards
 function renderItemInputs(item, index) {
@@ -1123,6 +1508,100 @@ function renderItemInputs(item, index) {
     `;
   }
 
+  // Volunteer / Ehrenamt Inputs
+  if (activeBlock === 'volunteer') {
+    html += `
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Tätigkeit / Rolle</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.role}" oninput="updateBlockField(${index}, 'role', this.value)" placeholder="z.B. Mentor">
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Organisation / Verein</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.organization}" oninput="updateBlockField(${index}, 'organization', this.value)" placeholder="z.B. Tech Mentoring e.V.">
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Zeitraum</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.date}" oninput="updateBlockField(${index}, 'date', this.value)" placeholder="z.B. 2021 – heute">
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Beschreibung (optional)</label>
+        <textarea rows="2" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white leading-normal" oninput="updateBlockField(${index}, 'description', this.value)" placeholder="Kurze Beschreibung">${item.description || ''}</textarea>
+      </div>
+    `;
+  }
+
+  // Awards / Auszeichnungen Inputs
+  if (activeBlock === 'awards') {
+    html += `
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Auszeichnung / Preis</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.title}" oninput="updateBlockField(${index}, 'title', this.value)" placeholder="z.B. Best Developer Award">
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Verleiher</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.issuer}" oninput="updateBlockField(${index}, 'issuer', this.value)" placeholder="Verleihende Org.">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Jahr</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.date}" oninput="updateBlockField(${index}, 'date', this.value)" placeholder="2024">
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Beschreibung (optional)</label>
+        <textarea rows="2" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white leading-normal" oninput="updateBlockField(${index}, 'description', this.value)" placeholder="Optionale Beschreibung">${item.description || ''}</textarea>
+      </div>
+    `;
+  }
+
+  // Talks / Vorträge Inputs
+  if (activeBlock === 'talks') {
+    html += `
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Titel des Vortrags</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.title || ''}" oninput="updateBlockField(${index}, 'title', this.value)" placeholder="z.B. DevSecOps in der Praxis">
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Veranstaltung / Konferenz</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.event || ''}" oninput="updateBlockField(${index}, 'event', this.value)" placeholder="z.B. DevConf Munich">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Jahr</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.date || ''}" oninput="updateBlockField(${index}, 'date', this.value)" placeholder="2024">
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">URL (optional)</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.url || ''}" oninput="updateBlockField(${index}, 'url', this.value)" placeholder="https://...">
+      </div>
+    `;
+  }
+
+  // Publications / Publikationen Inputs
+  if (activeBlock === 'publications') {
+    html += `
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Titel</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.title || ''}" oninput="updateBlockField(${index}, 'title', this.value)" placeholder="z.B. Clean Architecture im Enterprise">
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Publisher / Medium</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.publisher || ''}" oninput="updateBlockField(${index}, 'publisher', this.value)" placeholder="z.B. Heise Developer">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Jahr</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.date || ''}" oninput="updateBlockField(${index}, 'date', this.value)" placeholder="2024">
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">URL (optional)</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.url || ''}" oninput="updateBlockField(${index}, 'url', this.value)" placeholder="https://...">
+      </div>
+    `;
+  }
+
   return html;
 }
 
@@ -1169,6 +1648,30 @@ window.addArrayItem = function(section) {
     education: { degree: "Neuer Abschluss / Studiengang", institution: "Schule / Hochschule", date: "Zeitraum" },
     methodsAndTools: "Neuer Tool-Eintrag",
     hobbies: "Anderes Hobby / Interesse",
+    volunteer: {
+      role: "Neue Tätigkeit",
+      organization: "Organisation / Verein",
+      date: "Zeitraum",
+      description: "Kurze Beschreibung der ehrenamtlichen Tätigkeit und deren Wirkung."
+    },
+    awards: {
+      title: "Neuer Preis / Auszeichnung",
+      issuer: "Verleihende Organisation",
+      date: "Jahr",
+      description: ""
+    },
+    talks: {
+      title: "Neuer Vortrag / Talk",
+      event: "Konferenz / Event",
+      date: "Jahr",
+      url: ""
+    },
+    publications: {
+      title: "Neuer Artikel / Publikation",
+      publisher: "Medium / Verlag",
+      date: "Jahr",
+      url: ""
+    },
     projects: {
       title: "Neues Projekt",
       duration: "Dauer • Jahr",
@@ -1356,6 +1859,9 @@ function setupInputListeners() {
     { id: 'meta-website', path: 'personal.website', previewId: 'cv-contact-website' },
     { id: 'meta-github', path: 'personal.github', previewId: 'cv-contact-github' },
     { id: 'meta-linkedin', path: 'personal.linkedin', previewId: 'cv-contact-linkedin' },
+    { id: 'meta-birth-date', path: 'personal.birthDate', previewId: null },
+    { id: 'meta-birth-place', path: 'personal.birthPlace', previewId: null },
+    { id: 'meta-nationality', path: 'personal.nationality', previewId: null },
     { id: 'meta-profile-text', path: 'personal.profileText', previewId: 'cv-profile-text' }
   ];
 
@@ -1388,6 +1894,32 @@ function setupInputListeners() {
       } catch (err) {
         // Silent syntax error bypass while typing
       }
+    });
+  }
+
+  // Photo upload listener
+  const photoUpload = document.getElementById('photo-upload');
+  if (photoUpload) {
+    photoUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        cvData.personal.photo = ev.target.result;
+        saveData();
+        syncPhotoPreview();
+        renderCV();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  const photoRemove = document.getElementById('photo-remove');
+  if (photoRemove) {
+    photoRemove.addEventListener('click', () => {
+      cvData.personal.photo = '';
+      saveData();
+      syncPhotoPreview();
+      renderCV();
     });
   }
 }
@@ -1466,7 +1998,13 @@ function setupDesignListeners() {
     { id: 'check-visible-certs', key: 'certifications' },
     { id: 'check-visible-tools', key: 'methodsAndTools' },
     { id: 'check-visible-languages', key: 'languages' },
-    { id: 'check-visible-hobbies', key: 'hobbies' }
+    { id: 'check-visible-hobbies', key: 'hobbies' },
+    { id: 'check-visible-volunteer', key: 'volunteer' },
+    { id: 'check-visible-awards', key: 'awards' },
+    { id: 'check-visible-driving', key: 'drivingLicense' },
+    { id: 'check-visible-talks', key: 'talks' },
+    { id: 'check-visible-publications', key: 'publications' },
+    { id: 'check-visible-references', key: 'references' },
   ];
 
   sectionCheckboxes.forEach(cb => {
@@ -1493,6 +2031,9 @@ function syncFormsFromData() {
     { id: 'meta-website', path: 'personal.website' },
     { id: 'meta-github', path: 'personal.github' },
     { id: 'meta-linkedin', path: 'personal.linkedin' },
+    { id: 'meta-birth-date', path: 'personal.birthDate' },
+    { id: 'meta-birth-place', path: 'personal.birthPlace' },
+    { id: 'meta-nationality', path: 'personal.nationality' },
     { id: 'meta-profile-text', path: 'personal.profileText' }
   ];
 
@@ -1535,7 +2076,13 @@ function syncFormsFromData() {
     { id: 'check-visible-certs', key: 'certifications' },
     { id: 'check-visible-tools', key: 'methodsAndTools' },
     { id: 'check-visible-languages', key: 'languages' },
-    { id: 'check-visible-hobbies', key: 'hobbies' }
+    { id: 'check-visible-hobbies', key: 'hobbies' },
+    { id: 'check-visible-volunteer', key: 'volunteer' },
+    { id: 'check-visible-awards', key: 'awards' },
+    { id: 'check-visible-driving', key: 'drivingLicense' },
+    { id: 'check-visible-talks', key: 'talks' },
+    { id: 'check-visible-publications', key: 'publications' },
+    { id: 'check-visible-references', key: 'references' },
   ];
 
   sectionCheckboxes.forEach(cb => {
@@ -1547,6 +2094,9 @@ function syncFormsFromData() {
 
   // Sync Theme Selection highlights
   syncThemeButtons();
+
+  // Sync photo preview in sidebar
+  syncPhotoPreview();
 
   // Sync JSON text editor
   const jsonEditor = document.getElementById('json-editor');
@@ -1632,7 +2182,7 @@ function setupThemeSelector() {
     btn.className = 'theme-btn w-6 h-6 rounded-full cursor-pointer border border-white/20 transition-all hover:scale-110 shrink-0';
     btn.dataset.theme = themeName;
     btn.style.background = `linear-gradient(135deg, ${theme.primary}, ${theme.accent})`;
-    btn.title = `Farbschema: ${themeName.toUpperCase()}`;
+    btn.title = themeLabels[themeName] || themeName.toUpperCase();
     
     if (themeName === cvData.layout.theme) {
       btn.classList.add('ring-4', 'ring-white');
@@ -1810,28 +2360,25 @@ function applyStyleSpecificPrintMargins(styleName) {
   rootElement.style.setProperty('--cv-margin-x', mmToPx(cfg.left));
   rootElement.style.setProperty('--cv-margin-y', mmToPx(cfg.top));
 
-  // @page margin:0 → layout is ALWAYS independent of browser print dialog margin settings.
-  // Physical mm units are valid and correct exclusively inside @media print.
+  // @page margin is the ONLY correct way to get consistent margins on ALL pages.
+  // padding on #cv-page would only affect page 1 top and last page bottom.
   styleEl.innerHTML = `
     @media print {
       @page {
         size: A4;
-        margin: 0;
+        margin: ${cfg.top}mm ${cfg.right}mm ${cfg.bottom}mm ${cfg.left}mm;
       }
       #cv-page {
-        padding-top: ${cfg.top}mm !important;
-        padding-bottom: ${cfg.bottom}mm !important;
-        padding-left: ${cfg.left}mm !important;
-        padding-right: ${cfg.right}mm !important;
+        padding: 0 !important;
       }
       .header-layout-corporate {
-        margin-top: -${cfg.top}mm !important;
-        margin-left: -${cfg.left}mm !important;
-        margin-right: -${cfg.right}mm !important;
-        padding-top: ${cfg.top}mm !important;
-        padding-left: ${cfg.left}mm !important;
-        padding-right: ${cfg.right}mm !important;
-        padding-bottom: 10mm !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 8mm !important;
       }
     }
   `;

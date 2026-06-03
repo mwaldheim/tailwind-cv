@@ -81,7 +81,9 @@
   }
   
   .page-preview {
-    width: 210mm !important;
+    /* @page margin reduces the printable area – width: 100% fills that area exactly.
+       Using 210mm here would overflow since the viewport is already narrowed by @page margins. */
+    width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
     margin: 0 !important;
@@ -96,6 +98,8 @@
 
   @page {
     size: A4;
+    /* Fallback – overridden by the dynamic style injected by applyStyleSpecificPrintMargins() */
+    margin: 20mm;
   }
 }
 
@@ -109,7 +113,7 @@
 #cv-footer {
   margin-left: var(--cv-margin-x) !important;
   margin-right: var(--cv-margin-x) !important;
-  padding-bottom: 3rem;
+  padding-bottom: var(--cv-margin-y) !important;
 }
 
 @media print {
@@ -191,6 +195,53 @@
   border: 12px solid var(--color-cv-primary) !important;
 }
 
+/* ---- Per-page border frame in print (repeats on every page via position:fixed) ---- */
+@media print {
+  .paper-bg-border {
+    border: none !important; /* The fixed pseudo-element takes over */
+  }
+  .paper-bg-border::before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 6mm;
+    left: 6mm;
+    right: 6mm;
+    bottom: 6mm;
+    border: 3px solid var(--color-cv-primary);
+    pointer-events: none;
+    z-index: 9999;
+  }
+}
+
+/* ---- Page-break visualizer (screen only, no-print) ---- */
+.page-break-indicator {
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  pointer-events: none;
+  z-index: 20;
+  user-select: none;
+}
+.page-break-indicator__line {
+  position: relative;
+  border-top: 2px dashed rgba(239, 68, 68, 0.55);
+}
+.page-break-indicator__label {
+  position: absolute;
+  top: -12px;
+  right: 0;
+  background: #ef4444;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 6px 1px 5px;
+  border-radius: 3px 3px 0 0;
+  letter-spacing: 0.4px;
+  font-family: ui-monospace, monospace;
+  white-space: nowrap;
+}
+
 /* ========================================================
    DYNAMIC HEADER VARIANT STYLES
    ======================================================== */
@@ -199,7 +250,7 @@
 .header-layout-minimal {
   padding-left: var(--cv-margin-x) !important;
   padding-right: var(--cv-margin-x) !important;
-  padding-top: 3rem;
+  padding-top: var(--cv-margin-y) !important;
   padding-bottom: 1.5rem;
   border-bottom: 2px solid var(--color-cv-line);
   margin-bottom: 1rem;
@@ -209,7 +260,7 @@
 .header-layout-executive {
   padding-left: var(--cv-margin-x) !important;
   padding-right: var(--cv-margin-x) !important;
-  padding-top: 3rem;
+  padding-top: var(--cv-margin-y) !important;
   padding-bottom: 1.5rem;
   text-align: center !important;
   margin-bottom: 1rem;
@@ -228,6 +279,11 @@
   padding: 8px 0 !important;
   margin-top: 16px !important;
 }
+/* Center personal-details flex row in centered header variants */
+.header-layout-executive #cv-personal-details,
+.header-layout-double-border #cv-personal-details {
+  justify-content: center;
+}
 
 /* Corporate Banner (Full-Bleed Header spanning 100% of paper edges) */
 .header-layout-corporate {
@@ -235,7 +291,7 @@
   color: white !important;
   padding-left: var(--cv-margin-x) !important;
   padding-right: var(--cv-margin-x) !important;
-  padding-top: 3rem;
+  padding-top: var(--cv-margin-y) !important;
   padding-bottom: 2.5rem;
   margin-bottom: 2rem;
 }
@@ -259,13 +315,19 @@
 .header-layout-split {
   padding-left: var(--cv-margin-x) !important;
   padding-right: var(--cv-margin-x) !important;
-  padding-top: 3rem;
+  padding-top: var(--cv-margin-y) !important;
   padding-bottom: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 2rem;
   border-bottom: 3px solid var(--color-cv-primary);
   margin-bottom: 1.5rem;
+}
+/* The photo+name wrapper is the left flex item – allow it to shrink naturally */
+.header-layout-split > div:first-child {
+  flex-shrink: 1;
+  min-width: 0;
 }
 .header-layout-split .contact-grid {
   display: flex !important;
@@ -273,6 +335,7 @@
   gap: 4px !important;
   align-items: flex-end !important;
   justify-content: flex-end !important;
+  flex-shrink: 0;
   margin-top: 0 !important;
   border: none !important;
   padding: 0 !important;
@@ -281,12 +344,16 @@
 .header-layout-split .contact-grid > div {
   justify-content: flex-end !important;
 }
+/* Personal details in split go below role, left-aligned */
+.header-layout-split #cv-personal-details {
+  justify-content: flex-start;
+}
 
 /* Accent Block Badge Header (Left-aligned with background card badge) */
 .header-layout-badge {
   padding-left: var(--cv-margin-x) !important;
   padding-right: var(--cv-margin-x) !important;
-  padding-top: 3rem;
+  padding-top: var(--cv-margin-y) !important;
   padding-bottom: 2rem;
   margin-bottom: 1.5rem;
 }
@@ -308,7 +375,7 @@
 .header-layout-double-border {
   padding-left: var(--cv-margin-x) !important;
   padding-right: var(--cv-margin-x) !important;
-  padding-top: 3.5rem;
+  padding-top: var(--cv-margin-y) !important;
   padding-bottom: 2rem;
   margin-bottom: 1.5rem;
 }
@@ -337,8 +404,10 @@
 
 /* Printing Header Adjustments */
 @media print {
+  /* @page margin handles the page insets – headers need no extra indent */
   .header-layout-minimal,
   .header-layout-executive,
+  .header-layout-corporate,
   .header-layout-split,
   .header-layout-badge,
   .header-layout-double-border {
@@ -346,15 +415,7 @@
     padding-right: 0 !important;
     padding-top: 0 !important;
     padding-bottom: 6mm !important;
-  }
-  .header-layout-corporate {
-    margin-top: -20mm !important;
-    margin-left: -20mm !important;
-    margin-right: -20mm !important;
-    padding-top: 20mm !important;
-    padding-left: 20mm !important;
-    padding-right: 20mm !important;
-    padding-bottom: 10mm !important;
+    margin: 0 !important;
   }
 }
 

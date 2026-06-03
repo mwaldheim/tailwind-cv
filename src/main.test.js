@@ -182,31 +182,28 @@ describe('window.addSkillItem / removeSkillItem', () => {
     expect(typeof window.removeSkillItem).toBe('function');
   });
 
-  it('fügt einen Skill in eine vorhandene Kategorie ein', () => {
+  it('fügt einen Skill in eine vorhandene Gruppe ein', () => {
     const before = JSON.parse(localStorage.getItem('cv_json_data'));
-    const categories = Object.keys(before.skills);
-    expect(categories.length).toBeGreaterThan(0);
-    const cat = categories[0];
-    const countBefore = before.skills[cat].length;
+    const groups = before.skills.groups;
+    expect(groups.length).toBeGreaterThan(0);
+    const countBefore = groups[0].items.length;
 
-    window.addSkillItem(cat);
+    window.addSkillItem(0);
 
     const after = JSON.parse(localStorage.getItem('cv_json_data'));
-    expect(after.skills[cat].length).toBe(countBefore + 1);
+    expect(after.skills.groups[0].items.length).toBe(countBefore + 1);
   });
 
-  it('entfernt einen Skill aus einer Kategorie', () => {
-    const data = JSON.parse(localStorage.getItem('cv_json_data'));
-    const cat = Object.keys(data.skills)[0];
-    window.addSkillItem(cat);
+  it('entfernt einen Skill aus einer Gruppe', () => {
+    window.addSkillItem(0);
 
     const before = JSON.parse(localStorage.getItem('cv_json_data'));
-    const countBefore = before.skills[cat].length;
+    const countBefore = before.skills.groups[0].items.length;
 
-    window.removeSkillItem(cat, countBefore - 1);
+    window.removeSkillItem(0, countBefore - 1);
 
     const after = JSON.parse(localStorage.getItem('cv_json_data'));
-    expect(after.skills[cat].length).toBe(countBefore - 1);
+    expect(after.skills.groups[0].items.length).toBe(countBefore - 1);
   });
 });
 
