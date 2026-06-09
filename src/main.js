@@ -3,6 +3,7 @@ const defaultCVData = {
   "layout": {
     "theme": "teal",
     "style": "modernist",
+    "fontPack": "inter-outfit",
     "background": "cream",
     "headerStyle": "split",
     "footerStyle": "corporate",
@@ -368,6 +369,7 @@ function loadData() {
       cvData = JSON.parse(cached);
       // Ensure layout exists (schema migration)
       if (!cvData.layout) cvData.layout = JSON.parse(JSON.stringify(defaultCVData.layout));
+      if (!cvData.layout.fontPack) cvData.layout.fontPack = 'inter-outfit';
       // Ensure personal.address exists (schema migration)
       if (cvData.personal && cvData.personal.address === undefined) cvData.personal.address = '';
       // Migrate new sections if missing
@@ -428,10 +430,31 @@ function renderCV(preventSidebarRebuild = false) {
     'style-neumorphic',
     'style-scandinavian',
     'style-art-deco',
-    'style-academic'
+    'style-academic',
+    'style-glassfolio',
+    'style-heritage-ledger',
+    'style-metro-grid',
+    'style-zen-minimum',
+    'style-dossier',
+    'style-kinetic-sans',
+    'style-serif-luxe',
+    'style-mono-blueprint'
   );
   root.classList.add(`style-${cvData.layout.style}`);
   applyStyleSpecificPrintMargins(cvData.layout.style);
+
+  // 1.25. Apply Font Pack Configuration
+  root.classList.remove(
+    'font-pack-inter-outfit',
+    'font-pack-editorial-serif',
+    'font-pack-grotesk-stack',
+    'font-pack-humanist-sans',
+    'font-pack-geometric-sans',
+    'font-pack-classic-print',
+    'font-pack-tech-mono',
+    'font-pack-elegant-modern'
+  );
+  root.classList.add(`font-pack-${cvData.layout.fontPack || 'inter-outfit'}`);
 
   // 1.5. Apply Screen Preview Mode Configuration (A4 vs Continuous)
   const pMode = cvData.layout.previewMode || 'a4';
@@ -442,7 +465,20 @@ function renderCV(preventSidebarRebuild = false) {
   }
 
   // 2. Apply Paper Background Configuration
-  root.classList.remove('paper-bg-white', 'paper-bg-cream', 'paper-bg-grid', 'paper-bg-border');
+  root.classList.remove(
+    'paper-bg-white',
+    'paper-bg-cream',
+    'paper-bg-grid',
+    'paper-bg-border',
+    'paper-bg-linen',
+    'paper-bg-recycled',
+    'paper-bg-blueprint-fine',
+    'paper-bg-deckle',
+    'paper-bg-legal-pad',
+    'paper-bg-archive-dot',
+    'paper-bg-marble',
+    'paper-bg-technical-grid'
+  );
   root.classList.add(`paper-bg-${cvData.layout.background}`);
 
   // 3. Apply Header Layout Configuration
@@ -482,7 +518,19 @@ function renderCV(preventSidebarRebuild = false) {
     const fStyle = cvData.layout.footerStyle || 'simple';
     
     // Remove custom classes to prevent style leaking
-    cvFooter.classList.remove('footer-layout-corporate', 'footer-layout-initials', 'footer-layout-signature');
+    cvFooter.classList.remove(
+      'footer-layout-corporate',
+      'footer-layout-initials',
+      'footer-layout-signature',
+      'footer-layout-editorial-rule',
+      'footer-layout-ledger-strip',
+      'footer-layout-stamp',
+      'footer-layout-notched',
+      'footer-layout-wave',
+      'footer-layout-archive',
+      'footer-layout-matrix',
+      'footer-layout-handwritten'
+    );
     
     if (fStyle === 'none') {
       cvFooter.style.display = 'none';
@@ -522,6 +570,64 @@ function renderCV(preventSidebarRebuild = false) {
           <div class="footer-signature-line text-[9px] text-slate-500">
             Unterschrift / Gez. ${cvData.personal.name}
           </div>
+        `;
+      } else if (fStyle === 'editorial-rule') {
+        cvFooter.classList.add('footer-layout-editorial-rule');
+        cvFooter.innerHTML = `
+          <span class="text-[9px] font-semibold text-[var(--color-cv-primary)]">Curriculum Vitae</span>
+          <span class="text-[9px] text-slate-600">${text}</span>
+        `;
+      } else if (fStyle === 'ledger-strip') {
+        cvFooter.classList.add('footer-layout-ledger-strip');
+        cvFooter.innerHTML = `
+          <span class="text-[8px] text-[var(--color-cv-primary)] font-bold">DOC</span>
+          <span class="text-[8px] text-slate-600 truncate">${text}</span>
+          <span class="text-[8px] text-[var(--color-cv-primary)] font-bold text-right">VER ${new Date().getFullYear()}</span>
+        `;
+      } else if (fStyle === 'stamp') {
+        cvFooter.classList.add('footer-layout-stamp');
+        const initials = cvData.personal.name
+          ? cvData.personal.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 3)
+          : 'CV';
+        cvFooter.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="footer-stamp-seal">${initials}</span>
+            <span class="text-[9px] text-slate-600">${text}</span>
+          </div>
+          <span class="text-[8px] uppercase tracking-wider text-slate-500">Archive Ready</span>
+        `;
+      } else if (fStyle === 'notched') {
+        cvFooter.classList.add('footer-layout-notched');
+        cvFooter.innerHTML = `
+          <span class="text-[8px] text-slate-700 font-semibold">${cvData.personal.role || 'Professional Profile'}</span>
+          <span class="text-[8px] text-slate-700">${cvData.personal.location || 'Deutschland'}</span>
+        `;
+      } else if (fStyle === 'wave') {
+        cvFooter.classList.add('footer-layout-wave');
+        cvFooter.innerHTML = `
+          <span class="text-[9px] text-slate-600">${text}</span>
+          <span class="text-[8px] uppercase tracking-wider text-[var(--color-cv-primary)]">Live Profile</span>
+        `;
+      } else if (fStyle === 'archive') {
+        cvFooter.classList.add('footer-layout-archive');
+        cvFooter.innerHTML = `
+          <span class="text-[8px] px-1 py-0.5 border border-[var(--color-cv-line)] text-slate-600">A</span>
+          <span class="text-[8px] px-1 py-0.5 border border-[var(--color-cv-line)] text-slate-600">CV</span>
+          <span class="text-[9px] text-slate-600 truncate">${text}</span>
+        `;
+      } else if (fStyle === 'matrix') {
+        cvFooter.classList.add('footer-layout-matrix');
+        const year = String(new Date().getFullYear());
+        cvFooter.innerHTML = `
+          <span class="text-[8px] text-slate-600">IDX</span>
+          <span class="text-[8px] text-slate-600">${year}</span>
+          <span class="text-[8px] text-slate-600">${(cvData.personal.name || 'CV').substring(0, 8).toUpperCase()}</span>
+        `;
+      } else if (fStyle === 'handwritten') {
+        cvFooter.classList.add('footer-layout-handwritten');
+        cvFooter.innerHTML = `
+          <span class="text-[9px] text-slate-600">${text}</span>
+          <span class="footer-handwritten-sign">gez. ${cvData.personal.name || 'Name'}</span>
         `;
       } else {
         // default simple
@@ -1947,6 +2053,16 @@ function setupDesignListeners() {
     });
   }
 
+  // Font pack dropdown
+  const fontPack = document.getElementById('select-font-pack');
+  if (fontPack) {
+    fontPack.addEventListener('change', (e) => {
+      cvData.layout.fontPack = e.target.value;
+      saveData();
+      renderCV();
+    });
+  }
+
   // Paper Background style dropdown
   const paperBg = document.getElementById('select-paper-bg');
   if (paperBg) {
@@ -2052,6 +2168,9 @@ function syncFormsFromData() {
   // Sync Layout selection inputs
   const layoutStyle = document.getElementById('select-layout-style');
   if (layoutStyle) layoutStyle.value = cvData.layout.style || 'minimal';
+
+  const fontPack = document.getElementById('select-font-pack');
+  if (fontPack) fontPack.value = cvData.layout.fontPack || 'inter-outfit';
 
   const paperBg = document.getElementById('select-paper-bg');
   if (paperBg) paperBg.value = cvData.layout.background || 'white';

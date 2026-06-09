@@ -38,6 +38,59 @@
   padding: 0 !important; /* Zero padding to allow full-bleed banners! */
 }
 
+/* Creative screen-only motion helpers (kept subtle for readability) */
+@media screen {
+  .page-preview {
+    animation: cv-paper-enter 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  #cv-header {
+    animation: cv-header-rise 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  #cv-page > section {
+    animation: cv-section-fade 360ms ease-out;
+    animation-fill-mode: both;
+  }
+
+  #cv-page > section:nth-of-type(2) { animation-delay: 35ms; }
+  #cv-page > section:nth-of-type(3) { animation-delay: 65ms; }
+  #cv-page > section:nth-of-type(4) { animation-delay: 95ms; }
+}
+
+@keyframes cv-paper-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes cv-header-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cv-section-fade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ========================================================
    SCREEN PREVIEW MODES (A4 vs Continuous)
    ======================================================== */
@@ -193,6 +246,70 @@
 .paper-bg-border {
   background-color: #ffffff !important;
   border: 12px solid var(--color-cv-primary) !important;
+}
+
+.paper-bg-linen {
+  background-color: #fffdf7 !important;
+  background-image:
+    linear-gradient(90deg, rgba(120, 113, 108, 0.06) 1px, transparent 1px),
+    linear-gradient(rgba(120, 113, 108, 0.045) 1px, transparent 1px);
+  background-size: 5px 5px, 5px 5px;
+}
+
+.paper-bg-recycled {
+  background-color: #f6f3eb !important;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(146, 64, 14, 0.08) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 40%, rgba(120, 113, 108, 0.09) 0 1px, transparent 2px),
+    radial-gradient(circle at 40% 80%, rgba(120, 113, 108, 0.08) 0 1px, transparent 1.5px);
+  background-size: 22px 22px, 28px 28px, 25px 25px;
+}
+
+.paper-bg-blueprint-fine {
+  background-color: #f8fbff !important;
+  background-image:
+    linear-gradient(rgba(30, 64, 175, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 64, 175, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(30, 64, 175, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 64, 175, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px, 28px 28px, 7px 7px, 7px 7px;
+}
+
+.paper-bg-deckle {
+  background-color: #fffdf8 !important;
+  box-shadow: inset 0 0 0 2px rgba(148, 163, 184, 0.18), inset 0 0 32px rgba(71, 85, 105, 0.05);
+}
+
+.paper-bg-legal-pad {
+  background-color: #fffbea !important;
+  background-image:
+    linear-gradient(to bottom, transparent 29px, rgba(217, 119, 6, 0.18) 30px),
+    linear-gradient(to right, rgba(220, 38, 38, 0.22) 58px, transparent 58px);
+  background-size: 100% 30px, 100% 100%;
+}
+
+.paper-bg-archive-dot {
+  background-color: #fffefe !important;
+  background-image: radial-gradient(rgba(71, 85, 105, 0.12) 0.8px, transparent 0.9px);
+  background-size: 11px 11px;
+}
+
+.paper-bg-marble {
+  background-color: #fbfcff !important;
+  background-image:
+    radial-gradient(circle at 15% 30%, rgba(148, 163, 184, 0.18), transparent 45%),
+    radial-gradient(circle at 85% 10%, rgba(191, 219, 254, 0.18), transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(148, 163, 184, 0.15), transparent 35%);
+}
+
+.paper-bg-technical-grid {
+  background-color: #ffffff !important;
+  background-image:
+    linear-gradient(rgba(30, 41, 59, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 41, 59, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(30, 41, 59, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 41, 59, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px, 44px 44px, 11px 11px, 11px 11px;
 }
 
 /* ---- Per-page border frame in print (repeats on every page via position:fixed) ---- */
@@ -402,6 +519,161 @@
   margin-top: 1.25rem !important;
 }
 
+/* Ribbon editorial header with offset accent strip */
+.header-layout-editorial-ribbon {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: var(--cv-margin-y) !important;
+  padding-bottom: 2rem;
+  margin-bottom: 1.4rem;
+  position: relative;
+  border-bottom: 2px solid color-mix(in srgb, var(--color-cv-primary) 65%, white);
+}
+.header-layout-editorial-ribbon::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 7px;
+  background: linear-gradient(90deg, var(--color-cv-primary), var(--color-cv-accent));
+}
+.header-layout-editorial-ribbon h2 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+/* Futuristic glass stripe header */
+.header-layout-neon-grid {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: var(--cv-margin-y) !important;
+  padding-bottom: 2rem;
+  margin-bottom: 1.4rem;
+  border: 1px solid color-mix(in srgb, var(--color-cv-accent) 45%, transparent);
+  background-image:
+    linear-gradient(145deg, color-mix(in srgb, var(--color-cv-accent-light) 60%, transparent), transparent),
+    repeating-linear-gradient(90deg, rgba(37, 99, 235, 0.08) 0 1px, transparent 1px 10px);
+  border-radius: 14px;
+}
+.header-layout-neon-grid .contact-grid {
+  border-top: 1px solid color-mix(in srgb, var(--color-cv-accent) 35%, transparent) !important;
+}
+
+/* Retro terminal masthead */
+.header-layout-retro-terminal {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: var(--cv-margin-y) !important;
+  padding-bottom: 2rem;
+  margin-bottom: 1.25rem;
+  background: #0b1324;
+  color: #dbeafe !important;
+  border: 3px solid #1d4ed8;
+  box-shadow: inset 0 0 0 2px #0ea5e9;
+}
+.header-layout-retro-terminal h2,
+.header-layout-retro-terminal h3 {
+  color: #dbeafe !important;
+  font-family: "Courier New", Monaco, monospace !important;
+}
+.header-layout-retro-terminal .contact-grid {
+  border-top: 1px dashed rgba(219, 234, 254, 0.65) !important;
+}
+
+/* Swiss poster header */
+.header-layout-swiss-slab {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: calc(var(--cv-margin-y) - 10px) !important;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.3rem;
+  border-bottom: 8px solid var(--color-cv-primary);
+}
+.header-layout-swiss-slab h2 {
+  font-family: "Outfit", sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: -0.045em;
+  font-size: 3rem !important;
+  line-height: 0.95;
+}
+.header-layout-swiss-slab h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem !important;
+}
+
+/* Luxury serif plaque */
+.header-layout-luxe-plaque {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: var(--cv-margin-y) !important;
+  padding-bottom: 2.1rem;
+  margin-bottom: 1.5rem;
+}
+.header-layout-luxe-plaque > div {
+  border: 2px solid color-mix(in srgb, var(--color-cv-primary) 72%, white);
+  border-radius: 14px;
+  padding: 1.2rem 1.4rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(248, 250, 252, 0.9));
+}
+.header-layout-luxe-plaque h2 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 2.6rem !important;
+}
+
+/* Brutalist stencil block */
+.header-layout-brutalist-stencil {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: var(--cv-margin-y) !important;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.4rem;
+  border: 4px solid var(--color-cv-primary);
+  box-shadow: 10px 10px 0 var(--color-cv-accent-light);
+}
+.header-layout-brutalist-stencil h2,
+.header-layout-brutalist-stencil h3 {
+  font-family: "Outfit", sans-serif !important;
+  text-transform: uppercase;
+}
+
+/* Handcrafted notebook strip */
+.header-layout-handcrafted {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: var(--cv-margin-y) !important;
+  padding-bottom: 1.9rem;
+  margin-bottom: 1.45rem;
+  border-left: 10px solid color-mix(in srgb, var(--color-cv-accent) 72%, white);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-cv-accent-light) 45%, white), transparent 34%);
+}
+.header-layout-handcrafted h2 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-style: italic;
+}
+
+/* Split poster frame */
+.header-layout-offset-frame {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: var(--cv-margin-y) !important;
+  padding-bottom: 1.8rem;
+  margin-bottom: 1.6rem;
+  position: relative;
+  border-bottom: 2px solid var(--color-cv-primary);
+}
+.header-layout-offset-frame::after {
+  content: '';
+  position: absolute;
+  right: var(--cv-margin-x);
+  top: calc(var(--cv-margin-y) - 12px);
+  width: 140px;
+  height: 2px;
+  background: var(--color-cv-accent);
+}
+
 /* Printing Header Adjustments */
 @media print {
   /* @page margin handles the page insets – headers need no extra indent */
@@ -410,18 +682,116 @@
   .header-layout-corporate,
   .header-layout-split,
   .header-layout-badge,
-  .header-layout-double-border {
+  .header-layout-double-border,
+  .header-layout-editorial-ribbon,
+  .header-layout-neon-grid,
+  .header-layout-retro-terminal,
+  .header-layout-swiss-slab,
+  .header-layout-luxe-plaque,
+  .header-layout-brutalist-stencil,
+  .header-layout-handcrafted,
+  .header-layout-offset-frame {
     padding-left: 0 !important;
     padding-right: 0 !important;
     padding-top: 0 !important;
     padding-bottom: 6mm !important;
     margin: 0 !important;
   }
+
+  .header-layout-neon-grid,
+  .header-layout-retro-terminal,
+  .header-layout-brutalist-stencil,
+  .header-layout-luxe-plaque > div {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
 }
 
 /* ========================================================
    DESIGN LAYOUT STYLES (layout.style) - 6 options
    ======================================================== */
+
+/* ========================================================
+   FONT PACKS (layout.fontPack)
+   ======================================================== */
+
+.font-pack-inter-outfit {
+  font-family: "Inter", sans-serif;
+}
+.font-pack-inter-outfit h2,
+.font-pack-inter-outfit h3,
+.font-pack-inter-outfit h4 {
+  font-family: "Outfit", sans-serif;
+}
+
+.font-pack-editorial-serif {
+  font-family: "Playfair Display", Georgia, serif;
+}
+.font-pack-editorial-serif h2,
+.font-pack-editorial-serif h3,
+.font-pack-editorial-serif h4 {
+  font-family: "Playfair Display", Georgia, serif;
+}
+.font-pack-editorial-serif p,
+.font-pack-editorial-serif li,
+.font-pack-editorial-serif span {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.font-pack-grotesk-stack {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.font-pack-grotesk-stack h2,
+.font-pack-grotesk-stack h3,
+.font-pack-grotesk-stack h4 {
+  font-family: "Arial Black", Arial, sans-serif;
+}
+
+.font-pack-humanist-sans {
+  font-family: "Trebuchet MS", Verdana, sans-serif;
+}
+.font-pack-humanist-sans h2,
+.font-pack-humanist-sans h3,
+.font-pack-humanist-sans h4 {
+  font-family: Verdana, "Trebuchet MS", sans-serif;
+}
+
+.font-pack-geometric-sans {
+  font-family: "Avenir Next", "Century Gothic", Futura, sans-serif;
+}
+.font-pack-geometric-sans h2,
+.font-pack-geometric-sans h3,
+.font-pack-geometric-sans h4 {
+  font-family: "Avenir Next", Futura, sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.font-pack-classic-print {
+  font-family: Garamond, "Times New Roman", serif;
+}
+.font-pack-classic-print h2,
+.font-pack-classic-print h3,
+.font-pack-classic-print h4 {
+  font-family: Garamond, Georgia, serif;
+}
+
+.font-pack-tech-mono {
+  font-family: "Courier New", "Lucida Console", Monaco, monospace;
+}
+.font-pack-tech-mono h2,
+.font-pack-tech-mono h3,
+.font-pack-tech-mono h4 {
+  font-family: "Courier New", "Lucida Console", Monaco, monospace;
+}
+
+.font-pack-elegant-modern {
+  font-family: "Segoe UI", Calibri, "Trebuchet MS", sans-serif;
+}
+.font-pack-elegant-modern h2,
+.font-pack-elegant-modern h3,
+.font-pack-elegant-modern h4 {
+  font-family: "Segoe UI", Calibri, sans-serif;
+}
 
 /* --- 1. MINIMAL (Default Minimalist Classic) --- */
 .style-minimal {
@@ -851,6 +1221,140 @@
   font-size: 8px;
 }
 
+.footer-layout-editorial-rule {
+  border-top: 3px double var(--color-cv-primary) !important;
+  padding-top: 10px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-family: "Playfair Display", Georgia, serif;
+  letter-spacing: 0.02em;
+}
+
+.footer-layout-ledger-strip {
+  display: grid !important;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  border-top: 2px solid var(--color-cv-primary) !important;
+  border-bottom: 1px solid var(--color-cv-line) !important;
+  padding: 8px 0 !important;
+  font-family: "Courier New", Monaco, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.footer-layout-stamp {
+  border-top: 1px dashed var(--color-cv-secondary) !important;
+  padding-top: 8px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+.footer-stamp-seal {
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--color-cv-primary);
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--color-cv-primary);
+}
+
+.footer-layout-notched {
+  border-top: none !important;
+  padding-top: 0 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: stretch !important;
+  min-height: 20px;
+}
+.footer-layout-notched > * {
+  background: color-mix(in srgb, var(--color-cv-accent-light) 55%, white);
+  border: 1px solid var(--color-cv-line);
+  padding: 4px 8px;
+}
+
+.footer-layout-wave {
+  border-top: 0 !important;
+  padding-top: 7px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  position: relative;
+}
+.footer-layout-wave::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 6px;
+  background:
+    radial-gradient(circle at 5px -2px, transparent 6px, var(--color-cv-primary) 6px 7px, transparent 7px) 0 0/16px 8px;
+}
+
+.footer-layout-archive {
+  display: grid !important;
+  grid-template-columns: auto auto 1fr;
+  gap: 8px;
+  align-items: center;
+  border-top: 1px solid var(--color-cv-primary) !important;
+  padding-top: 9px !important;
+}
+
+.footer-layout-matrix {
+  border-top: 1px solid var(--color-cv-line) !important;
+  padding-top: 8px !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  text-align: center;
+}
+
+.footer-layout-handwritten {
+  border-top: 2px solid color-mix(in srgb, var(--color-cv-primary) 45%, white) !important;
+  padding-top: 10px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+.footer-handwritten-sign {
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-size: 10px;
+  transform: rotate(-1.5deg);
+  border-bottom: 1px solid var(--color-cv-secondary);
+}
+
+@media print {
+  .page-preview,
+  #cv-header,
+  #cv-page > section,
+  #cv-footer {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .paper-bg-linen,
+  .paper-bg-recycled,
+  .paper-bg-blueprint-fine,
+  .paper-bg-legal-pad,
+  .paper-bg-archive-dot,
+  .paper-bg-marble,
+  .paper-bg-technical-grid {
+    background-image: none !important;
+    background-color: #ffffff !important;
+  }
+
+  .paper-bg-deckle {
+    box-shadow: none !important;
+  }
+}
+
 /* Web App Tab System Styling */
 .tab-btn-active {
   @apply bg-slate-700 text-white border-b-2 border-blue-500 font-bold;
@@ -1033,6 +1537,156 @@
 }
 .style-academic span, .style-academic p {
   font-family: "Inter", sans-serif;
+}
+
+/* --- 14. GLASSFOLIO (Luminous Layered Surfaces) --- */
+.style-glassfolio {
+  font-family: "Inter", sans-serif;
+}
+.style-glassfolio h4 {
+  background: linear-gradient(90deg, rgba(219, 234, 254, 0.75), rgba(255, 255, 255, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+.style-glassfolio #work-experience-container > div,
+.style-glassfolio #projects-container > div {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 10px;
+  padding: 12px !important;
+}
+
+/* --- 15. HERITAGE LEDGER (Archive Documentation) --- */
+.style-heritage-ledger {
+  font-family: Garamond, Georgia, serif;
+}
+.style-heritage-ledger h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.style-heritage-ledger h4 {
+  border-top: 1px solid var(--color-cv-primary);
+  border-bottom: 1px solid var(--color-cv-primary);
+  padding: 4px 0;
+}
+.style-heritage-ledger #work-experience-container > div {
+  border-left: 2px solid color-mix(in srgb, var(--color-cv-primary) 55%, white);
+}
+
+/* --- 16. METRO GRID (Structured Urban) --- */
+.style-metro-grid {
+  font-family: "Outfit", sans-serif;
+}
+.style-metro-grid h2 {
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  border-left: 10px solid var(--color-cv-primary);
+  padding-left: 12px;
+}
+.style-metro-grid h4 {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 3px solid var(--color-cv-accent);
+  padding-bottom: 4px;
+}
+
+/* --- 17. ZEN MINIMUM (Calm White Space) --- */
+.style-zen-minimum {
+  font-family: "Inter", sans-serif;
+}
+.style-zen-minimum h2 {
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+.style-zen-minimum h4 {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  border-bottom: 1px solid var(--color-cv-line);
+  padding-bottom: 6px;
+}
+.style-zen-minimum .timeline-dot {
+  width: 6px;
+  height: 6px;
+  left: -4px;
+}
+
+/* --- 18. DOSSIER (Bureau File) --- */
+.style-dossier {
+  font-family: "Trebuchet MS", Verdana, sans-serif;
+}
+.style-dossier h2 {
+  font-family: "Outfit", sans-serif;
+  border: 2px solid var(--color-cv-primary);
+  display: inline-block;
+  padding: 4px 10px;
+}
+.style-dossier h4 {
+  text-transform: uppercase;
+  font-weight: 800;
+  border-left: 5px solid var(--color-cv-primary);
+  padding-left: 8px;
+}
+
+/* --- 19. KINETIC SANS (Dynamic Typographic Blocks) --- */
+.style-kinetic-sans {
+  font-family: "Outfit", sans-serif;
+}
+.style-kinetic-sans h2 {
+  text-transform: uppercase;
+  letter-spacing: -0.06em;
+  font-weight: 900;
+}
+.style-kinetic-sans h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-weight: 700;
+}
+.style-kinetic-sans h4 {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--color-cv-primary);
+  color: white;
+  padding: 4px 8px;
+  display: inline-block;
+}
+
+/* --- 20. SERIF LUXE (Premium Editorial Luxury) --- */
+.style-serif-luxe {
+  font-family: "Playfair Display", Georgia, serif;
+}
+.style-serif-luxe h2 {
+  font-style: italic;
+  font-size: 2.6rem;
+}
+.style-serif-luxe h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+}
+.style-serif-luxe h4 {
+  border-bottom: 2px solid color-mix(in srgb, var(--color-cv-primary) 55%, white);
+  padding-bottom: 4px;
+}
+
+/* --- 21. MONO BLUEPRINT (Technical Draft Aesthetic) --- */
+.style-mono-blueprint {
+  font-family: "Courier New", Monaco, monospace;
+}
+.style-mono-blueprint h2,
+.style-mono-blueprint h3,
+.style-mono-blueprint h4 {
+  font-family: "Courier New", Monaco, monospace;
+  text-transform: uppercase;
+}
+.style-mono-blueprint h4 {
+  border: 1px solid var(--color-cv-primary);
+  padding: 4px 6px;
+  display: inline-block;
+}
+.style-mono-blueprint #work-experience-container > div {
+  border-left: 2px dashed var(--color-cv-primary);
 }
 
 /* ========================================================

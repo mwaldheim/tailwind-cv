@@ -95,9 +95,14 @@ test.describe('Design-Tab', () => {
     await expect(page.locator('#select-layout-style')).toBeVisible();
   });
 
-  test('enthält alle 13 Stil-Optionen', async ({ page }) => {
+  test('enthält alle 21 Stil-Optionen', async ({ page }) => {
     const options = await page.locator('#select-layout-style option').count();
-    expect(options).toBe(13);
+    expect(options).toBe(21);
+  });
+
+  test('Schriftfamilie-Wechsel zu "tech-mono" wendet CSS-Klasse an', async ({ page }) => {
+    await page.locator('#select-font-pack').selectOption('tech-mono');
+    await expect(page.locator('#cv-page')).toHaveClass(/font-pack-tech-mono/);
   });
 
   test('Stil-Wechsel zu "executive" wendet CSS-Klasse an', async ({ page }) => {
