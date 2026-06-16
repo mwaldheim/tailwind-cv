@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interaktiver Premium Lebenslauf / CV Builder</title>
-  <meta name="description" content="Professioneller, interaktiver CV-Builder mit Tailwind CSS v4. Erstelle, bearbeite und exportiere deinen Lebenslauf direkt als A4-PDF.">
+  <title>CV Generator — Interaktiver Lebenslauf Builder</title>
+  <meta name="description" content="CV Generator: Professioneller, interaktiver Lebenslauf-Builder mit Tailwind CSS v4. Erstelle, bearbeite und exportiere deinen Lebenslauf direkt als A4-PDF.">
   <link rel="stylesheet" href="/src/style.css">
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen font-sans flex flex-col xl:flex-row overflow-hidden print:overflow-visible">
@@ -21,7 +21,7 @@
     <div class="flex items-center justify-between pb-3 border-b border-slate-700/50">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></span>
-        <h1 class="text-base font-extrabold font-display tracking-tight text-white">CV Baustein-System</h1>
+        <h1 class="text-base font-extrabold font-display tracking-tight text-white">CV Generator</h1>
       </div>
       <div class="flex gap-1.5">
         <button id="export-json-btn" class="p-1.5 rounded-lg bg-slate-700 hover:bg-slate-650 text-slate-300 transition-colors cursor-pointer" title="Als JSON-Datei sichern">
@@ -74,6 +74,11 @@
           <option value="warm-editorial">Warm Editorial (Cozy Elegant Serif)</option>
           <option value="terminal">Tech Terminal (Console Command Line)</option>
           <option value="neumorphic">Neumorphic Soft UI (Tactile Soft Shadow)</option>
+          <optgroup label="── Brechende Layouts ──">
+          <option value="magazine">Magazine Cover (Editorial Hero)</option>
+          <option value="poster">Swiss Poster (Giant Typography)</option>
+          <option value="brutalist">Brutalist (Raw Borders, No Apologies)</option>
+          </optgroup>
         </select>
       </div>
 
@@ -106,6 +111,10 @@
           <option value="split">Asymmetrischer Split (Zweispaltig)</option>
           <option value="badge">Akzentuierter Badge-Block</option>
           <option value="double-border">Klassischer Editorial-Doppelrahmen</option>
+          <optgroup label="── Brechende Layouts ──">
+          <option value="magazine">Magazine Cover (Full-Bleed Gradient Hero)</option>
+          <option value="poster">Poster-Typografie (Riesige Schrift, zentriert)</option>
+          </optgroup>
         </select>
       </div>
 

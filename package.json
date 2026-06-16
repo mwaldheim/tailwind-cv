@@ -1,8 +1,17 @@
 {
   "name": "tailwind-cv",
-  "private": true,
+  "private": false,
   "version": "1.0.0",
+  "description": "Open-source, zero-dependency CV builder powered by Tailwind CSS v4 and Vite. Design, edit, and export A4 PDFs in the browser.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mwaldheim/tailwind-cv.git"
+  },
+  "homepage": "https://github.com/mwaldheim/tailwind-cv",
+  "author": "Markus Waldheim",
+  "license": "MIT",
+  "keywords": ["cv", "resume", "tailwindcss", "vite", "pdf", "builder", "open-source"],
   "scripts": {
     "dev": "vite",
     "build": "vite build",

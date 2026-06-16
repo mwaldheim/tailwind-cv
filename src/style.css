@@ -743,6 +743,290 @@
   border: 1px solid rgba(241, 245, 249, 0.8);
 }
 
+/* ========================================================
+   HEADER LAYOUT — MAGAZINE (Full-Bleed Drama Hero)
+   ======================================================== */
+.header-layout-magazine {
+  background: linear-gradient(135deg, var(--color-cv-primary) 60%, var(--color-cv-accent));
+  color: white !important;
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: 4rem;
+  padding-bottom: 3rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.header-layout-magazine::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--color-cv-accent);
+}
+.header-layout-magazine h2 {
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+  font-size: 3rem !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1 !important;
+  margin-bottom: 0.5rem;
+}
+.header-layout-magazine h3 {
+  color: rgba(255,255,255,0.65) !important;
+  font-size: 0.85rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+  font-weight: 600 !important;
+}
+.header-layout-magazine .contact-grid {
+  color: rgba(255,255,255,0.75) !important;
+  border-top: 1px solid rgba(255,255,255,0.2) !important;
+  margin-top: 1.5rem !important;
+  padding-top: 1rem !important;
+}
+.header-layout-magazine svg {
+  color: rgba(255,255,255,0.5) !important;
+}
+
+/* HEADER LAYOUT — POSTER (Towering Typography) */
+.header-layout-poster {
+  padding-left: var(--cv-margin-x) !important;
+  padding-right: var(--cv-margin-x) !important;
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  border-bottom: 6px solid var(--color-cv-primary);
+}
+.header-layout-poster h2 {
+  font-size: 4rem !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.06em !important;
+  line-height: 0.9 !important;
+  text-transform: uppercase !important;
+  color: var(--color-cv-primary) !important;
+  -webkit-text-fill-color: var(--color-cv-primary) !important;
+  display: block !important;
+  background: none !important;
+}
+.header-layout-poster h3 {
+  font-size: 0.7rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.3em !important;
+  font-weight: 600 !important;
+  color: var(--color-cv-accent) !important;
+  margin-top: 0.75rem !important;
+}
+.header-layout-poster .contact-grid {
+  justify-content: center !important;
+  border-top: 1px solid var(--color-cv-line) !important;
+  margin-top: 1.5rem !important;
+  padding-top: 0.75rem !important;
+}
+
+@media print {
+  .header-layout-magazine {
+    margin-top: -20mm !important;
+    margin-left: -20mm !important;
+    margin-right: -20mm !important;
+    padding-top: 20mm !important;
+    padding-left: 20mm !important;
+    padding-right: 20mm !important;
+    padding-bottom: 12mm !important;
+  }
+  .header-layout-poster {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 6mm !important;
+  }
+}
+
+/* ========================================================
+   DESIGN STYLES 11–13: MAGAZINE, POSTER, BRUTALIST
+   ======================================================== */
+
+/* --- 11. MAGAZINE (Editorial Drama) --- */
+.style-magazine {
+  font-family: "Inter", sans-serif;
+}
+.style-magazine h2 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 900;
+  font-size: 2.75rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-cv-primary);
+  -webkit-text-fill-color: var(--color-cv-primary);
+  background: none;
+}
+.style-magazine h3 {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.7rem;
+  color: var(--color-cv-secondary);
+}
+.style-magazine h4 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  color: white;
+  background-color: var(--color-cv-primary);
+  padding: 5px 12px;
+  display: inline-block;
+  border-radius: 0;
+  margin-bottom: 1rem;
+}
+.style-magazine #cv-sec-profile p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  border-left: 3px solid var(--color-cv-accent);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--color-cv-secondary);
+}
+.style-magazine .timeline-dot {
+  background-color: var(--color-cv-accent);
+  border: none;
+  width: 10px;
+  height: 10px;
+  left: -6px;
+  border-radius: 0;
+}
+.style-magazine #work-experience-container > div {
+  border-left: 3px solid var(--color-cv-line);
+}
+.style-magazine #work-experience-container > div:hover {
+  border-left-color: var(--color-cv-accent);
+}
+
+/* --- 12. POSTER (Swiss-Inspired Giant Typography) --- */
+.style-poster {
+  font-family: "Outfit", sans-serif;
+}
+.style-poster h2 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 900;
+  font-size: 3.5rem;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--color-cv-primary);
+  -webkit-text-fill-color: var(--color-cv-primary);
+  background: none;
+  display: block;
+}
+.style-poster h3 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  color: var(--color-cv-accent);
+}
+.style-poster h4 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  font-size: 1.25rem;
+  color: var(--color-cv-primary);
+  border-top: 4px solid var(--color-cv-primary);
+  border-bottom: 1px solid var(--color-cv-line);
+  padding: 6px 0 8px 0;
+  margin-bottom: 1rem;
+}
+.style-poster .timeline-dot {
+  background-color: var(--color-cv-primary);
+  border: none;
+  width: 8px;
+  height: 8px;
+  left: -5px;
+  border-radius: 0;
+}
+.style-poster #work-experience-container > div {
+  border-left: 1px solid var(--color-cv-line);
+}
+.style-poster #methods-tools-container span {
+  border-radius: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+}
+
+/* --- 13. BRUTALIST (Raw Structure, No Apologies) --- */
+.style-brutalist {
+  font-family: "Outfit", "Inter", sans-serif;
+}
+.style-brutalist h2 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 900;
+  font-size: 2.5rem;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--color-cv-primary);
+  -webkit-text-fill-color: var(--color-cv-primary);
+  background: none;
+  border: 3px solid var(--color-cv-primary);
+  display: inline-block;
+  padding: 4px 12px 4px 8px;
+  box-shadow: 5px 5px 0 var(--color-cv-accent);
+}
+.style-brutalist h3 {
+  font-family: "Courier New", monospace;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--color-cv-secondary);
+}
+.style-brutalist h4 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--color-cv-primary);
+  border-top: 4px solid var(--color-cv-primary);
+  padding-top: 6px;
+  letter-spacing: 0.05em;
+  border-radius: 0;
+}
+.style-brutalist #work-experience-container > div {
+  border-left: 4px solid var(--color-cv-primary);
+  border-radius: 0;
+}
+.style-brutalist #work-experience-container > div,
+.style-brutalist #projects-container > div,
+.style-brutalist #education-container > div,
+.style-brutalist #competencies-container > div {
+  outline: 1px solid var(--color-cv-line);
+  padding: 10px !important;
+  margin-bottom: 8px;
+}
+.style-brutalist .timeline-dot {
+  background-color: var(--color-cv-accent);
+  border: 3px solid var(--color-cv-primary);
+  border-radius: 0;
+  width: 14px;
+  height: 14px;
+  left: -9px;
+}
+.style-brutalist #methods-tools-container span {
+  border-radius: 0;
+  border: 2px solid var(--color-cv-primary);
+  background-color: transparent;
+  font-weight: 700;
+}
+
 /* Corporate Minimal Footer */
 .footer-layout-corporate {
   border-top: 2px solid var(--color-cv-primary) !important;

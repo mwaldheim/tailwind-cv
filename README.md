@@ -1,81 +1,135 @@
-# 📄 Premium Interaktiver Lebenslauf / CV Builder
+# CV Generator (tailwind-cv)
 
-Ein moderner, professioneller und hochgradig anpassbarer Lebenslauf-Builder, der mit **HTML5**, **CSS3**, **Tailwind CSS v4** und **Vite** erstellt wurde. Er ist speziell für den A4-Ausdruck optimiert und ermöglicht es, den Lebenslauf direkt im Webbrowser visuell anzupassen und abzuspeichern.
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Vite](https://img.shields.io/badge/Built_with-Vite-646cff?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
+[![Zero Runtime Deps](https://img.shields.io/badge/Dependencies-Zero_Runtime-brightgreen?style=flat-square)](#)
+[![A4 PDF Ready](https://img.shields.io/badge/Export-A4_PDF-orange?style=flat-square)](#-pdf-export)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-cyan?style=flat-square)](https://mwaldheim.github.io/tailwind-cv/)
 
-## ✨ Features
+**An open-source, zero-dependency CV Generator powered by Tailwind CSS v4 and Vite.**
 
-- **Tailwind CSS v4**: Nutzt das brandneue Tailwind CSS v4 Framework für moderne Stile und flexible Theme-Definitionen über CSS-Variablen.
-- **DINA4 optimiert**: Durchdachtes 2-Seiten-Layout mit CSS-Print-Overrides. Keine abgeschnittenen Elemente oder Layout-Verschiebungen beim PDF-Export.
-- **Interaktiver Editor**: Sämtliche Texte im Lebenslauf sind direkt per Klick im Browser editierbar (`contenteditable="true"`).
-- **Auto-Save & Cache**: Änderungen werden automatisch lokal im Browser-Speicher (`localStorage`) gesichert, damit nichts verloren geht.
-- **Multi-Theme Unterstützung**: Bietet vier vordefinierte, professionelle Farbpaletten ("Classic Navy", "Emerald Forest", "Deep Purple", "Charcoal Minimal"), die mit einem Klick gewechselt werden können.
-- **PDF-Export**: Direkter Export über den nativen Druckdialog (`window.print()`) des Browsers, bereinigt um alle Bedienelemente.
+Design, edit, and export beautiful A4 PDFs — right in the browser. No accounts, no data uploads, no backend. Everything stays on your machine.
+
+**[→ Try the Live Demo](https://mwaldheim.github.io/tailwind-cv/)**
 
 ---
 
-## 🚀 Schnelleinrichtung & Start
+## Why tailwind-cv?
 
-Folge diesen Schritten, um den CV-Builder lokal auszuführen:
+Most CV builders are either locked behind subscriptions, send your data to servers, or produce ugly PDFs. tailwind-cv gives you full creative control with a real-time editor, 10+ layout styles, multiple color themes, and pixel-perfect A4 export — all in a single HTML file powered by modern web tech.
 
-### 1. Repository / Ordner betreten
-Öffne ein Terminal in diesem Projektordner:
+---
+
+## Features
+
+| | |
+|---|---|
+| **Tailwind CSS v4** | CSS-variable-driven theming with near-zero overhead |
+| **13 Layout Styles** | From Minimal to Cyberpunk to Magazine Cover — switch instantly |
+| **10 Color Themes** | Navy, Emerald, Purple, Teal, Terracotta and more |
+| **5 Header Variants** | Minimal, Executive, Corporate, Split, Badge, Double-Border, Magazine, Poster |
+| **In-Browser Editing** | Click any text on the CV and type — no forms needed |
+| **JSON Data Layer** | Full data model export/import as JSON — your CV as structured data |
+| **A4 PDF Export** | Print-optimized CSS with `@page` rules and background-graphics support |
+| **Auto-Save** | Changes persist in `localStorage` between sessions |
+| **Block System** | Show/hide and reorder sections: Work, Projects, Skills, OSS, Education, Certs... |
+| **Zero Runtime Deps** | Vanilla JS + Tailwind compiler only — no React, no Vue, no bundler magic |
+
+---
+
+## Quick Start
+
 ```bash
-cd dev/tailwind-cv
+git clone https://github.com/mwaldheim/tailwind-cv.git
+cd tailwind-cv
+pnpm install
+pnpm dev
 ```
 
-### 2. Entwicklungsserver starten
-Der lokale Server wird gestartet und bietet Live-Reload:
-```bash
-pnpm run dev
+Open **[http://localhost:5173](http://localhost:5173)** in your browser.
+
+> Requires Node.js 18+ and pnpm. npm and yarn work too — just replace `pnpm` with your preferred package manager.
+
+---
+
+## Layout Styles
+
+tailwind-cv ships with 13 distinct visual styles, selectable from the Design tab:
+
+| Style | Description |
+|---|---|
+| `minimal` | Clean sans-serif, classic top-down |
+| `executive` | Centered serif, formal elegance |
+| `modernist` | Bold gradient name, tech-forward |
+| `vintage-editorial` | Italic serif, literary magazine feel |
+| `avant-garde` | Bauhaus bold, geometric structure |
+| `cyberpunk` | Monospace terminal, neo-noir |
+| `swiss` | Typographic modernism, tight tracking |
+| `warm-editorial` | Cozy serif with soft accents |
+| `terminal` | Console command-line aesthetic |
+| `neumorphic` | Soft UI, tactile card shadows |
+| `magazine` | Full-bleed hero, editorial drama |
+| `poster` | Giant typography, Swiss poster grid |
+| `brutalist` | Raw borders, stark contrast, bold |
+
+---
+
+## PDF Export
+
+1. Click **PDF** in the control bar (or press `Ctrl+P` / `Cmd+P`)
+2. In the browser print dialog:
+   - Destination: **Save as PDF**
+   - Layout: **Portrait**
+   - Paper: **A4**
+   - Margins: **None**
+   - Background graphics: **Enabled**
+   - Headers and footers: **Off**
+3. Click Save
+
+---
+
+## JSON Data Format
+
+All CV content is stored in a structured JSON model. Export it from the **JSON** tab or via the download button. This makes tailwind-cv composable — pipe your CV data from any source.
+
+```json
+{
+  "layout": { "theme": "navy", "style": "minimal", ... },
+  "personal": { "name": "...", "email": "...", ... },
+  "workExperience": [ { "role": "...", "company": "...", "details": [] } ],
+  "skills": { "frontend": [], "backend": [] },
+  "projects": [],
+  "openSource": [],
+  "certifications": [],
+  "education": []
+}
 ```
 
-### 3. Im Browser öffnen
-Öffne die folgende Adresse in deinem Browser:
-👉 **[http://localhost:5173/](http://localhost:5173/)**
+---
+
+## Roadmap
+
+- [ ] Multi-page layout control (page-break hints)
+- [ ] Photo/avatar block with circular crop
+- [ ] Right-to-left language support
+- [ ] Astro.js static export for GitHub Pages hosting
+- [ ] Additional language packs (EN, FR, ES)
 
 ---
 
-## 🛠️ Anpassung & Nutzung
+## Contributing
 
-### 📝 Text bearbeiten
-1. Stelle sicher, dass der **Bearbeitungsmodus: EIN** oben in der Leiste aktiv ist.
-2. Klicke auf ein beliebiges Textelement (z.B. Name, Berufsbezeichnung, Stichpunkte der Berufserfahrung oder Technologien).
-3. Tippe einfach deinen Text ein. Er wird im Hintergrund sofort per **Auto-Save** gesichert.
-
-### 🎨 Farbtheme ändern
-Klicke oben auf die runden Farbkreise in der Steuerungsleiste, um das Design augenblicklich zu wechseln:
-- 🔵 **Classic Navy** (Standard: Professionelles Dunkelblau &amp; Slate)
-- 🟢 **Emerald Forest** (Modernes Dunkelgrün &amp; Mint)
-- 🟣 **Deep Purple** (Kreatives Violett &amp; Indigo)
-- ⚫ **Charcoal Minimal** (Elegantes Anthrazit &amp; Indigo)
-
-### 💾 Daten zurücksetzen
-Wenn du von vorne anfangen möchtest, klicke einfach auf **Reset** in der Steuerungsleiste. Dadurch werden deine Browser-Caches gelöscht und die Standard-Demodaten wiederhergestellt.
+Contributions are welcome — especially new layout styles and color themes. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add your own style in ~30 lines of CSS.
 
 ---
 
-## 🖨️ PDF Export Anleitung
+## Part of the Waldheim Suite
 
-Um deinen Lebenslauf als fehlerfreies PDF zu exportieren, befolge diese Schritte im Browser:
-
-1. Klicke in der Steuerungsleiste oben auf den Button **"PDF Exportieren"** (oder drücke `Strg + P` / `Cmd + P`).
-2. Konfiguriere im sich öffnenden Druckdialog deines Browsers folgende Einstellungen:
-   - **Ziel**: *Als PDF speichern* oder *Save as PDF*.
-   - **Seiten**: *Alle* (1 &amp; 2).
-   - **Layout**: *Hochformat* / *Portrait*.
-   - **Papierformat**: *A4*.
-   - **Ränder**: *Keine* oder *Minimal* (Empfohlen: **Keine / None**, da die Ränder bereits perfekt im CSS-Layout definiert sind).
-   - **Optionen**: Aktiviere unbedingt **Hintergrundgrafiken / Background graphics** (damit die farbigen Hintergründe und Fortschrittsbalken im PDF sichtbar sind).
-   - Deaktiviere *Kopf- und Fußzeilen* (Headers and footers), damit keine Browser-URLs auf dem Ausdruck erscheinen.
-3. Klicke auf **Speichern** und wähle deinen Speicherort.
+tailwind-cv is published as a standalone open-source tool and is also part of the **Waldheim Suite** — a modular enterprise productivity platform built with React micro-frontends and Tailwind CSS.
 
 ---
 
-## 📂 Dateistruktur
+## License
 
-- `index.html` — Die CV-Struktur mit allen editierbaren Elementen (`data-cv-key`).
-- `vite.config.js` — Konfiguration für Vite und Tailwind Compiler.
-- `pnpm-workspace.yaml` — Whitelist für erlaubte Dependency-Builds (`esbuild`).
-- `src/`
-  - `style.css` — Tailwind v4 `@import`, Theme-Variablen und dedizierte `@media print`-Regeln.
-  - `main.js` — Event-Handling für Editiermodus, `localStorage`-Sicherung und Theme-Wechsel.
+[MIT](LICENSE) — free to use, modify, and redistribute.

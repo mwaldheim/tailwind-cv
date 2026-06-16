@@ -310,16 +310,19 @@ function renderCV(preventSidebarRebuild = false) {
 
   // 1. Apply Layout Style Configuration
   root.classList.remove(
-    'style-minimal', 
-    'style-executive', 
-    'style-modernist', 
-    'style-vintage-editorial', 
-    'style-avant-garde', 
+    'style-minimal',
+    'style-executive',
+    'style-modernist',
+    'style-vintage-editorial',
+    'style-avant-garde',
     'style-cyberpunk',
     'style-swiss',
     'style-warm-editorial',
     'style-terminal',
-    'style-neumorphic'
+    'style-neumorphic',
+    'style-magazine',
+    'style-poster',
+    'style-brutalist'
   );
   root.classList.add(`style-${cvData.layout.style}`);
   applyStyleSpecificPrintMargins(cvData.layout.style);
@@ -1775,7 +1778,10 @@ function applyStyleSpecificPrintMargins(styleName) {
     'swiss': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
     'warm-editorial': { top: '22mm', bottom: '22mm', left: '22mm', right: '22mm' },
     'terminal': { top: '15mm', bottom: '15mm', left: '15mm', right: '15mm' },
-    'neumorphic': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' }
+    'neumorphic': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
+    'magazine': { top: '20mm', bottom: '20mm', left: '18mm', right: '18mm' },
+    'poster': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
+    'brutalist': { top: '18mm', bottom: '18mm', left: '18mm', right: '18mm' }
   };
 
   const config = marginConfigs[styleName] || marginConfigs['minimal'];
@@ -1794,7 +1800,8 @@ function applyStyleSpecificPrintMargins(styleName) {
         margin-left: ${config.left} !important;
         margin-right: ${config.right} !important;
       }
-      .header-layout-corporate {
+      .header-layout-corporate,
+      .header-layout-magazine {
         margin-top: -${config.top} !important;
         margin-left: -${config.left} !important;
         margin-right: -${config.right} !important;
