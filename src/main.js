@@ -3,6 +3,7 @@ const defaultCVData = {
   "layout": {
     "theme": "teal",
     "style": "modernist",
+    "fontPack": "inter-outfit",
     "background": "cream",
     "headerStyle": "split",
     "footerStyle": "corporate",
@@ -19,7 +20,13 @@ const defaultCVData = {
       "certifications": true,
       "methodsAndTools": true,
       "languages": true,
-      "hobbies": true
+      "hobbies": true,
+      "volunteer": false,
+      "awards": false,
+      "drivingLicense": false,
+      "talks": false,
+      "publications": false,
+      "references": false
     }
   },
   "personal": {
@@ -27,10 +34,15 @@ const defaultCVData = {
     "role": "Senior IT-Consultant & DevSecOps Experte",
     "email": "alexander.neumann@example.com",
     "phone": "+49 89 12345678",
+    "address": "",
     "location": "München, Deutschland",
     "website": "alexander-neumann.dev",
     "github": "github.com/alexander-neumann",
     "linkedin": "linkedin.com/in/alexander-neumann",
+    "photo": "",
+    "birthDate": "",
+    "birthPlace": "",
+    "nationality": "",
     "profileText": "Zertifizierter Scrum Master (PSM II) und Ausbilder (IHK) mit über 10 Jahren IT-Praxiserfahrung an der Schnittstelle zwischen Softwarearchitektur, robuster System-Infrastruktur und agiler Transformation. Meine Mission ist das Schließen der Lücke zwischen Geschäfts-Visionen und technischer Exzellenz sowie das Eliminieren von Ineffizienzen in Softwareprojekten."
   },
   "competencies": [
@@ -184,45 +196,75 @@ const defaultCVData = {
       "technologies": ["Astro.js", "TypeScript", "Node.js", "Markdown-Parser"]
     }
   ],
+  "talks": [
+    {
+      "title": "DevSecOps in der Praxis – von 0 auf Pipeline in 60 Minuten",
+      "event": "DevConf Munich 2025",
+      "date": "2025",
+      "url": ""
+    }
+  ],
+  "publications": [
+    {
+      "title": "Clean Architecture im agilen Umfeld",
+      "publisher": "IT-Spektrum Blog",
+      "date": "2024",
+      "url": ""
+    }
+  ],
+  "referencesNote": "Referenzen aus früheren Positionen sind auf Anfrage erhältlich.",
+  "volunteer": [
+    {
+      "role": "Mentor für Nachwuchs-Entwickler",
+      "organization": "Tech Mentoring Initiative München",
+      "date": "2021 – heute",
+      "description": "Begleitung und Förderung von Junior-Entwicklern in den Bereichen Clean Code, agile Methoden und DevSecOps-Praktiken."
+    }
+  ],
+  "awards": [
+    {
+      "title": "Outstanding Developer Award",
+      "issuer": "TechConf Munich",
+      "date": "2023",
+      "description": "Auszeichnung für herausragende Beiträge zur Open-Source-Community im DevSecOps-Umfeld."
+    }
+  ],
+  "drivingLicense": {
+    "classes": "B, BE",
+    "ownVehicle": true
+  },
   "skills": {
-    "frontend": [
+    "groups": [
       {
-        "name": "Angular / TypeScript / RxJS",
-        "level": "Experte",
-        "years": "10 Jahre",
-        "percentage": 98
+        "label": "Frontend & UI",
+        "items": [
+          { "name": "Angular / TypeScript / RxJS", "level": "Experte", "years": "10 Jahre", "percentage": 98 },
+          { "name": "Astro.js / Tailwind CSS / Vite", "level": "Experte", "years": "3.5 Jahre", "percentage": 95 },
+          { "name": "React / Figma / UI-UX Design", "level": "Sehr gut", "years": "5 Jahre", "percentage": 88 }
+        ]
       },
       {
-        "name": "Astro.js / Tailwind CSS / Vite",
-        "level": "Experte",
-        "years": "3.5 Jahre",
-        "percentage": 95
+        "label": "Backend & API",
+        "items": [
+          { "name": "Node.js / Express / NestJS", "level": "Experte", "years": "10 Jahre", "percentage": 92 },
+          { "name": "PHP / Java / Spring / Quarkus", "level": "Sehr gut", "years": "12 Jahre", "percentage": 85 },
+          { "name": "Go (Golang)", "level": "Gut", "years": "1 Jahr", "percentage": 70 }
+        ]
       },
       {
-        "name": "React / Figma / UI-UX Design",
-        "level": "Sehr gut",
-        "years": "5 Jahre",
-        "percentage": 88
-      }
-    ],
-    "backend": [
-      {
-        "name": "Node.js / Express / NestJS",
-        "level": "Experte",
-        "years": "10 Jahre",
-        "percentage": 92
+        "label": "DevSecOps & Cloud",
+        "items": [
+          { "name": "Kubernetes / Docker / Helm", "level": "Experte", "years": "7 Jahre", "percentage": 94 },
+          { "name": "GitLab CI/CD / GitHub Actions", "level": "Experte", "years": "6 Jahre", "percentage": 92 },
+          { "name": "AWS / Azure / Terraform", "level": "Sehr gut", "years": "5 Jahre", "percentage": 85 }
+        ]
       },
       {
-        "name": "PHP / Java / Spring / Quarkus",
-        "level": "Sehr gut",
-        "years": "12 Jahre",
-        "percentage": 85
-      },
-      {
-        "name": "Go (Golang)",
-        "level": "Gut",
-        "years": "1 Jahr",
-        "percentage": 70
+        "label": "Datenbanken & Tools",
+        "items": [
+          { "name": "PostgreSQL / MongoDB / Redis", "level": "Sehr gut", "years": "8 Jahre", "percentage": 87 },
+          { "name": "IntelliJ / VS Code / Figma", "level": "Experte", "years": "10 Jahre", "percentage": 95 }
+        ]
       }
     ]
   }
@@ -237,16 +279,48 @@ let editMode = true; // Always true for interactive builder
 
 // Theme definitions
 const themes = {
-  navy: { primary: '#1e293b', secondary: '#475569', accent: '#2563eb', accentLight: '#dbeafe', bg: '#f8fafc', line: '#e2e8f0' },
-  emerald: { primary: '#064e3b', secondary: '#0f766e', accent: '#0d9488', accentLight: '#ccfbf1', bg: '#f0fdfa', line: '#e2e8f0' },
-  purple: { primary: '#3b0764', secondary: '#581c87', accent: '#7c3aed', accentLight: '#f3e8ff', bg: '#faf5ff', line: '#f3e8ff' },
-  charcoal: { primary: '#18181b', secondary: '#3f3f46', accent: '#4f46e5', accentLight: '#e0e7ff', bg: '#fafafa', line: '#e4e4e7' },
+  // ── Modern / Trendig ──────────────────────────────────────────────────────
+  petrol:     { primary: '#0c4a5a', secondary: '#1a6e86', accent: '#0891b2', accentLight: '#e0f2fe', bg: '#f5fbfd', line: '#bae6fd' },
+  midnight:   { primary: '#111827', secondary: '#374151', accent: '#6366f1', accentLight: '#eef2ff', bg: '#f9fafb', line: '#e0e7ff' },
+  cobalt:     { primary: '#1e3a5f', secondary: '#2a5298', accent: '#3b82f6', accentLight: '#dbeafe', bg: '#f8faff', line: '#bfdbfe' },
+  copper:     { primary: '#3d2b1f', secondary: '#7a4d2e', accent: '#b87333', accentLight: '#fdf0e0', bg: '#fffcf8', line: '#f5deb3' },
+  olive:      { primary: '#2d3a1e', secondary: '#4a5e2e', accent: '#6b7e3a', accentLight: '#f0f4e0', bg: '#fafcf7', line: '#d4e0b0' },
+  // ── Klassisch / Zeitlos ───────────────────────────────────────────────────
+  navy:       { primary: '#1e293b', secondary: '#475569', accent: '#2563eb', accentLight: '#dbeafe', bg: '#f8fafc', line: '#e2e8f0' },
+  charcoal:   { primary: '#18181b', secondary: '#3f3f46', accent: '#4f46e5', accentLight: '#e0e7ff', bg: '#fafafa', line: '#e4e4e7' },
+  royal:      { primary: '#1e3a8a', secondary: '#1e40af', accent: '#2563eb', accentLight: '#eff6ff', bg: '#f8fafc', line: '#dbeafe' },
+  oxford:     { primary: '#002147', secondary: '#003e87', accent: '#0064c8', accentLight: '#e6eeff', bg: '#f8faff', line: '#c0d8f8' },
+  // ── Natur / Organisch ─────────────────────────────────────────────────────
+  teal:       { primary: '#115e59', secondary: '#0f766e', accent: '#0d9488', accentLight: '#ccfbf1', bg: '#f0fdfa', line: '#99f6e4' },
+  emerald:    { primary: '#064e3b', secondary: '#0f766e', accent: '#0d9488', accentLight: '#ccfbf1', bg: '#f0fdfa', line: '#e2e8f0' },
+  sage:       { primary: '#14532d', secondary: '#3f6212', accent: '#15803d', accentLight: '#dcfce7', bg: '#fcfdfb', line: '#bbf7d0' },
+  amber:      { primary: '#78350f', secondary: '#92400e', accent: '#b45309', accentLight: '#fef3c7', bg: '#fffdfa', line: '#fde68a' },
+  // ── Warm / Leidenschaftlich ───────────────────────────────────────────────
+  wine:       { primary: '#4a0e2c', secondary: '#6b1e42', accent: '#9b1851', accentLight: '#fce4ec', bg: '#fffbfc', line: '#f9a8c9' },
   terracotta: { primary: '#7c2d12', secondary: '#9a3412', accent: '#c2410c', accentLight: '#ffedd5', bg: '#fffbeb', line: '#fed7aa' },
-  sage: { primary: '#14532d', secondary: '#3f6212', accent: '#15803d', accentLight: '#dcfce7', bg: '#fcfdfb', line: '#bbf7d0' },
-  royal: { primary: '#1e3a8a', secondary: '#1e40af', accent: '#2563eb', accentLight: '#eff6ff', bg: '#f8fafc', line: '#dbeafe' },
-  dustyrose: { primary: '#4c0519', secondary: '#881337', accent: '#be123c', accentLight: '#ffe4e6', bg: '#fffafb', line: '#fecdd3' },
-  teal: { primary: '#115e59', secondary: '#0f766e', accent: '#0d9488', accentLight: '#ccfbf1', bg: '#f0fdfa', line: '#99f6e4' },
-  amber: { primary: '#78350f', secondary: '#92400e', accent: '#b45309', accentLight: '#fef3c7', bg: '#fffdfa', line: '#fde68a' }
+  dustyrose:  { primary: '#4c0519', secondary: '#881337', accent: '#be123c', accentLight: '#ffe4e6', bg: '#fffafb', line: '#fecdd3' },
+  // ── Elegant / Akademisch ─────────────────────────────────────────────────
+  purple:     { primary: '#3b0764', secondary: '#581c87', accent: '#7c3aed', accentLight: '#f3e8ff', bg: '#faf5ff', line: '#f3e8ff' },
+};
+
+const themeLabels = {
+  petrol:     'Petrol — modernes Blaugrün',
+  midnight:   'Midnight — ultra-modern Dunkel',
+  cobalt:     'Kobalt — kräftiges Blau',
+  copper:     'Kupfer — warmes Bronze',
+  olive:      'Olive — erdiges Grün',
+  navy:       'Navy — klassisches Dunkelblau',
+  charcoal:   'Charcoal — elegantes Anthrazit',
+  royal:      'Royal — tiefes Königsblau',
+  oxford:     'Oxford — traditionelles Dunkelblau',
+  teal:       'Teal — frisches Blaugrün',
+  emerald:    'Emerald — sattes Grün',
+  sage:       'Sage — gedämpftes Waldgrün',
+  amber:      'Amber — warmes Honiggelb',
+  wine:       'Weinrot — elegantes Bordeaux',
+  terracotta: 'Terracotta — warmes Erdrot',
+  dustyrose:  'Dusty Rose — zartes Altrosa',
+  purple:     'Amethyst — elegantes Violett',
 };
 
 // Initialize Application
@@ -258,6 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupTabController();
   setupInputListeners();
   setupDesignListeners();
+  setupMobileToggle();
   
   renderCV();
 });
@@ -292,8 +367,39 @@ function loadData() {
   if (cached) {
     try {
       cvData = JSON.parse(cached);
-      // Ensure layout exists
+      // Ensure layout exists (schema migration)
       if (!cvData.layout) cvData.layout = JSON.parse(JSON.stringify(defaultCVData.layout));
+      if (!cvData.layout.fontPack) cvData.layout.fontPack = 'inter-outfit';
+      // Ensure personal.address exists (schema migration)
+      if (cvData.personal && cvData.personal.address === undefined) cvData.personal.address = '';
+      // Migrate new sections if missing
+      if (cvData.personal.photo === undefined) cvData.personal.photo = '';
+      if (cvData.personal.birthDate === undefined) cvData.personal.birthDate = '';
+      if (cvData.personal.birthPlace === undefined) cvData.personal.birthPlace = '';
+      if (cvData.personal.nationality === undefined) cvData.personal.nationality = '';
+      if (!cvData.talks) cvData.talks = [];
+      if (!cvData.publications) cvData.publications = [];
+      if (cvData.referencesNote === undefined) cvData.referencesNote = '';
+      if (!cvData.volunteer) cvData.volunteer = [];
+      if (!cvData.awards) cvData.awards = [];
+      if (!cvData.drivingLicense) cvData.drivingLicense = { classes: '', ownVehicle: false };
+      if (cvData.layout?.visibleSections?.volunteer === undefined) cvData.layout.visibleSections.volunteer = false;
+      if (cvData.layout?.visibleSections?.awards === undefined) cvData.layout.visibleSections.awards = false;
+      if (cvData.layout?.visibleSections?.drivingLicense === undefined) cvData.layout.visibleSections.drivingLicense = false;
+      if (cvData.layout?.visibleSections?.talks === undefined) cvData.layout.visibleSections.talks = false;
+      if (cvData.layout?.visibleSections?.publications === undefined) cvData.layout.visibleSections.publications = false;
+      if (cvData.layout?.visibleSections?.references === undefined) cvData.layout.visibleSections.references = false;
+      // Migrate old skills format {frontend:[...], backend:[...]} to new {groups:[...]}
+      if (cvData.skills && !cvData.skills.groups) {
+        const oldGroups = [];
+        for (const [key, items] of Object.entries(cvData.skills)) {
+          if (Array.isArray(items)) {
+            const label = key.charAt(0).toUpperCase() + key.slice(1);
+            oldGroups.push({ label, items });
+          }
+        }
+        cvData.skills = { groups: oldGroups };
+      }
     } catch (e) {
       console.error("Failed to parse cached CV data", e);
       cvData = JSON.parse(JSON.stringify(defaultCVData));
@@ -301,6 +407,8 @@ function loadData() {
   } else {
     cvData = JSON.parse(JSON.stringify(defaultCVData));
   }
+  // Always persist to keep localStorage in sync with the current schema
+  localStorage.setItem('cv_json_data', JSON.stringify(cvData));
 }
 
 // Render dynamic sections from JSON model
@@ -322,10 +430,34 @@ function renderCV(preventSidebarRebuild = false) {
     'style-neumorphic',
     'style-magazine',
     'style-poster',
-    'style-brutalist'
+    'style-brutalist',
+    'style-scandinavian',
+    'style-art-deco',
+    'style-academic',
+    'style-glassfolio',
+    'style-heritage-ledger',
+    'style-metro-grid',
+    'style-zen-minimum',
+    'style-dossier',
+    'style-kinetic-sans',
+    'style-serif-luxe',
+    'style-mono-blueprint'
   );
   root.classList.add(`style-${cvData.layout.style}`);
   applyStyleSpecificPrintMargins(cvData.layout.style);
+
+  // 1.25. Apply Font Pack Configuration
+  root.classList.remove(
+    'font-pack-inter-outfit',
+    'font-pack-editorial-serif',
+    'font-pack-grotesk-stack',
+    'font-pack-humanist-sans',
+    'font-pack-geometric-sans',
+    'font-pack-classic-print',
+    'font-pack-tech-mono',
+    'font-pack-elegant-modern'
+  );
+  root.classList.add(`font-pack-${cvData.layout.fontPack || 'inter-outfit'}`);
 
   // 1.5. Apply Screen Preview Mode Configuration (A4 vs Continuous)
   const pMode = cvData.layout.previewMode || 'a4';
@@ -336,7 +468,20 @@ function renderCV(preventSidebarRebuild = false) {
   }
 
   // 2. Apply Paper Background Configuration
-  root.classList.remove('paper-bg-white', 'paper-bg-cream', 'paper-bg-grid', 'paper-bg-border');
+  root.classList.remove(
+    'paper-bg-white',
+    'paper-bg-cream',
+    'paper-bg-grid',
+    'paper-bg-border',
+    'paper-bg-linen',
+    'paper-bg-recycled',
+    'paper-bg-blueprint-fine',
+    'paper-bg-deckle',
+    'paper-bg-legal-pad',
+    'paper-bg-archive-dot',
+    'paper-bg-marble',
+    'paper-bg-technical-grid'
+  );
   root.classList.add(`paper-bg-${cvData.layout.background}`);
 
   // 3. Apply Header Layout Configuration
@@ -363,6 +508,12 @@ function renderCV(preventSidebarRebuild = false) {
   toggleSectionVisibility('cv-sec-methodsAndTools', visible.methodsAndTools);
   toggleSectionVisibility('cv-sec-languages', visible.languages);
   toggleSectionVisibility('cv-sec-hobbies', visible.hobbies);
+  toggleSectionVisibility('cv-sec-volunteer', visible.volunteer);
+  toggleSectionVisibility('cv-sec-awards', visible.awards);
+  toggleSectionVisibility('cv-sec-drivingLicense', visible.drivingLicense);
+  toggleSectionVisibility('cv-sec-talks', visible.talks);
+  toggleSectionVisibility('cv-sec-publications', visible.publications);
+  toggleSectionVisibility('cv-sec-references', visible.references);
 
   // 6. Apply Dynamic Footer Block
   const cvFooter = document.getElementById('cv-footer');
@@ -370,7 +521,19 @@ function renderCV(preventSidebarRebuild = false) {
     const fStyle = cvData.layout.footerStyle || 'simple';
     
     // Remove custom classes to prevent style leaking
-    cvFooter.classList.remove('footer-layout-corporate', 'footer-layout-initials', 'footer-layout-signature');
+    cvFooter.classList.remove(
+      'footer-layout-corporate',
+      'footer-layout-initials',
+      'footer-layout-signature',
+      'footer-layout-editorial-rule',
+      'footer-layout-ledger-strip',
+      'footer-layout-stamp',
+      'footer-layout-notched',
+      'footer-layout-wave',
+      'footer-layout-archive',
+      'footer-layout-matrix',
+      'footer-layout-handwritten'
+    );
     
     if (fStyle === 'none') {
       cvFooter.style.display = 'none';
@@ -411,6 +574,64 @@ function renderCV(preventSidebarRebuild = false) {
             Unterschrift / Gez. ${cvData.personal.name}
           </div>
         `;
+      } else if (fStyle === 'editorial-rule') {
+        cvFooter.classList.add('footer-layout-editorial-rule');
+        cvFooter.innerHTML = `
+          <span class="text-[9px] font-semibold text-[var(--color-cv-primary)]">Curriculum Vitae</span>
+          <span class="text-[9px] text-slate-600">${text}</span>
+        `;
+      } else if (fStyle === 'ledger-strip') {
+        cvFooter.classList.add('footer-layout-ledger-strip');
+        cvFooter.innerHTML = `
+          <span class="text-[8px] text-[var(--color-cv-primary)] font-bold">DOC</span>
+          <span class="text-[8px] text-slate-600 truncate">${text}</span>
+          <span class="text-[8px] text-[var(--color-cv-primary)] font-bold text-right">VER ${new Date().getFullYear()}</span>
+        `;
+      } else if (fStyle === 'stamp') {
+        cvFooter.classList.add('footer-layout-stamp');
+        const initials = cvData.personal.name
+          ? cvData.personal.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 3)
+          : 'CV';
+        cvFooter.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="footer-stamp-seal">${initials}</span>
+            <span class="text-[9px] text-slate-600">${text}</span>
+          </div>
+          <span class="text-[8px] uppercase tracking-wider text-slate-500">Archive Ready</span>
+        `;
+      } else if (fStyle === 'notched') {
+        cvFooter.classList.add('footer-layout-notched');
+        cvFooter.innerHTML = `
+          <span class="text-[8px] text-slate-700 font-semibold">${cvData.personal.role || 'Professional Profile'}</span>
+          <span class="text-[8px] text-slate-700">${cvData.personal.location || 'Deutschland'}</span>
+        `;
+      } else if (fStyle === 'wave') {
+        cvFooter.classList.add('footer-layout-wave');
+        cvFooter.innerHTML = `
+          <span class="text-[9px] text-slate-600">${text}</span>
+          <span class="text-[8px] uppercase tracking-wider text-[var(--color-cv-primary)]">Live Profile</span>
+        `;
+      } else if (fStyle === 'archive') {
+        cvFooter.classList.add('footer-layout-archive');
+        cvFooter.innerHTML = `
+          <span class="text-[8px] px-1 py-0.5 border border-[var(--color-cv-line)] text-slate-600">A</span>
+          <span class="text-[8px] px-1 py-0.5 border border-[var(--color-cv-line)] text-slate-600">CV</span>
+          <span class="text-[9px] text-slate-600 truncate">${text}</span>
+        `;
+      } else if (fStyle === 'matrix') {
+        cvFooter.classList.add('footer-layout-matrix');
+        const year = String(new Date().getFullYear());
+        cvFooter.innerHTML = `
+          <span class="text-[8px] text-slate-600">IDX</span>
+          <span class="text-[8px] text-slate-600">${year}</span>
+          <span class="text-[8px] text-slate-600">${(cvData.personal.name || 'CV').substring(0, 8).toUpperCase()}</span>
+        `;
+      } else if (fStyle === 'handwritten') {
+        cvFooter.classList.add('footer-layout-handwritten');
+        cvFooter.innerHTML = `
+          <span class="text-[9px] text-slate-600">${text}</span>
+          <span class="footer-handwritten-sign">gez. ${cvData.personal.name || 'Name'}</span>
+        `;
       } else {
         // default simple
         cvFooter.innerHTML = `
@@ -428,6 +649,7 @@ function renderCV(preventSidebarRebuild = false) {
     { id: 'cv-profile-text', path: 'personal.profileText' },
     { id: 'cv-contact-email', path: 'personal.email' },
     { id: 'cv-contact-phone', path: 'personal.phone' },
+    { id: 'cv-contact-address', path: 'personal.address' },
     { id: 'cv-contact-location', path: 'personal.location' },
     { id: 'cv-contact-website', path: 'personal.website' },
     { id: 'cv-contact-github', path: 'personal.github' },
@@ -441,6 +663,45 @@ function renderCV(preventSidebarRebuild = false) {
     }
   });
 
+  // 7b. Render Profile Photo
+  const photoWrapper = document.getElementById('cv-photo-wrapper');
+  const photoImg = document.getElementById('cv-photo');
+  const photoSrc = cvData.personal?.photo || '';
+  if (photoWrapper && photoImg) {
+    if (photoSrc) {
+      photoImg.src = photoSrc;
+      photoWrapper.classList.remove('hidden');
+    } else {
+      photoWrapper.classList.add('hidden');
+    }
+  }
+
+  // 7c. Render Personal Details (birthDate, birthPlace, nationality)
+  const pdWrapper = document.getElementById('cv-personal-details');
+  const bdEl = document.getElementById('cv-personal-birthdate');
+  const bpEl = document.getElementById('cv-personal-birthplace');
+  const natEl = document.getElementById('cv-personal-nationality');
+  const birthDate = cvData.personal?.birthDate || '';
+  const birthPlace = cvData.personal?.birthPlace || '';
+  const nationality = cvData.personal?.nationality || '';
+  if (bdEl) {
+    if (birthDate) { bdEl.textContent = `Geb. ${birthDate}`; bdEl.classList.remove('hidden'); }
+    else { bdEl.classList.add('hidden'); }
+  }
+  if (bpEl) {
+    if (birthPlace) { bpEl.textContent = `Geburtsort: ${birthPlace}`; bpEl.classList.remove('hidden'); }
+    else { bpEl.classList.add('hidden'); }
+  }
+  if (natEl) {
+    if (nationality) { natEl.textContent = `Nationalität: ${nationality}`; natEl.classList.remove('hidden'); }
+    else { natEl.classList.add('hidden'); }
+  }
+  if (pdWrapper) {
+    const anyPersonalDetails = birthDate || birthPlace || nationality;
+    if (anyPersonalDetails) pdWrapper.classList.remove('hidden');
+    else pdWrapper.classList.add('hidden');
+  }
+
   // 8. Render Dynamic Content Blocks
   renderCompetencies();
   renderLanguages();
@@ -452,9 +713,18 @@ function renderCV(preventSidebarRebuild = false) {
   renderProjects();
   renderOpenSource();
   renderSkills();
+  renderVolunteer();
+  renderAwards();
+  renderDrivingLicense();
+  renderTalks();
+  renderPublications();
+  renderReferences();
+  // Update page-break indicators after DOM settles
+  requestAnimationFrame(() => renderPageBreaks());
 
   // 9. Sync Left Form Inputs
   syncFormsFromData();
+  syncPhotoPreview();
 
   // 10. Attach on-screen listeners
   syncEditabilityAndListeners();
@@ -799,62 +1069,240 @@ function renderOpenSource() {
 
 
 function renderSkills() {
-  // Render Frontend Skills
-  const feContainer = document.getElementById('skills-frontend-container');
-  feContainer.innerHTML = '';
-  
-  cvData.skills.frontend.forEach((skill, index) => {
-    const div = document.createElement('div');
-    div.className = 'group relative flex flex-col gap-1 pr-6';
-    div.innerHTML = `
-      <div class="flex justify-between items-baseline text-xs">
-        <span class="font-semibold text-slate-800" data-path="skills.frontend.${index}.name">${skill.name}</span>
-        <span class="text-slate-500 text-[10px] shrink-0 font-medium">
-          <span class="font-bold text-[var(--color-cv-accent)] uppercase" data-path="skills.frontend.${index}.level">${skill.level}</span> • 
-          <span data-path="skills.frontend.${index}.years">${skill.years}</span>
-        </span>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="w-full bg-slate-200 h-1 rounded-full overflow-hidden">
-          <div class="bg-[var(--color-cv-accent)] h-full transition-all duration-300" style="width: ${skill.percentage}%"></div>
-        </div>
-        <span class="text-[9px] text-slate-400 no-print font-bold w-6 text-right" data-path="skills.frontend.${index}.percentage" data-type="number">${skill.percentage}%</span>
-      </div>
-      <button class="no-print absolute top-0.5 right-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-0.5" onclick="removeSkillItem('frontend', ${index})" title="Skill entfernen">
-        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-      </button>
-    `;
-    feContainer.appendChild(div);
-  });
+  const container = document.getElementById('skills-groups-container');
+  if (!container) return;
+  container.innerHTML = '';
 
-  // Render Backend Skills
-  const beContainer = document.getElementById('skills-backend-container');
-  beContainer.innerHTML = '';
-  
-  cvData.skills.backend.forEach((skill, index) => {
-    const div = document.createElement('div');
-    div.className = 'group relative flex flex-col gap-1 pr-6';
-    div.innerHTML = `
-      <div class="flex justify-between items-baseline text-xs">
-        <span class="font-semibold text-slate-800" data-path="skills.backend.${index}.name">${skill.name}</span>
-        <span class="text-slate-500 text-[10px] shrink-0 font-medium">
-          <span class="font-bold text-[var(--color-cv-accent)] uppercase" data-path="skills.backend.${index}.level">${skill.level}</span> • 
-          <span data-path="skills.backend.${index}.years">${skill.years}</span>
-        </span>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="w-full bg-slate-200 h-1 rounded-full overflow-hidden">
-          <div class="bg-[var(--color-cv-accent)] h-full transition-all duration-300" style="width: ${skill.percentage}%"></div>
+  const groups = cvData.skills?.groups || [];
+  groups.forEach((group, gi) => {
+    const col = document.createElement('div');
+    col.className = 'flex flex-col gap-2';
+    col.innerHTML = `<h5 class="text-xs font-bold text-[var(--color-cv-primary)] border-b border-[var(--color-cv-line)] pb-0.5">${group.label}</h5>`;
+    const list = document.createElement('div');
+    list.className = 'flex flex-col gap-3 text-xs text-[var(--color-cv-secondary)]';
+
+    (group.items || []).forEach((skill, index) => {
+      const div = document.createElement('div');
+      div.className = 'group relative flex flex-col gap-1 pr-6';
+      div.innerHTML = `
+        <div class="flex justify-between items-baseline text-xs">
+          <span class="font-semibold text-slate-800" data-path="skills.groups.${gi}.items.${index}.name">${skill.name}</span>
+          <span class="text-slate-500 text-[10px] shrink-0 font-medium">
+            <span class="font-bold text-[var(--color-cv-accent)] uppercase" data-path="skills.groups.${gi}.items.${index}.level">${skill.level}</span> • 
+            <span data-path="skills.groups.${gi}.items.${index}.years">${skill.years}</span>
+          </span>
         </div>
-        <span class="text-[9px] text-slate-400 no-print font-bold w-6 text-right" data-path="skills.backend.${index}.percentage" data-type="number">${skill.percentage}%</span>
-      </div>
-      <button class="no-print absolute top-0.5 right-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-0.5" onclick="removeSkillItem('backend', ${index})" title="Skill entfernen">
-        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-      </button>
-    `;
-    beContainer.appendChild(div);
+        <div class="flex items-center gap-2">
+          <div class="w-full bg-slate-200 h-1 rounded-full overflow-hidden">
+            <div class="bg-[var(--color-cv-accent)] h-full transition-all duration-300" style="width: ${skill.percentage}%"></div>
+          </div>
+          <span class="text-[9px] text-slate-400 no-print font-bold w-6 text-right" data-path="skills.groups.${gi}.items.${index}.percentage" data-type="number">${skill.percentage}%</span>
+        </div>
+        <button class="no-print absolute top-0.5 right-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-0.5" onclick="removeSkillItem(${gi}, ${index})" title="Skill entfernen">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+        </button>
+      `;
+      list.appendChild(div);
+    });
+    col.appendChild(list);
+    container.appendChild(col);
   });
 }
+
+function renderVolunteer() {
+  const container = document.getElementById('volunteer-container');
+  if (!container) return;
+  container.innerHTML = '';
+  (cvData.volunteer || []).forEach((item, index) => {
+    const div = document.createElement('div');
+    div.className = 'group relative flex flex-col gap-0.5 pr-6';
+    div.innerHTML = `
+      <div class="flex justify-between items-baseline flex-wrap gap-x-2">
+        <span class="font-bold text-[var(--color-cv-primary)]" data-path="volunteer.${index}.role">${item.role}</span>
+        <span class="text-[10px] text-slate-400 shrink-0" data-path="volunteer.${index}.date">${item.date}</span>
+      </div>
+      <span class="font-semibold text-[var(--color-cv-accent)] text-[11px]" data-path="volunteer.${index}.organization">${item.organization}</span>
+      <span class="leading-relaxed" data-path="volunteer.${index}.description">${item.description}</span>
+      <button class="no-print absolute top-0.5 right-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-0.5" onclick="removeArrayItem('volunteer', ${index})" title="Entfernen">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+      </button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function renderAwards() {
+  const container = document.getElementById('awards-container');
+  if (!container) return;
+  container.innerHTML = '';
+  (cvData.awards || []).forEach((item, index) => {
+    const div = document.createElement('div');
+    div.className = 'group relative flex flex-col gap-0.5 pr-6';
+    div.innerHTML = `
+      <div class="flex justify-between items-baseline flex-wrap gap-x-2">
+        <span class="font-bold text-[var(--color-cv-primary)]" data-path="awards.${index}.title">${item.title}</span>
+        <span class="text-[10px] text-slate-400 shrink-0" data-path="awards.${index}.date">${item.date}</span>
+      </div>
+      <span class="font-semibold text-[var(--color-cv-accent)] text-[11px]" data-path="awards.${index}.issuer">${item.issuer}</span>
+      ${item.description ? `<span class="leading-relaxed" data-path="awards.${index}.description">${item.description}</span>` : ''}
+      <button class="no-print absolute top-0.5 right-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-0.5" onclick="removeArrayItem('awards', ${index})" title="Entfernen">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+      </button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function renderDrivingLicense() {
+  const container = document.getElementById('driving-license-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const dl = cvData.drivingLicense;
+  if (!dl || (!dl.classes && !dl.ownVehicle)) return;
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'flex flex-wrap items-center gap-2';
+
+  if (dl.classes) {
+    dl.classes.split(',').map(c => c.trim()).filter(Boolean).forEach(cls => {
+      const badge = document.createElement('span');
+      badge.className = 'px-2.5 py-0.5 bg-[var(--color-cv-accent-light)] text-[var(--color-cv-accent)] text-[10px] font-bold rounded-full';
+      badge.textContent = `Klasse ${cls}`;
+      wrapper.appendChild(badge);
+    });
+  }
+
+  if (dl.ownVehicle) {
+    const badge = document.createElement('span');
+    badge.className = 'flex items-center gap-1 text-[10px] text-slate-500';
+    badge.innerHTML = '<svg class="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg> Eigenes Fahrzeug vorhanden';
+    wrapper.appendChild(badge);
+  }
+  container.appendChild(wrapper);
+}
+
+function renderTalks() {
+  const container = document.getElementById('talks-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const talks = cvData.talks || [];
+  if (!talks.length) return;
+
+  talks.forEach(talk => {
+    const div = document.createElement('div');
+    div.className = 'flex flex-col gap-0.5';
+
+    const title = document.createElement('div');
+    title.className = 'font-semibold text-[var(--color-cv-primary)] leading-tight';
+    title.textContent = talk.title || '';
+
+    const meta = document.createElement('div');
+    meta.className = 'flex items-center gap-2 text-[var(--color-cv-secondary)]';
+    const parts = [talk.event, talk.date].filter(Boolean);
+    meta.textContent = parts.join(' · ');
+
+    div.appendChild(title);
+    div.appendChild(meta);
+
+    if (talk.url) {
+      const link = document.createElement('a');
+      link.href = talk.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'text-[var(--color-cv-accent)] hover:underline truncate';
+      link.textContent = talk.url;
+      div.appendChild(link);
+    }
+
+    container.appendChild(div);
+  });
+}
+
+function renderPublications() {
+  const container = document.getElementById('publications-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const pubs = cvData.publications || [];
+  if (!pubs.length) return;
+
+  pubs.forEach(pub => {
+    const div = document.createElement('div');
+    div.className = 'flex flex-col gap-0.5';
+
+    const title = document.createElement('div');
+    title.className = 'font-semibold text-[var(--color-cv-primary)] leading-tight';
+    title.textContent = pub.title || '';
+
+    const meta = document.createElement('div');
+    meta.className = 'flex items-center gap-2 text-[var(--color-cv-secondary)]';
+    const parts = [pub.publisher, pub.date].filter(Boolean);
+    meta.textContent = parts.join(' · ');
+
+    div.appendChild(title);
+    div.appendChild(meta);
+
+    if (pub.url) {
+      const link = document.createElement('a');
+      link.href = pub.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'text-[var(--color-cv-accent)] hover:underline truncate';
+      link.textContent = pub.url;
+      div.appendChild(link);
+    }
+
+    container.appendChild(div);
+  });
+}
+
+function renderReferences() {
+  const container = document.getElementById('references-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const note = cvData.referencesNote || '';
+  if (!note) return;
+  container.textContent = note;
+}
+
+function syncPhotoPreview() {
+  const preview = document.getElementById('photo-preview');
+  const removeBtn = document.getElementById('photo-remove');
+  const photo = cvData.personal?.photo || '';
+  if (!preview) return;
+  if (photo) {
+    preview.innerHTML = `<img src="${photo}" alt="Profilfoto" class="w-full h-full object-cover">`;
+    if (removeBtn) removeBtn.classList.remove('hidden');
+  } else {
+    preview.innerHTML = '<svg class="w-7 h-7 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>';
+    if (removeBtn) removeBtn.classList.add('hidden');
+  }
+}
+
+function renderPageBreaks() {
+  // Remove existing break indicators
+  document.querySelectorAll('#cv-page .page-break-indicator').forEach(el => el.remove());
+
+  const cvPage = document.getElementById('cv-page');
+  if (!cvPage || (cvData.layout?.previewMode === 'continuous')) return;
+
+  // A4 at 96dpi: 297mm × (96px / 25.4mm) ≈ 1122.52px
+  const A4_PX = Math.round(297 * 96 / 25.4);
+  const totalHeight = cvPage.scrollHeight;
+
+  for (let page = 1; page * A4_PX < totalHeight; page++) {
+    const indicator = document.createElement('div');
+    indicator.className = 'page-break-indicator no-print';
+    indicator.setAttribute('aria-hidden', 'true');
+    indicator.style.top = `${page * A4_PX}px`;
+    indicator.innerHTML = `
+      <div class="page-break-indicator__line">
+        <span class="page-break-indicator__label">Seite ${page} → ${page + 1}</span>
+      </div>
+    `;
+    cvPage.appendChild(indicator);
+  }
+}
+
 
 // ---------------- DYNAMIC SIDEBAR BLOCK EDITOR RENDERER ----------------
 
@@ -910,69 +1358,109 @@ function renderBlockEditor() {
     container.appendChild(addBtn);
 
   } else if (activeBlock === 'skills') {
-    // Skills nested lists (frontend and backend)
-    container.innerHTML = `
-      <div class="flex flex-col gap-4">
-        <!-- Frontend Skills Form list -->
-        <div class="flex flex-col gap-2">
-          <h6 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Frontend Skills</h6>
-          <div id="skills-fe-editor" class="flex flex-col gap-2"></div>
-          <button class="w-full py-1.5 bg-slate-700 hover:bg-slate-650 text-slate-200 rounded-lg text-xs font-semibold cursor-pointer transition-colors" onclick="addSkillItem('frontend')">+ Frontend Skill</button>
-        </div>
-        <!-- Backend Skills Form list -->
-        <div class="flex flex-col gap-2 border-t border-slate-700/50 pt-3">
-          <h6 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Backend Skills</h6>
-          <div id="skills-be-editor" class="flex flex-col gap-2"></div>
-          <button class="w-full py-1.5 bg-slate-700 hover:bg-slate-650 text-slate-200 rounded-lg text-xs font-semibold cursor-pointer transition-colors" onclick="addSkillItem('backend')">+ Backend Skill</button>
-        </div>
-      </div>
-    `;
+    // Dynamic skill groups editor
+    const groups = cvData.skills?.groups || [];
+    const wrapper = document.createElement('div');
+    wrapper.className = 'flex flex-col gap-5';
 
-    // Render frontend skill cards
-    const feEd = document.getElementById('skills-fe-editor');
-    cvData.skills.frontend.forEach((skill, index) => {
-      const card = document.createElement('div');
-      card.className = 'bg-slate-900 border border-slate-700 p-2.5 rounded-lg flex flex-col gap-2 relative';
-      card.innerHTML = `
-        <div class="flex justify-between items-center">
-          <span class="text-[9px] font-bold text-blue-400">#${index + 1} Frontend</span>
-          <button class="text-red-400 hover:text-red-500 cursor-pointer" onclick="removeSkillItem('frontend', ${index})">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-          </button>
-        </div>
-        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${skill.name}" oninput="updateSkillField('frontend', ${index}, 'name', this.value)" placeholder="Technologie-Name">
-        <div class="grid grid-cols-3 gap-1">
-          <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.level}" oninput="updateSkillField('frontend', ${index}, 'level', this.value)" placeholder="z.B. Experte">
-          <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.years}" oninput="updateSkillField('frontend', ${index}, 'years', this.value)" placeholder="z.B. 6 Jahre">
-          <input type="number" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.percentage}" oninput="updateSkillField('frontend', ${index}, 'percentage', parseInt(this.value))" placeholder="95" min="0" max="100">
-        </div>
-      `;
-      feEd.appendChild(card);
-    });
+    groups.forEach((group, gi) => {
+      const section = document.createElement('div');
+      section.className = 'flex flex-col gap-2 border border-slate-700 rounded-xl p-3';
 
-    // Render backend skill cards
-    const beEd = document.getElementById('skills-be-editor');
-    cvData.skills.backend.forEach((skill, index) => {
-      const card = document.createElement('div');
-      card.className = 'bg-slate-900 border border-slate-700 p-2.5 rounded-lg flex flex-col gap-2 relative';
-      card.innerHTML = `
-        <div class="flex justify-between items-center">
-          <span class="text-[9px] font-bold text-blue-400">#${index + 1} Backend</span>
-          <button class="text-red-400 hover:text-red-500 cursor-pointer" onclick="removeSkillItem('backend', ${index})">
+      // Group header: rename input + delete group button
+      section.innerHTML = `
+        <div class="flex items-center gap-2 pb-2 border-b border-slate-700">
+          <input type="text" class="flex-1 bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs text-white font-bold" value="${group.label}" oninput="renameSkillGroup(${gi}, this.value)" placeholder="Gruppen-Name">
+          <button class="text-red-400 hover:text-red-500 cursor-pointer p-1" onclick="removeSkillGroup(${gi})" title="Gruppe entfernen">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
           </button>
         </div>
-        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${skill.name}" oninput="updateSkillField('backend', ${index}, 'name', this.value)" placeholder="Technologie-Name">
-        <div class="grid grid-cols-3 gap-1">
-          <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.level}" oninput="updateSkillField('backend', ${index}, 'level', this.value)" placeholder="z.B. Experte">
-          <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.years}" oninput="updateSkillField('backend', ${index}, 'years', this.value)" placeholder="z.B. 6 Jahre">
-          <input type="number" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.percentage}" oninput="updateSkillField('backend', ${index}, 'percentage', parseInt(this.value))" placeholder="90" min="0" max="100">
-        </div>
       `;
-      beEd.appendChild(card);
+
+      // Skill cards inside the group
+      const cardList = document.createElement('div');
+      cardList.className = 'flex flex-col gap-2';
+      (group.items || []).forEach((skill, index) => {
+        const card = document.createElement('div');
+        card.className = 'bg-slate-900 border border-slate-800 p-2.5 rounded-lg flex flex-col gap-2';
+        card.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="text-[9px] font-bold text-blue-400">#${index + 1}</span>
+            <button class="text-red-400 hover:text-red-500 cursor-pointer" onclick="removeSkillItem(${gi}, ${index})">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            </button>
+          </div>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${skill.name}" oninput="updateSkillField(${gi}, ${index}, 'name', this.value)" placeholder="Technologie-Name">
+          <div class="grid grid-cols-3 gap-1">
+            <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.level}" oninput="updateSkillField(${gi}, ${index}, 'level', this.value)" placeholder="z.B. Experte">
+            <input type="text" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.years}" oninput="updateSkillField(${gi}, ${index}, 'years', this.value)" placeholder="z.B. 6 Jahre">
+            <input type="number" class="col-span-1 bg-slate-950 border border-slate-800 rounded px-1.5 py-1 text-[10px] text-white" value="${skill.percentage}" oninput="updateSkillField(${gi}, ${index}, 'percentage', parseInt(this.value) || 0)" placeholder="95" min="0" max="100">
+          </div>
+        `;
+        cardList.appendChild(card);
+      });
+      section.appendChild(cardList);
+
+      // Add skill button
+      const addSkillBtn = document.createElement('button');
+      addSkillBtn.className = 'w-full py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs font-semibold cursor-pointer transition-colors';
+      addSkillBtn.textContent = '+ Skill hinzufügen';
+      addSkillBtn.onclick = () => addSkillItem(gi);
+      section.appendChild(addSkillBtn);
+
+      wrapper.appendChild(section);
     });
+
+    // Add new group button
+    const addGroupBtn = document.createElement('button');
+    addGroupBtn.className = 'w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold cursor-pointer transition-colors flex items-center justify-center gap-1.5';
+    addGroupBtn.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg> Neue Gruppe hinzufügen';
+    addGroupBtn.onclick = () => addSkillGroup();
+    wrapper.appendChild(addGroupBtn);
+
+    container.appendChild(wrapper);
+
+  } else if (activeBlock === 'drivingLicense') {
+    // Special object editor for Führerschein
+    const dl = cvData.drivingLicense || {};
+    container.innerHTML = `
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Führerschein-Klassen</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${dl.classes || ''}" oninput="window.updateDrivingLicense('classes', this.value)" placeholder="z.B. B, BE, C1">
+          <span class="text-[9px] text-slate-600">Mehrere Klassen mit Komma trennen (z.B. B, BE)</span>
+        </div>
+        <label class="flex items-center gap-2 cursor-pointer text-sm text-slate-300">
+          <input type="checkbox" class="rounded accent-blue-500" ${dl.ownVehicle ? 'checked' : ''} onchange="window.updateDrivingLicense('ownVehicle', this.checked)">
+          Eigenes Fahrzeug vorhanden
+        </label>
+      </div>
+    `;
+  } else if (activeBlock === 'references') {
+    // Special free-text editor for Referenzen
+    const note = cvData.referencesNote || '';
+    container.innerHTML = `
+      <div class="flex flex-col gap-2">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Referenz-Hinweis</label>
+        <textarea rows="3" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white leading-normal" oninput="window.updateReferencesNote(this.value)" placeholder="z.B. Referenzen auf Anfrage erhältlich.">${note}</textarea>
+        <span class="text-[9px] text-slate-600">Erscheint kursiv am Ende des Lebenslaufs.</span>
+      </div>
+    `;
   }
 }
+
+window.updateReferencesNote = function(value) {
+  cvData.referencesNote = value;
+  saveData();
+  renderCV(true);
+};
+
+window.updateDrivingLicense = function(field, value) {
+  if (!cvData.drivingLicense) cvData.drivingLicense = { classes: '', ownVehicle: false };
+  cvData.drivingLicense[field] = value;
+  saveData();
+  renderCV(true);
+};
 
 // Generate the specific input forms inside dynamic cards
 function renderItemInputs(item, index) {
@@ -1130,6 +1618,100 @@ function renderItemInputs(item, index) {
     `;
   }
 
+  // Volunteer / Ehrenamt Inputs
+  if (activeBlock === 'volunteer') {
+    html += `
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Tätigkeit / Rolle</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.role}" oninput="updateBlockField(${index}, 'role', this.value)" placeholder="z.B. Mentor">
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Organisation / Verein</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.organization}" oninput="updateBlockField(${index}, 'organization', this.value)" placeholder="z.B. Tech Mentoring e.V.">
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Zeitraum</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.date}" oninput="updateBlockField(${index}, 'date', this.value)" placeholder="z.B. 2021 – heute">
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Beschreibung (optional)</label>
+        <textarea rows="2" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white leading-normal" oninput="updateBlockField(${index}, 'description', this.value)" placeholder="Kurze Beschreibung">${item.description || ''}</textarea>
+      </div>
+    `;
+  }
+
+  // Awards / Auszeichnungen Inputs
+  if (activeBlock === 'awards') {
+    html += `
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Auszeichnung / Preis</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.title}" oninput="updateBlockField(${index}, 'title', this.value)" placeholder="z.B. Best Developer Award">
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Verleiher</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.issuer}" oninput="updateBlockField(${index}, 'issuer', this.value)" placeholder="Verleihende Org.">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Jahr</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.date}" oninput="updateBlockField(${index}, 'date', this.value)" placeholder="2024">
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Beschreibung (optional)</label>
+        <textarea rows="2" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white leading-normal" oninput="updateBlockField(${index}, 'description', this.value)" placeholder="Optionale Beschreibung">${item.description || ''}</textarea>
+      </div>
+    `;
+  }
+
+  // Talks / Vorträge Inputs
+  if (activeBlock === 'talks') {
+    html += `
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Titel des Vortrags</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.title || ''}" oninput="updateBlockField(${index}, 'title', this.value)" placeholder="z.B. DevSecOps in der Praxis">
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Veranstaltung / Konferenz</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.event || ''}" oninput="updateBlockField(${index}, 'event', this.value)" placeholder="z.B. DevConf Munich">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Jahr</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.date || ''}" oninput="updateBlockField(${index}, 'date', this.value)" placeholder="2024">
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">URL (optional)</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.url || ''}" oninput="updateBlockField(${index}, 'url', this.value)" placeholder="https://...">
+      </div>
+    `;
+  }
+
+  // Publications / Publikationen Inputs
+  if (activeBlock === 'publications') {
+    html += `
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">Titel</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.title || ''}" oninput="updateBlockField(${index}, 'title', this.value)" placeholder="z.B. Clean Architecture im Enterprise">
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Publisher / Medium</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.publisher || ''}" oninput="updateBlockField(${index}, 'publisher', this.value)" placeholder="z.B. Heise Developer">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-slate-500 uppercase font-semibold">Jahr</label>
+          <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.date || ''}" oninput="updateBlockField(${index}, 'date', this.value)" placeholder="2024">
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-[9px] text-slate-500 uppercase font-semibold">URL (optional)</label>
+        <input type="text" class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-white" value="${item.url || ''}" oninput="updateBlockField(${index}, 'url', this.value)" placeholder="https://...">
+      </div>
+    `;
+  }
+
   return html;
 }
 
@@ -1152,10 +1734,12 @@ window.updateSubBlockList = function(index, field, subIndex, value) {
   renderCV(true);
 };
 
-window.updateSkillField = function(category, index, field, value) {
-  cvData.skills[category][index][field] = value;
-  saveData();
-  renderCV(true);
+window.updateSkillField = function(groupIndex, index, field, value) {
+  if (cvData.skills?.groups?.[groupIndex]?.items?.[index] !== undefined) {
+    cvData.skills.groups[groupIndex].items[index][field] = value;
+    saveData();
+    renderCV(true);
+  }
 };
 
 // ---------------- STRUCTURAL CHANGE ACTIONS (ADD & REMOVE) ----------------
@@ -1174,6 +1758,30 @@ window.addArrayItem = function(section) {
     education: { degree: "Neuer Abschluss / Studiengang", institution: "Schule / Hochschule", date: "Zeitraum" },
     methodsAndTools: "Neuer Tool-Eintrag",
     hobbies: "Anderes Hobby / Interesse",
+    volunteer: {
+      role: "Neue Tätigkeit",
+      organization: "Organisation / Verein",
+      date: "Zeitraum",
+      description: "Kurze Beschreibung der ehrenamtlichen Tätigkeit und deren Wirkung."
+    },
+    awards: {
+      title: "Neuer Preis / Auszeichnung",
+      issuer: "Verleihende Organisation",
+      date: "Jahr",
+      description: ""
+    },
+    talks: {
+      title: "Neuer Vortrag / Talk",
+      event: "Konferenz / Event",
+      date: "Jahr",
+      url: ""
+    },
+    publications: {
+      title: "Neuer Artikel / Publikation",
+      publisher: "Medium / Verlag",
+      date: "Jahr",
+      url: ""
+    },
     projects: {
       title: "Neues Projekt",
       duration: "Dauer • Jahr",
@@ -1207,22 +1815,51 @@ window.removeArrayItem = function(section, index) {
   }
 };
 
-window.addSkillItem = function(category) {
+window.addSkillItem = function(groupIndex) {
   const defaultSkill = { name: "Neue Technologie / Skill", level: "Tiefe Kenntnisse", years: "3 Jahre", percentage: 75 };
-  if (cvData.skills && cvData.skills[category]) {
-    cvData.skills[category].push(defaultSkill);
+  if (cvData.skills?.groups?.[groupIndex]) {
+    cvData.skills.groups[groupIndex].items.push(defaultSkill);
     saveData();
     renderCV();
-    showNotification(`Skill in ${category} hinzugefügt.`);
+    showNotification("Skill hinzugefügt.");
   }
 };
 
-window.removeSkillItem = function(category, index) {
-  if (cvData.skills && cvData.skills[category] && cvData.skills[category].length > index) {
-    cvData.skills[category].splice(index, 1);
+window.removeSkillItem = function(groupIndex, index) {
+  const items = cvData.skills?.groups?.[groupIndex]?.items;
+  if (items && items.length > index) {
+    items.splice(index, 1);
     saveData();
     renderCV();
     showNotification("Skill entfernt.");
+  }
+};
+
+window.addSkillGroup = function() {
+  if (!cvData.skills) cvData.skills = { groups: [] };
+  if (!cvData.skills.groups) cvData.skills.groups = [];
+  cvData.skills.groups.push({ label: "Neue Gruppe", items: [] });
+  saveData();
+  renderCV();
+  renderBlockEditor();
+  showNotification("Neue Skill-Gruppe hinzugefügt.");
+};
+
+window.renameSkillGroup = function(groupIndex, newLabel) {
+  if (cvData.skills?.groups?.[groupIndex]) {
+    cvData.skills.groups[groupIndex].label = newLabel;
+    saveData();
+    renderCV(true);
+  }
+};
+
+window.removeSkillGroup = function(groupIndex) {
+  if (cvData.skills?.groups && cvData.skills.groups.length > groupIndex) {
+    cvData.skills.groups.splice(groupIndex, 1);
+    saveData();
+    renderCV();
+    renderBlockEditor();
+    showNotification("Skill-Gruppe entfernt.");
   }
 };
 
@@ -1321,17 +1958,21 @@ function setupTabController() {
 // ---------------- DYNAMIC FORMS VALUE SYNCHRONIZER ----------------
 
 function setupInputListeners() {
-  // Personal detail fields listeners
+  // Personal detail fields listeners – previewId maps sidebar input to CV preview element
   const fields = [
-    { id: 'meta-name', path: 'personal.name' },
-    { id: 'meta-role', path: 'personal.role' },
-    { id: 'meta-email', path: 'personal.email' },
-    { id: 'meta-phone', path: 'personal.phone' },
-    { id: 'meta-location', path: 'personal.location' },
-    { id: 'meta-website', path: 'personal.website' },
-    { id: 'meta-github', path: 'personal.github' },
-    { id: 'meta-linkedin', path: 'personal.linkedin' },
-    { id: 'meta-profile-text', path: 'personal.profileText' }
+    { id: 'meta-name', path: 'personal.name', previewId: 'cv-name' },
+    { id: 'meta-role', path: 'personal.role', previewId: 'cv-role' },
+    { id: 'meta-email', path: 'personal.email', previewId: 'cv-contact-email' },
+    { id: 'meta-phone', path: 'personal.phone', previewId: 'cv-contact-phone' },
+    { id: 'meta-address', path: 'personal.address', previewId: 'cv-contact-address' },
+    { id: 'meta-location', path: 'personal.location', previewId: 'cv-contact-location' },
+    { id: 'meta-website', path: 'personal.website', previewId: 'cv-contact-website' },
+    { id: 'meta-github', path: 'personal.github', previewId: 'cv-contact-github' },
+    { id: 'meta-linkedin', path: 'personal.linkedin', previewId: 'cv-contact-linkedin' },
+    { id: 'meta-birth-date', path: 'personal.birthDate', previewId: null },
+    { id: 'meta-birth-place', path: 'personal.birthPlace', previewId: null },
+    { id: 'meta-nationality', path: 'personal.nationality', previewId: null },
+    { id: 'meta-profile-text', path: 'personal.profileText', previewId: 'cv-profile-text' }
   ];
 
   fields.forEach(f => {
@@ -1340,20 +1981,10 @@ function setupInputListeners() {
       el.addEventListener('input', (e) => {
         setValueByPath(cvData, f.path, e.target.value);
         saveData();
-        
-        // Sync preview directly
-        const previewEl = document.getElementById(f.id.replace('meta-', 'cv-'));
+        // Sync preview element directly for instant feedback
+        const previewEl = document.getElementById(f.previewId);
         if (previewEl) {
           previewEl.innerHTML = e.target.value;
-        }
-        // Special mapping for page 2 header sync
-        if (f.id === 'meta-name') {
-          const p2Name = document.getElementById('cv-p2-name');
-          if (p2Name) p2Name.innerHTML = e.target.value;
-        }
-        if (f.id === 'meta-role') {
-          const p2Role = document.getElementById('cv-p2-role');
-          if (p2Role) p2Role.innerHTML = e.target.value;
         }
       });
     }
@@ -1375,6 +2006,32 @@ function setupInputListeners() {
       }
     });
   }
+
+  // Photo upload listener
+  const photoUpload = document.getElementById('photo-upload');
+  if (photoUpload) {
+    photoUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        cvData.personal.photo = ev.target.result;
+        saveData();
+        syncPhotoPreview();
+        renderCV();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  const photoRemove = document.getElementById('photo-remove');
+  if (photoRemove) {
+    photoRemove.addEventListener('click', () => {
+      cvData.personal.photo = '';
+      saveData();
+      syncPhotoPreview();
+      renderCV();
+    });
+  }
 }
 
 // Design layout and visibility panel listeners
@@ -1394,6 +2051,16 @@ function setupDesignListeners() {
   if (layoutStyle) {
     layoutStyle.addEventListener('change', (e) => {
       cvData.layout.style = e.target.value;
+      saveData();
+      renderCV();
+    });
+  }
+
+  // Font pack dropdown
+  const fontPack = document.getElementById('select-font-pack');
+  if (fontPack) {
+    fontPack.addEventListener('change', (e) => {
+      cvData.layout.fontPack = e.target.value;
       saveData();
       renderCV();
     });
@@ -1451,7 +2118,13 @@ function setupDesignListeners() {
     { id: 'check-visible-certs', key: 'certifications' },
     { id: 'check-visible-tools', key: 'methodsAndTools' },
     { id: 'check-visible-languages', key: 'languages' },
-    { id: 'check-visible-hobbies', key: 'hobbies' }
+    { id: 'check-visible-hobbies', key: 'hobbies' },
+    { id: 'check-visible-volunteer', key: 'volunteer' },
+    { id: 'check-visible-awards', key: 'awards' },
+    { id: 'check-visible-driving', key: 'drivingLicense' },
+    { id: 'check-visible-talks', key: 'talks' },
+    { id: 'check-visible-publications', key: 'publications' },
+    { id: 'check-visible-references', key: 'references' },
   ];
 
   sectionCheckboxes.forEach(cb => {
@@ -1473,10 +2146,14 @@ function syncFormsFromData() {
     { id: 'meta-role', path: 'personal.role' },
     { id: 'meta-email', path: 'personal.email' },
     { id: 'meta-phone', path: 'personal.phone' },
+    { id: 'meta-address', path: 'personal.address' },
     { id: 'meta-location', path: 'personal.location' },
     { id: 'meta-website', path: 'personal.website' },
     { id: 'meta-github', path: 'personal.github' },
     { id: 'meta-linkedin', path: 'personal.linkedin' },
+    { id: 'meta-birth-date', path: 'personal.birthDate' },
+    { id: 'meta-birth-place', path: 'personal.birthPlace' },
+    { id: 'meta-nationality', path: 'personal.nationality' },
     { id: 'meta-profile-text', path: 'personal.profileText' }
   ];
 
@@ -1494,6 +2171,9 @@ function syncFormsFromData() {
   // Sync Layout selection inputs
   const layoutStyle = document.getElementById('select-layout-style');
   if (layoutStyle) layoutStyle.value = cvData.layout.style || 'minimal';
+
+  const fontPack = document.getElementById('select-font-pack');
+  if (fontPack) fontPack.value = cvData.layout.fontPack || 'inter-outfit';
 
   const paperBg = document.getElementById('select-paper-bg');
   if (paperBg) paperBg.value = cvData.layout.background || 'white';
@@ -1519,7 +2199,13 @@ function syncFormsFromData() {
     { id: 'check-visible-certs', key: 'certifications' },
     { id: 'check-visible-tools', key: 'methodsAndTools' },
     { id: 'check-visible-languages', key: 'languages' },
-    { id: 'check-visible-hobbies', key: 'hobbies' }
+    { id: 'check-visible-hobbies', key: 'hobbies' },
+    { id: 'check-visible-volunteer', key: 'volunteer' },
+    { id: 'check-visible-awards', key: 'awards' },
+    { id: 'check-visible-driving', key: 'drivingLicense' },
+    { id: 'check-visible-talks', key: 'talks' },
+    { id: 'check-visible-publications', key: 'publications' },
+    { id: 'check-visible-references', key: 'references' },
   ];
 
   sectionCheckboxes.forEach(cb => {
@@ -1531,6 +2217,9 @@ function syncFormsFromData() {
 
   // Sync Theme Selection highlights
   syncThemeButtons();
+
+  // Sync photo preview in sidebar
+  syncPhotoPreview();
 
   // Sync JSON text editor
   const jsonEditor = document.getElementById('json-editor');
@@ -1616,7 +2305,7 @@ function setupThemeSelector() {
     btn.className = 'theme-btn w-6 h-6 rounded-full cursor-pointer border border-white/20 transition-all hover:scale-110 shrink-0';
     btn.dataset.theme = themeName;
     btn.style.background = `linear-gradient(135deg, ${theme.primary}, ${theme.accent})`;
-    btn.title = `Farbschema: ${themeName.toUpperCase()}`;
+    btn.title = themeLabels[themeName] || themeName.toUpperCase();
     
     if (themeName === cvData.layout.theme) {
       btn.classList.add('ring-4', 'ring-white');
@@ -1767,47 +2456,55 @@ function applyStyleSpecificPrintMargins(styleName) {
     document.head.appendChild(styleEl);
   }
 
-  // Margin configurations for each style matching the design aesthetics
+  // Margin configs in mm (numbers). mm is only used in @media print CSS.
+  // Screen CSS variables are converted to px (1mm = 96/25.4 px).
   const marginConfigs = {
-    'minimal': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
-    'executive': { top: '22mm', bottom: '22mm', left: '22mm', right: '22mm' },
-    'modernist': { top: '18mm', bottom: '18mm', left: '18mm', right: '18mm' },
-    'vintage-editorial': { top: '22mm', bottom: '22mm', left: '25mm', right: '25mm' },
-    'avant-garde': { top: '15mm', bottom: '15mm', left: '15mm', right: '15mm' },
-    'cyberpunk': { top: '15mm', bottom: '15mm', left: '12mm', right: '12mm' },
-    'swiss': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
-    'warm-editorial': { top: '22mm', bottom: '22mm', left: '22mm', right: '22mm' },
-    'terminal': { top: '15mm', bottom: '15mm', left: '15mm', right: '15mm' },
-    'neumorphic': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
-    'magazine': { top: '20mm', bottom: '20mm', left: '18mm', right: '18mm' },
-    'poster': { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
-    'brutalist': { top: '18mm', bottom: '18mm', left: '18mm', right: '18mm' }
+    'minimal':          { top: 20, bottom: 20, left: 20, right: 20 },
+    'executive':        { top: 22, bottom: 22, left: 22, right: 22 },
+    'modernist':        { top: 18, bottom: 18, left: 18, right: 18 },
+    'vintage-editorial':{ top: 22, bottom: 22, left: 25, right: 25 },
+    'avant-garde':      { top: 15, bottom: 15, left: 15, right: 15 },
+    'cyberpunk':        { top: 15, bottom: 15, left: 12, right: 12 },
+    'swiss':            { top: 20, bottom: 20, left: 20, right: 20 },
+    'warm-editorial':   { top: 22, bottom: 22, left: 22, right: 22 },
+    'terminal':         { top: 15, bottom: 15, left: 15, right: 15 },
+    'neumorphic':       { top: 20, bottom: 20, left: 20, right: 20 },
+    'magazine':         { top: 20, bottom: 20, left: 18, right: 18 },
+    'poster':           { top: 20, bottom: 20, left: 20, right: 20 },
+    'brutalist':        { top: 18, bottom: 18, left: 18, right: 18 },
+    'scandinavian':     { top: 24, bottom: 24, left: 22, right: 22 },
+    'art-deco':         { top: 20, bottom: 20, left: 20, right: 20 },
+    'academic':         { top: 25, bottom: 25, left: 25, right: 25 }
   };
 
-  const config = marginConfigs[styleName] || marginConfigs['minimal'];
+  const cfg = marginConfigs[styleName] || marginConfigs['minimal'];
 
-  // Sync screen preview margins to exactly match print margins!
+  // Convert mm → px for screen CSS variables (1mm = 96/25.4 ≈ 3.7795 px)
+  const mmToPx = (mm) => `${Math.round(mm * 96 / 25.4)}px`;
+
   const rootElement = document.documentElement;
-  rootElement.style.setProperty('--cv-margin-x', config.left);
-  rootElement.style.setProperty('--cv-margin-y', config.top);
+  rootElement.style.setProperty('--cv-margin-x', mmToPx(cfg.left));
+  rootElement.style.setProperty('--cv-margin-y', mmToPx(cfg.top));
 
+  // @page margin is the ONLY correct way to get consistent margins on ALL pages.
+  // padding on #cv-page would only affect page 1 top and last page bottom.
   styleEl.innerHTML = `
     @media print {
       @page {
         size: A4;
-        margin-top: ${config.top} !important;
-        margin-bottom: ${config.bottom} !important;
-        margin-left: ${config.left} !important;
-        margin-right: ${config.right} !important;
+        margin: ${cfg.top}mm ${cfg.right}mm ${cfg.bottom}mm ${cfg.left}mm;
+      }
+      #cv-page {
+        padding: 0 !important;
       }
       .header-layout-corporate,
       .header-layout-magazine {
-        margin-top: -${config.top} !important;
-        margin-left: -${config.left} !important;
-        margin-right: -${config.right} !important;
-        padding-top: ${config.top} !important;
-        padding-left: ${config.left} !important;
-        padding-right: ${config.right} !important;
+        margin-top: -${cfg.top}mm !important;
+        margin-left: -${cfg.left}mm !important;
+        margin-right: -${cfg.right}mm !important;
+        padding-top: ${cfg.top}mm !important;
+        padding-left: ${cfg.left}mm !important;
+        padding-right: ${cfg.right}mm !important;
         padding-bottom: 10mm !important;
       }
     }
@@ -1867,14 +2564,14 @@ function showPrintGuideModal() {
             </div>
           </div>
 
-          <!-- Step 3: Margins to Default -->
+          <!-- Step 3: Margins are irrelevant -->
           <div class="flex gap-3 bg-slate-950/40 p-3 border border-slate-800/60 rounded-xl">
-            <div class="text-amber-500 shrink-0 mt-0.5">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg>
+            <div class="text-emerald-500 shrink-0 mt-0.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <div>
-              <h4 class="font-bold text-white text-xs mb-0.5">3. Ränder auf "Standard" belassen</h4>
-              <p class="text-[11px] text-slate-400 leading-normal">Setze die Ränder auf <strong>"Standard"</strong>. Die passenden Seitenränder des Stils werden durch unser System automatisch gesteuert.</p>
+              <h4 class="font-bold text-white text-xs mb-0.5">3. Ränder – egal! (automatisch gesteuert)</h4>
+              <p class="text-[11px] text-slate-400 leading-normal">Die Seitenränder werden <strong>vollautomatisch durch das CV-System gesteuert</strong> – egal ob du im Dialog "Standard", "Keine" oder einen anderen Wert wählst. Das Ergebnis ist immer korrekt.</p>
             </div>
           </div>
 
@@ -1919,4 +2616,31 @@ function showPrintGuideModal() {
       window.print();
     }, 100);
   };
+}
+
+// ----------------  MOBILE PANEL TOGGLE ----------------
+
+function setupMobileToggle() {
+  const tabEditor = document.getElementById('mobile-tab-editor');
+  const tabPreview = document.getElementById('mobile-tab-preview');
+  if (!tabEditor || !tabPreview) return;
+
+  function setMobileTab(showPreview) {
+    document.body.classList.toggle('mobile-preview-active', showPreview);
+
+    tabEditor.classList.toggle('bg-slate-700', !showPreview);
+    tabEditor.classList.toggle('text-white', !showPreview);
+    tabEditor.classList.toggle('font-bold', !showPreview);
+    tabEditor.classList.toggle('text-slate-400', showPreview);
+    tabEditor.classList.toggle('font-semibold', showPreview);
+
+    tabPreview.classList.toggle('bg-slate-700', showPreview);
+    tabPreview.classList.toggle('text-white', showPreview);
+    tabPreview.classList.toggle('font-bold', showPreview);
+    tabPreview.classList.toggle('text-slate-400', !showPreview);
+    tabPreview.classList.toggle('font-semibold', !showPreview);
+  }
+
+  tabEditor.addEventListener('click', () => setMobileTab(false));
+  tabPreview.addEventListener('click', () => setMobileTab(true));
 }
